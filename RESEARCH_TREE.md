@@ -48,7 +48,7 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 - [x] 8. M2 (docs/m2.md): nested stacking = label-free + RYAN-fold + NBR + gene-propensity (GP) model. **Primary 0.1700 ± 0.012** (C1 .251/C2 .159/C3 .095); M2−M1 +0.025 [0.019, 0.033], seed-7 +0.031 → **adopted as incumbent**. Clean reruns at 3a9bf62 reproduce B1 .1033 / B4 .1079 / M1 .1447 exactly. Runtime: nested features ~130 s/fold, train 276 s (15 models), predict 10 s.
   - [!] NBR is the largest Ryan-derived family (+0.019 [0.013, 0.026]); RYAN+GP +0.007; GP alone +0.003 (n.s.; substitutes for β/MF/NBR); init_score 0 → not used
   - [-] GP toy check failed its pre-stated bar (unseen-gene Spearman 0.563 < 0.6; B1 β itself only 0.55 vs truth) — reported, bar not moved
-  - [~] Independent verification of M2 (nesting leak canary, label-permutation control, re-derived metric)
+  - [x] Independent verification of M2 → reviews/verify_m2/REPORT.md: leak canary bit-identical (positive controls detected), label permutation → 0.023 ≈ prevalence 0.021, metric re-derived exactly, lockbox/class/DAmP hygiene 0 mismatches. Note: MF score non-deterministic at >1 torch thread (~1e-6).
 - [~] 10. M2+ rung (agent, branch m2plus): XSP merge + ablation, 5-seed bagging, E-TARGET (binary vs continuous S2), C3-focused blend
 - [~] 11. Deliverable tooling (agent, branch deliverable): predict_all_pairs.py (universe scoring, OOF scores for measured pairs, flags), lockbox_eval.py + prereg template (one-shot, access log), linkage diagnostic
 - [~] 9. XSP cross-species gene/pair transfer (docs/features_xsp.md; staged): cer gene-propensity CV ρ 0.391, transfer ρ 0.246; merge + ablation on M2 pending

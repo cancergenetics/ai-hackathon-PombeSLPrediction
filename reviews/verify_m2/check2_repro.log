@@ -1,0 +1,35 @@
+fold 0 seed 0 183 65s
+fold 0 seed 1 117 113s
+fold 0 seed 2 172 169s
+{"primary": 0.166, "primary_of_negated_score": 0.0114, "weighted_auroc": 0.8533, "weighted_prevalence": 0.0211, "class_AP": {"C1": 0.2439, "C2": 0.1547, "C3": 0.0982}, "fits": [{"best_iter": 183, "valid_wAP": 0.1526}, {"best_iter": 117, "valid_wAP": 0.1671}, {"best_iter": 172, "valid_wAP": 0.1386}]}
+{
+ "mode": "repro",
+ "folds": {
+  "0": {
+   "primary": 0.166,
+   "primary_of_negated_score": 0.0114,
+   "weighted_auroc": 0.8533,
+   "weighted_prevalence": 0.0211,
+   "class_AP": {
+    "C1": 0.2439,
+    "C2": 0.1547,
+    "C3": 0.0982
+   },
+   "fits": [
+    {
+     "best_iter": 183,
+     "valid_wAP": 0.1526
+    },
+    {
+     "best_iter": 117,
+     "valid_wAP": 0.1671
+    },
+    {
+     "best_iter": 172,
+     "valid_wAP": 0.1386
+    }
+   ]
+  }
+ },
+ "wall_s": 170
+}

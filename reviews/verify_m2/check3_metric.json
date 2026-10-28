@@ -1,0 +1,60 @@
+{
+ "M2": {
+  "rows": 1320074,
+  "primary_mine": 0.17001,
+  "fold_primary": [
+   0.166,
+   0.1804,
+   0.1618,
+   0.1661,
+   0.1758
+  ],
+  "registry_primary": 0.170008534966877,
+  "classAP_fold_mean": {
+   "C1": 0.2514,
+   "C2": 0.1592,
+   "C3": 0.0948
+  },
+  "registry_class": {
+   "C1": 0.2514,
+   "C2": 0.1592,
+   "C3": 0.0948
+  },
+  "all_pairs_mine": 0.18311,
+  "weighted_prevalence": 0.02092
+ },
+ "M1": {
+  "rows": 1320074,
+  "primary_mine": 0.14466,
+  "fold_primary": [
+   0.143,
+   0.1549,
+   0.1363,
+   0.1341,
+   0.1549
+  ],
+  "registry_primary": 0.14466210764261653,
+  "classAP_fold_mean": {
+   "C1": 0.2141,
+   "C2": 0.1335,
+   "C3": 0.0875
+  },
+  "registry_class": {
+   "C1": 0.2141,
+   "C2": 0.1335,
+   "C3": 0.0875
+  },
+  "all_pairs_mine": 0.15576,
+  "weighted_prevalence": 0.02092
+ },
+ "delta_point": 0.02535,
+ "delta_boot": {
+  "n": 200,
+  "mean": 0.0251,
+  "ci95": [
+   0.0172,
+   0.0329
+  ],
+  "frac_le_0": 0.0
+ }
+}
