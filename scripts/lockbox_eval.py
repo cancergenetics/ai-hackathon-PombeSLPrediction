@@ -354,7 +354,8 @@ def main(argv=None) -> int:
         raise
     out["peak_rss_mb"] = round(peak_rss_mb(), 1)
     from src.evaluate import git_info
-    out.update({"git": git_info(), "models_sha256": protocol.sha256_file(ROOT / P["models_file"]),
+    # threads are recorded: the Huber stacker (M2r_huber) is not bit-invariant to the LightGBM thread count
+    out.update({"threads": threads, "git": git_info(), "models_sha256": protocol.sha256_file(ROOT / P["models_file"]),
                 "protocol_sha256": protocol.protocol_sha256(), "data_root": str(protocol.data_root()),
                 "override": bool(a.override), "reason": a.reason})
     d = protocol.results_root() / "lockbox"

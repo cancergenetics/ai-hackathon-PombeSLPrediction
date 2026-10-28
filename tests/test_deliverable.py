@@ -411,6 +411,7 @@ def test_lockbox_sequence(toy, lockbox_repo):
     assert c["p_holm"] >= c["p"] and res["shipped_model"] == "M2r_huber"
     assert res["models"]["M2r_huber"]["primary"] > res["models"]["B1_additive_logit"]["primary"]   # toy has signal
     assert res["fits"]["M2r_huber"]["objective"] == "huber"            # lockbox_eval trains the Huber stacker
+    assert res["threads"] == 2
     assert lb.lockbox_preds_path("M2r_huber").exists()
     # 6. second access -> refused; override without reason -> refused; with reason -> completed + logged
     rc, lb = _lb(["--prereg", str(f)])
