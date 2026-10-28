@@ -1,0 +1,28 @@
+{
+ "task": "features_xsp_quick_full_pc0",
+ "wall_s": 97.91,
+ "cpu_s": 286.79,
+ "peak_rss_mb": 7011.8,
+ "steps_s": {
+  "inputs": 0.87,
+  "species_features": 60.35,
+  "labels": 1.27,
+  "gene_cv": 5.07,
+  "pair_sample": 0.08,
+  "pair_cv": 30.26
+ },
+ "hardware": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "cpu_count": 10,
+  "python": "3.10.0"
+ },
+ "threads": {
+  "OMP_NUM_THREADS": null,
+  "VECLIB_MAXIMUM_THREADS": null
+ },
+ "finished": "2026-10-28T17:49:57",
+ "variant": "full",
+ "quick": true,
+ "n_jobs": 6
+}

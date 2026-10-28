@@ -45,15 +45,19 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [x] DIAG NBR cross-source mean = 0.125 (C2 .117 > B1 .080); C3 still ≈ chance for all single scores
 - [x] 7. M1 LightGBM on label-free features (src/pairs.py; 358 features/9 groups): primary 0.145 ± 0.011 (C1 .214/C2 .134/C3 .088); M1−B1 +0.041 [0.031, 0.051]; gene-permuted control 0.071 (C3 → prevalence) ✓; ablation: PHEN Δ+0.022, CER +0.004, others ≈0; universe scoring 7.14M pairs in 80 s
   - [!] M1 signal is mostly gene-level "sickness" (phenotype breadth, cerevisiae-ortholog negative rate, ortholog fitness); pair-similarity features add little
-- [~] 8. M2: nested stacking = label-free + Ryan/NBR + explicit gene-propensity model (β̂ from gene features); clean reruns of B1/B4/M1
+- [x] 8. M2 (docs/m2.md): nested stacking = label-free + RYAN-fold + NBR + gene-propensity (GP) model. **Primary 0.1700 ± 0.012** (C1 .251/C2 .159/C3 .095); M2−M1 +0.025 [0.019, 0.033], seed-7 +0.031 → **adopted as incumbent**. Clean reruns at 3a9bf62 reproduce B1 .1033 / B4 .1079 / M1 .1447 exactly. Runtime: nested features ~130 s/fold, train 276 s (15 models), predict 10 s.
+  - [!] NBR is the largest Ryan-derived family (+0.019 [0.013, 0.026]); RYAN+GP +0.007; GP alone +0.003 (n.s.; substitutes for β/MF/NBR); init_score 0 → not used
+  - [-] GP toy check failed its pre-stated bar (unseen-gene Spearman 0.563 < 0.6; B1 β itself only 0.55 vs truth) — reported, bar not moved
+  - [ ] Independent verification of M2 (nesting leak canary, label-permutation control, re-derived metric)
+- [~] 9. XSP cross-species gene/pair transfer (docs/features_xsp.md; staged): cer gene-propensity CV ρ 0.391, transfer ρ 0.246; merge + ablation on M2 pending
 - [ ] 6. Feature-based models
 - [ ] 7. Advanced models / cross-species transfer
 - [ ] 8. Final evaluation on held-out test → REPORT.md
 
 ## Idea backlog (ranked; stop rule: 3 consecutive failed rungs and no supported idea left)
-1. [~] Explicit gene-propensity model β̂ (in M2)
+1. [x] Explicit gene-propensity model β̂ (in M2; own increment n.s.)
 2. [ ] Seed bagging (5+ seeds) of best model — cheap, +0.016 seen for M1
-3. [ ] Cross-species gene-propensity transfer: learn cerevisiae gene GI degree from cerevisiae ESM/PPI (Costanzo labels), apply to pombe genes (esp. without orthologs) → gene feature (M4-as-feature)
+3. [~] Cross-species gene-propensity transfer: learn cerevisiae gene GI degree from cerevisiae ESM/PPI (Costanzo labels), apply to pombe genes (esp. without orthologs) → gene feature (M4-as-feature)
 4. [ ] C3-focused low-capacity model (monotone constraints on sickness/propensity features)
 5. [ ] Rank-average ensemble (M5) of M2 + MF + NBR-mean; E-TARGET (Huber on S2)
 6. [ ] M3 neural inductive pair model (one attempt)
