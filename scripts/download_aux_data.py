@@ -242,6 +242,41 @@ def ensembl_compara():
     write_sums(d, extra_note="Ensembl Fungi Compara 116 gene-tree homologies (sequence-based), rows involving S. pombe only")
 
 
+def ncbi_gene_pombe():
+    """Entrez Gene ID <-> PomBase systematic ID, via NCBI Datasets API (taxon 4896). Keeps ID fields only
+    (the API report also embeds GO annotations; these are deliberately discarded)."""
+    import json
+    import urllib.parse
+    d = RAW / "ncbi_gene_pombe"
+    d.mkdir(parents=True, exist_ok=True)
+    out = d / "entrez_to_pombase.tsv"
+    if out.exists():
+        print("  [skip] entrez_to_pombase.tsv present")
+    else:
+        rows, token = [], None
+        while True:
+            q = {"page_size": "1000"}
+            if token:
+                q["page_token"] = token
+            url = "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/taxon/4896/dataset_report?" + urllib.parse.urlencode(q)
+            j = json.loads(subprocess.run(["curl", "-fsSL", "--retry", "4", "-A", UA, url], check=True,
+                                          capture_output=True, text=True).stdout)
+            for rep in j.get("reports", []):
+                g = rep["gene"]
+                rows.append((g["gene_id"], g.get("symbol", ""), g.get("type", ""),
+                             g.get("nomenclature_authority", {}).get("identifier", ""),
+                             g.get("description", "")))
+            token = j.get("next_page_token")
+            if not token:
+                break
+        with open(out, "w") as fh:
+            fh.write("entrez_id\tsymbol\ttype\tpombase_id\tdescription\n")
+            for r in rows:
+                fh.write("\t".join(x.replace("\t", " ") for x in r) + "\n")
+        print(f"  {len(rows)} genes")
+    write_sums(d, extra_note=f"NCBI Datasets API gene reports for taxon 4896, retrieved {TODAY}; ID fields only")
+
+
 DATASETS = {
     "pombase_protein": pombase_protein,
     "pombase_quant_expression": pombase_quant_expression,
@@ -252,6 +287,7 @@ DATASETS = {
     "kim2010_deletion_library": kim2010_deletion_library,
     "matsuyama2006_localization": matsuyama2006_localization,
     "uniprot_idmapping_pombe": uniprot_idmapping_pombe,
+    "ncbi_gene_pombe": ncbi_gene_pombe,
     "alphafold_spombe": alphafold_spombe,
     "ensembl_compara": ensembl_compara,
 }

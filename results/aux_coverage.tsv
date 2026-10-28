@@ -1,0 +1,40 @@
+dataset	metric	value	n_in_ryan_genes	note
+pombase_protein	protein-coding genes with peptide (universe)	5126	2400	
+ryan2012	Ryan genes (pombase_id) in universe [reference]	2400	2416	
+ncbi_gene_pombe	Entrez GeneID -> PomBase ID (all gene types)	12403		
+ncbi_gene_pombe	protein-coding Entrez genes in universe	5106		
+uniprot_idmapping_pombe	Entrez->sysID agreeing with NCBI / conflicting	3187/13		
+uniprot_idmapping_pombe	UniProt accessions with PomBase ID	5130		
+pombase_protein	genes with any domain/feature call	4925	2331	
+pombase_protein	genes with Pfam domain	4603	2173	
+pombase_protein	genes with PANTHER family	4489	2107	
+pombase_protein	distinct Pfam domains	3812		
+pombase_quant_expression	universe genes with Marguerat2012 RNA	5117	2416	
+pombase_quant_expression	universe genes with Marguerat2012 protein	3619	1648	
+pombase_quant_expression	universe genes with Carpy2014 protein	3175	1435	
+biogrid_pombe_physical	physical rows	19416		
+biogrid_pombe_physical	genes in universe with >=1 physical interaction	3660	1733	of 3700 total ids
+biogrid_pombe_physical	unique gene pairs (no self)	14023		
+biogrid_pombe_physical	Vo2016 Y2H/PCA rows	2347		
+biogrid_pombe_physical	genes with Vo2016 interaction	1305	634	
+biogrid_pombe_physical	genes with >=1 HTP-flagged interaction	3081	1422	
+biogrid_scerevisiae_physical	S. cerevisiae physical rows	283038		
+biogrid_scerevisiae_physical	S. cerevisiae genes with physical interaction	6074		
+coxpresdb_spo	RNA-seq: genes x samples	5512x556		
+coxpresdb_spo	RNA-seq: genes mapped to PomBase ID in universe	4703	2216	
+coxpresdb_spo	microarray: genes x samples	4881x166		
+coxpresdb_spo	microarray: genes mapped to PomBase ID in universe	4845	2363	
+matsuyama2006_localization	genes with localisation call in universe	4691	2276	4954 rows
+rodriguez_lopez_2023_phenomics	genes (deletion mutants) x conditions	3509x129		
+rodriguez_lopez_2023_phenomics	mutant genes in universe	3499	2162	
+kim2010_deletion_library	S-Table1 library genes in universe	4906	2379	
+kim2010_deletion_library	S-Table15 het-diploid fitness genes in universe	4287	2202	
+kim2010_deletion_library	S-Table11 (Sp-Sc paralog/ortholog) genes in universe	2436	1023	
+ozturk2022_ko_proteome	long-format rows (strain x protein)	11013018		
+ozturk2022_ko_proteome	distinct strains	3769		
+ozturk2022_ko_proteome	KO genes in universe	3301	2179	
+ozturk2022_ko_proteome	protein groups measured (in universe)	2880	1286	2922 total
+ensembl_fungi_compara	within-pombe paralogue pairs (within_species + other_paralog)	5718		
+ensembl_fungi_compara	genes in >=1 within-pombe paralogue pair	2452	1203	
+ensembl_fungi_compara	genes with >=1 ortholog in another fungal genome	4833	2287	
+ensembl_fungi_compara	partner genomes with pombe orthologs	367		
