@@ -54,10 +54,13 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [-] XSP features: +0.0002 [−0.003, +0.003] (≈1% gain importance) → merged into the store but excluded from models
   - [-] Seed bagging alone: +0.0028 [0.0011, 0.0045] < 0.005 bar → not adopted on its own (kept inside the Huber incumbent)
   - [-] C3-focused logistic blend (pre-stated rule): −0.0001 → C3 stuck at ≈0.095 under every idea so far
-  - [ ] Independent verification of the Huber incumbent
+  - [~] Independent verification of the Huber incumbent (agent)
 - [x] 11. Deliverable tooling (docs/deliverable.md; merged f8a3fba): predict_all_pairs.py scores 7,693,003 pairs (3,923 genes incl. 144 viability-unknown) with M2 trained on dev genes in 985 s on 3 threads, peak footprint 6.3 GB; out-of-fold scores for measured pairs (in-sample AP 0.307 vs OOF 0.201 → users must read OOF); lockbox_eval.py one-shot with access log + prereg template (toy-tested only); config/models.yaml
   - [!] Linkage: Ryan barely measured pairs < 300 kb apart (coverage ≤6% vs ~77%). Same-chromosome 300–1,000 kb pairs have a small excess hit rate (2.15% vs 1.82% inter-chromosomal, OR 1.18, p 3e-8) that M2 does not predict. → `linked` flag at 300 kb, no score penalty; reported as a limitation
   - [!] Top-ranked universe pairs are almost all C1/C2 (top 10k: 1 C3 pair); C3 scores are compressed, so absolute scores are not comparable across classes
+- [~] 12. Ship incumbent (branch ship): shared Huber stacker in src, M2r_bag5_huber as deliverable default, explicit default LF groups (XSP leak fix), universe re-run
+- [~] 13. E-CONT rung (branch m2cont): GP / NBR built from continuous −min(S2,0) instead of binary hits — aimed at C2/C3
+- [~] 14. Rarely-seen genes (branch fewshot; report-only): AUPRC by seen-gene training degree; E-FEWSHOT k ∈ {0,5,20}
 - [-] 9. XSP cross-species gene/pair transfer (docs/features_xsp.md; staged): cer gene-propensity CV ρ 0.391, transfer ρ 0.246; merge + ablation on M2 pending
 - [ ] 6. Feature-based models
 - [ ] 7. Advanced models / cross-species transfer
