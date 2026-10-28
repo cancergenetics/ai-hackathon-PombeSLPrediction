@@ -22,6 +22,10 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import build_ryan_pairs as brp  # noqa: E402  (our own script, not downloaded code)
+sys.path.insert(0, str(ROOT))
+from src import protocol  # noqa: E402
+
+THR = protocol.threshold()  # label threshold from config/protocol.yaml
 
 RAW = ROOT / "data/raw"
 P = ROOT / "data/processed"
@@ -110,12 +114,12 @@ def main():
             check("  ... incl. multi-allele single-orientation pairs (allele averaging)", fm >= 0.99,
                   f"{100 * fm:.2f}% within 0.01 of f_1, n={len(multi):,}")
         else:
-            gap = np.interp(-2.3, fy, fx)
-            check("f_2 (reciprocal pairs) ~ identity near the cut-off", abs(gap + 2.3) < 0.3,
-                  f"S2=-2.3 <-> raw {gap:.2f}")
+            gap = np.interp(THR, fy, fx)
+            check("f_2 (reciprocal pairs) ~ identity near the cut-off", abs(gap - THR) < 0.3,
+                  f"S2={THR} <-> raw {gap:.2f}")
     one = ok[~ok.both_orientations]
-    gap1 = np.interp(-2.3, np.sort(one.s_score.values), np.sort(one.s_raw_mean.values))
-    check("f_1 (single orientation) is compressive (pseudo-averaging)", gap1 < -3.0, f"S2=-2.3 <-> raw {gap1:.2f}")
+    gap1 = np.interp(THR, np.sort(one.s_score.values), np.sort(one.s_raw_mean.values))
+    check("f_1 (single orientation) is compressive (pseudo-averaging)", gap1 < -3.0, f"S2={THR} <-> raw {gap1:.2f}")
     diff_all = ok[(ok.n_meas_all != ok.n_meas) & ~ok.both_orientations]
     fa = np.mean(np.abs(np.interp(diff_all.s_raw_mean_all.values, f1x, f1y) - diff_all.s_score.values) < 0.01)
     check("negative control: mean over ALL alleles does not reproduce S2", fa < 0.5,

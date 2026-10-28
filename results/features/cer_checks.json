@@ -1,0 +1,119 @@
+{
+ "collapse": {
+  "n_measurements": 17148734,
+  "n_strain_pairs": 17125574,
+  "n_orf_pairs": 11430205,
+  "n_orfs": 5550,
+  "frac_orf_pairs_neg": 0.03224902790457389,
+  "frac_orf_pairs_multi_allele": 0.37951891501508506
+ },
+ "essentiality": {
+  "n_orfs_with_strains": 5874,
+  "n_essential": 1004,
+  "n_orfs_with_both_deletion_and_ts_or_damp": 57,
+  "class_counts": {
+   "sn": 4091,
+   "dma": 3915,
+   "tsq": 1169,
+   "damp": 823,
+   "tsa": 808
+  }
+ },
+ "profile_pca": {
+  "n_orfs_profiled": 5550,
+  "explained_variance_ratio": [
+   0.0128,
+   0.0091,
+   0.0074,
+   0.0068,
+   0.0064,
+   0.006,
+   0.0057,
+   0.0053,
+   0.0053,
+   0.0051,
+   0.005,
+   0.0048,
+   0.0046,
+   0.0045,
+   0.0043,
+   0.0041,
+   0.0041,
+   0.0038,
+   0.0037,
+   0.0036
+  ]
+ },
+ "ygob": {
+  "n_pillars_both_tracks": 633,
+  "n_ohnolog_pairs": 545,
+  "n_pairs_both_in_costanzo": 477,
+  "n_ohnolog_pairs_negative": 131
+ },
+ "coverage_genes": {
+  "has_ortholog": 5126,
+  "n_orthologs": 5126,
+  "n_orthologs_costanzo": 5126,
+  "any_ortholog_essential": 3598,
+  "ortholog_smf": 2586,
+  "neg_rate_nxn": 2672,
+  "neg_rate_e": 3350,
+  "emb1": 3598,
+  "emb2": 3598,
+  "emb3": 3598,
+  "emb4": 3598,
+  "emb5": 3598,
+  "emb6": 3598,
+  "emb7": 3598,
+  "emb8": 3598,
+  "emb9": 3598,
+  "emb10": 3598,
+  "emb11": 3598,
+  "emb12": 3598,
+  "emb13": 3598,
+  "emb14": 3598,
+  "emb15": 3598,
+  "emb16": 3598,
+  "emb17": 3598,
+  "emb18": 3598,
+  "emb19": 3598,
+  "emb20": 3598,
+  "has_ohnolog_orthologs": 4013,
+  "ohnolog_orthologs_neg": 4013
+ },
+ "n_genes_ortholog_with_costanzo": 3598,
+ "kmin": {
+  "kmax": 95,
+  "m_k_minus_m_1": {
+   "1": 0.0,
+   "2": -0.0205,
+   "3": -0.0315,
+   "4": -0.0396,
+   "5": -0.0461,
+   "6": -0.0517,
+   "7": -0.0566,
+   "8": -0.0611,
+   "9": -0.0651,
+   "10": -0.0689
+  }
+ },
+ "pairs": {
+  "n_measured_pairs": 5175839,
+  "n_pairs_with_profile_corr": 6470708,
+  "n_ohnolog_sl_pairs": 107,
+  "n_shared_ortholog_pairs": 703,
+  "eps_mean_quantiles": {
+   "0.01": -0.15219999849796295,
+   "0.05": -0.06790000200271606,
+   "0.5": -0.002441667253151536,
+   "0.95": 0.051649998873472214
+  }
+ },
+ "vs_core_costanzo_pairs": {
+  "n_core": 11430205,
+  "n_mine": 11430205,
+  "n_both": 11430205,
+  "pearson_eps": 0.9999370945547699,
+  "frac_identical_1e-6": 0.9987686135113062
+ }
+}

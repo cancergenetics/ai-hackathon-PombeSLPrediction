@@ -1,0 +1,187 @@
+{
+ "filters": [
+  {
+   "network": "pombe",
+   "step": "raw physical rows (both interactors S. pombe)",
+   "rows": 19416,
+   "edges": null
+  },
+  {
+   "network": "pombe",
+   "step": "rows dropped: an interactor not mapped to a protein-coding gene",
+   "rows": 95,
+   "edges": null
+  },
+  {
+   "network": "pombe",
+   "step": "input (both IDs mapped)",
+   "rows": 19321,
+   "edges": 13955
+  },
+  {
+   "network": "pombe",
+   "step": "drop non protein-protein systems",
+   "rows": 18507,
+   "edges": 13431
+  },
+  {
+   "network": "pombe",
+   "step": "drop PMID blocklist",
+   "rows": 11022,
+   "edges": 8230
+  },
+  {
+   "network": "pombe",
+   "step": "drop self edges",
+   "rows": 10369,
+   "edges": 8230
+  },
+  {
+   "network": "pombe",
+   "step": "blocklist marginal: rows removed",
+   "rows": 7343,
+   "edges": 5201,
+   "n_publications_hit": 723,
+   "top_publications": {
+    "PUBMED:28218250": 755,
+    "PUBMED:33109728": 614,
+    "PUBMED:21386897": 370,
+    "PUBMED:34496258": 285,
+    "PUBMED:24013502": 228,
+    "PUBMED:21652630": 226,
+    "PUBMED:22119525": 207,
+    "PUBMED:23297348": 151,
+    "PUBMED:26152728": 143,
+    "PUBMED:22730331": 142
+   },
+   "htp_rows_removed": 3485
+  },
+  {
+   "network": "pombe_htp",
+   "step": "HTP-only (Throughput == 'High Throughput')",
+   "rows": 5393,
+   "edges": 5013
+  },
+  {
+   "network": "cerevisiae",
+   "step": "input",
+   "rows": 283038,
+   "edges": 193040
+  },
+  {
+   "network": "cerevisiae",
+   "step": "drop non protein-protein systems",
+   "rows": 248577,
+   "edges": 163792
+  },
+  {
+   "network": "cerevisiae",
+   "step": "drop PMID blocklist",
+   "rows": 247977,
+   "edges": 163454
+  },
+  {
+   "network": "cerevisiae",
+   "step": "drop self edges",
+   "rows": 243985,
+   "edges": 163454
+  },
+  {
+   "network": "cerevisiae",
+   "step": "blocklist marginal: rows removed",
+   "rows": 591,
+   "edges": 338,
+   "n_publications_hit": 16,
+   "top_publications": {
+    "PUBMED:21386897": 330,
+    "PUBMED:11884590": 160,
+    "PUBMED:12477395": 39,
+    "PUBMED:16990132": 18,
+    "PUBMED:8816472": 13,
+    "PUBMED:22354040": 10,
+    "PUBMED:15889139": 4,
+    "PUBMED:37597513": 4,
+    "PUBMED:9725898": 3,
+    "PUBMED:22681890": 3
+   },
+   "htp_rows_removed": 485
+  }
+ ],
+ "n_blocklist_publications": 2079,
+ "network_default": {
+  "n_edges": 8230,
+  "n_genes_with_edge": 2849,
+  "degree_quantiles": {
+   "0.1": 1.0,
+   "0.25": 1.0,
+   "0.5": 2.0,
+   "0.75": 5.0,
+   "0.9": 10.0,
+   "0.99": 58.1201171875
+  },
+  "degree_max": 364.0,
+  "top_hubs": [
+   "SPBC26H8.10",
+   "SPAC3G6.02",
+   "SPCC736.08",
+   "SPAC17H9.02",
+   "SPBC725.08",
+   "SPAC2F7.14c",
+   "SPBC3B9.02c",
+   "SPBC8D2.10c",
+   "SPAC1006.03c",
+   "SPBC337.12"
+  ],
+  "sp_counts": {
+   "1.0": 8230,
+   "2.0": 352264,
+   "3.0": 1044517,
+   "4.0": 1711885,
+   "5.0": 940080
+  }
+ },
+ "network_htp": {
+  "n_edges": 5013,
+  "n_genes_with_edge": 2166,
+  "degree_quantiles": {
+   "0.1": 1.0,
+   "0.25": 1.0,
+   "0.5": 2.0,
+   "0.75": 3.0,
+   "0.9": 7.0,
+   "0.99": 50.0
+  },
+  "degree_max": 334.0,
+  "top_hubs": [
+   "SPBC26H8.10",
+   "SPAC3G6.02",
+   "SPCC736.08",
+   "SPAC17H9.02",
+   "SPBC725.08",
+   "SPAC2F7.14c",
+   "SPBC3B9.02c",
+   "SPAC1006.03c",
+   "SPBC337.12",
+   "SPBC530.14c"
+  ],
+  "sp_counts": {
+   "1.0": 5013,
+   "2.0": 283398,
+   "3.0": 533901,
+   "4.0": 1006493,
+   "5.0": 515890
+  }
+ },
+ "positive_control_cer_vs_pombe_edges": {
+  "n_genes": 2420,
+  "p1c1": 1908,
+  "p1c0": 3389,
+  "p0c1": 106705,
+  "p0c0": 2814988,
+  "odds_ratio": 14.852466422616168,
+  "P(pombe edge | cer edge)": 0.01756695791479841,
+  "P(pombe edge | no cer edge)": 0.0012024651066908365
+ },
+ "n_cer_mapped_edges": 177739,
+ "n_genes_with_cer_ortholog": 4013
+}

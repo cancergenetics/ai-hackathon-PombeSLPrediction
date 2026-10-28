@@ -10,7 +10,7 @@ Generative model (all parameters in PARAMS below)
   latent pair covariate z_ab (symmetric N(0,1)).
   signal_ab = beta_a + beta_b + gamma_between*R[m_a,m_b] + gamma_within*1[m_a==m_b] + eta*z_ab
   S_ab      = -(signal_ab - mean(signal)) + sigma*eps          (more negative = stronger interaction)
-  sigma is solved so that the expected prevalence P(S < -2.3) over measured pairs is PREV_TARGET.
+  sigma is solved so that the expected prevalence P(S < threshold) over measured pairs is PREV_TARGET.
   Pairs are measured only query x array (FILL fraction), one value per unordered pair.
 
 Usage:
@@ -30,6 +30,9 @@ from scipy.stats import norm
 from sklearn.metrics import average_precision_score as ap_score
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys
+sys.path.insert(0, str(ROOT))
+from src import protocol  # noqa: E402  (label threshold comes from config/protocol.yaml)
 SCRIPT_REL = "scripts/toy/make_toy.py"
 
 PARAMS = dict(
@@ -38,7 +41,7 @@ PARAMS = dict(
     n_modules=40, module_dirichlet_alpha=2.0,
     beta_scale=0.30, beta_log_sd=0.8, n_hubs=10, hub_range=(1.2, 2.2),
     gamma_between=1.8, gamma_within=0.5, eta=0.40,
-    prev_target=0.02, threshold=-2.3, fill=0.80, both_orient_frac=0.5, raw_orient_sd=0.4,
+    prev_target=0.02, threshold=protocol.threshold(), fill=0.80, both_orient_frac=0.5, raw_orient_sd=0.4,
     viability_probs=dict(viable=0.89, inviable=0.05, **{"condition-dependent": 0.03}, unknown=0.03),
     # feature noise levels (known => feature-informed oracle can be computed)
     infb_noise=(0.7, 1.5), infb_missing=0.05,

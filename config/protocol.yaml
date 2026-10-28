@@ -1,0 +1,114 @@
+# Evaluation protocol (DESIGN.md §0–§3). Every value that defines the evaluation lives here.
+# Code reads these values ONLY via src/protocol.py; tests/test_lint.py fails if the label threshold
+# or the class weights appear as literals in src/ or scripts/.
+# Freeze: the PI records the sha256 of this file in RESEARCH_TREE.md at the end of Phase A.
+# Blocks between ">>> BEGIN derived" / "<<< END derived" markers are written by the named script; do
+# not edit them by hand (re-run the script).
+protocol_version: 1
+
+paths:
+  data_root_env: PSL_DATA_ROOT        # env var overriding the data root (toy data: data/toy)
+  data_root_default: data/processed
+  results_root_env: PSL_RESULTS_ROOT  # env var overriding results/ (tests use a temp dir)
+  results_root_default: results
+  splits_subdir: splits
+  preds_subdir: preds
+  cache_subdir: cache
+
+label:
+  column: s_score          # Ryan Dataset S2 (authors' per-pair averaged S-score)
+  threshold: -2.3          # positive iff column < threshold (strict)
+  direction: less_than
+  sensitivity_column: s_raw_mean   # report-only sensitivity label (same threshold), DESIGN §1
+
+universe:
+  gene_type: protein coding gene
+  viability_include: [viable, condition-dependent]
+  # Unknown-viability genes join the universe iff they have a main-allele DELETION strain in Ryan
+  # (an array strain, or an unlabelled / plain-deletion main query allele). DAmP-only genes (sap10)
+  # are excluded. Derived by scripts/build_universe.py (block below).
+  unknown_viability_rule: unknown_with_ryan_main_deletion_strain
+  # PomBase-inviable genes that have a Ryan "deletion" array strain are dropped from TRAINING
+  # (DESIGN §1 v3.1: training pairs = all S2 pairs except those involving these genes).
+  drop_from_training: inviable_with_ryan_array_strain
+
+# >>> BEGIN derived:universe (written by scripts/build_universe.py; do not edit by hand)
+universe_derived:
+  universe_genes_tsv: universe_genes.tsv (under data root)
+  universe_genes_tsv_sha256: 4fdd8d17243dc844352c4689579d05943d80fb0d9af39ac00c7e956783a78165
+  n_universe_genes: 3779
+  n_by_reason: {'viability:viable': 3580, 'viability:condition-dependent': 177, unknown_viability_with_ryan_deletion_strain: 22}
+  unknown_with_ryan_deletion_strain: [SPAC1F3.08c, SPAC222.18, SPAC23H4.13c, SPAC24B11.14, SPAC27E2.04c, SPAC750.01,
+    SPAC750.04c, SPAC9E9.17c, SPAP27G11.11c, SPBC1348.03, SPBC1348.12, SPBC27.05, SPBC3B9.22c, SPBPB2B2.17c, SPCC1884.01,
+    SPCC1919.06c, SPCC548.04, SPCC622.03c, SPCC622.04, SPCC622.06c, SPCC622.07, SPCC663.17]
+  unknown_excluded_damp_only: [SPBC211.05]
+  n_unknown_flagged_not_in_universe: 144
+  drop_from_training_genes: [SPAC17G8.02, SPAC24H6.06, SPAC3G9.15c, SPAC3H5.11, SPAC4D7.05, SPAPB24D3.06c, SPBC16G5.14c,
+    SPBP16F5.02, SPCC162.08c, SPCC1620.11, SPCC1739.15, SPCC18.04]
+# <<< END derived:universe
+
+eval:
+  require_both_in_universe: true
+  exclude_damp_only_pairs: true     # per pair: S2 derives only from DAmP-allele measurements
+  exclude_merged_id_pairs: true     # pairs involving merged Ryan IDs are train-only
+  secondary_masks: [viable_viable, exclude_damp_mixed]   # report-only
+  precision_at_k: 1000
+
+lockbox:
+  genes_file: config/lockbox_genes.txt
+  genes_sha256: 77fb02e1a5d688884e0a282c49c9f100840ee0f1988b74247abee150228d3457
+  gene_fraction: 0.20      # as drawn by scripts/draw_lockbox.py; used only to draw TOY lockboxes
+  c1_fraction: 0.10        # of eval-eligible dev x dev pairs, label-stratified
+  c1_seed: 20261028
+
+stratification:            # same scheme as scripts/draw_lockbox.py
+  hub_quantile: 0.98       # top 2% of genes by hit rate = own stratum
+  n_hit_rate_quantiles: 5  # within-role hit-rate quintiles
+
+dev_cv:
+  n_folds: 5
+  split_seed: 20261028
+  alt_split_seed: 7        # re-partitions dev genes only; lockbox unchanged
+  c1_fraction: 0.10        # per-fold C1 pair hold-out among the other folds' genes, label-stratified
+
+inner:
+  n_folds: 5
+  c1_fraction: 0.10
+  seed: 20261028
+
+nbr:
+  k_grid: [10, 20, 50]
+  k_default: 20
+  lambda: 1
+
+seeds:
+  all: [0, 1, 2, 3, 4]
+  ladder: [0, 1, 2]
+
+bootstrap:
+  n_replicates: 1000
+  distribution: poisson1   # one Poisson(1) count per gene, shared across classes and folds
+  seed: 20261028
+  ci_level: 0.95
+
+adoption:
+  min_delta: 0.005
+  ci_level: 0.95
+  require_clean_git: true          # dirty runs are recorded but barred from adoption
+  ladder_requires_alt_seed_positive: true
+  sign_flip_veto: opposite_ci_excludes_zero   # keep simpler model only if another weighting's CI excludes 0 in the opposite direction
+
+# >>> BEGIN derived:class_weights (written by scripts/compute_class_weights.py; do not edit by hand)
+class_weights:
+  primary: unmeasured_universe
+  unmeasured_universe: {C1: 0.236459, C2: 0.569837, C3: 0.193704}
+  all_pairs: {C1: 0.354117, C2: 0.482028, C3: 0.163855}
+  derivation:
+    n_universe_genes: 3779
+    n_universe_ryan_s2_genes: 2249
+    n_measured_universe_pairs: 1100014
+    pair_counts:
+      all_pairs: {C1: 2527876, C2: 3440970, C3: 1169685}
+      unmeasured_universe: {C1: 1427862, C2: 3440970, C3: 1169685}
+    script: scripts/compute_class_weights.py
+# <<< END derived:class_weights

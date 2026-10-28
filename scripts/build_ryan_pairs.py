@@ -44,6 +44,10 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+from src import protocol  # noqa: E402  (label threshold is read from config/protocol.yaml)
+
+THR = protocol.threshold()
 RAW = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "processed"
 S1_PATH = RAW / "ryan2012/extracted/mmc4/Dataset S1 - Unaveraged E-MAP with 953 Alleles.txt"
@@ -250,11 +254,12 @@ def main() -> int:
     vmap = gq.viability.first()
     pairs["viability_a"] = pairs.gene_a.map(vmap)
     pairs["viability_b"] = pairs.gene_b.map(vmap)
-    pairs["neg_s2_lt_-2.3"] = pairs.s_score < -2.3
-    pairs["neg_raw_lt_-2.3"] = pairs.s_raw_mean < -2.3
+    neg_s2, neg_raw = f"neg_s2_lt_{THR}", f"neg_raw_lt_{THR}"
+    pairs[neg_s2] = pairs.s_score < THR
+    pairs[neg_raw] = pairs.s_raw_mean < THR
     pairs = pairs[["gene_a", "gene_b", "s_score", "s_raw_mean", "s_raw_ab", "s_raw_ba", "n_meas", "n_ab", "n_ba",
                    "s_raw_mean_meas", "s_raw_min", "s_raw_max", "s_raw_mean_all", "n_meas_all", "in_s2", "both_orientations", "involves_merged_id",
-                   "viability_a", "viability_b", "neg_s2_lt_-2.3", "neg_raw_lt_-2.3"]]
+                   "viability_a", "viability_b", neg_s2, neg_raw]]
     pairs.to_parquet(OUT / "ryan_pairs.parquet", index=False)
 
     # empirical transform raw mean -> S2 (for documentation / threshold conversion)

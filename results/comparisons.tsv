@@ -1,0 +1,2 @@
+timestamp	run_a	run_b	model_a	model_b	delta	ci_lo	ci_hi	delta_all_pairs	ci_all_pairs	delta_equal	ci_equal	alt_delta	clean	sign_flip_veto	adopt	reason
+20261028T155914	B0_random__20261028T155822__dd03b7	B0_random__20261028T155647__9cc2ef	B0_random	B0_random	-5.5427307787295904e-05	-0.0004818150909836058	0.0002733931620196456	-6.180414680678759e-05	[-0.0005980468025925527, 0.0003224815179080753]	-9.899073679124279e-05	[-0.0006971468437801612, 0.00036148951125232384]		False	False	False	CI includes/below 0; delta < 0.005; dirty run(s)

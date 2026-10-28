@@ -1,0 +1,62 @@
+{
+ "profile": {
+  "n_genes_mapped": 3503,
+  "n_genes_kept": 3443,
+  "n_conditions": 129,
+  "frac_missing_cells_kept_genes": 0.003273690917646635
+ },
+ "pca_explained_variance_ratio": [
+  0.1454,
+  0.1071,
+  0.0499,
+  0.0455,
+  0.0354,
+  0.0287,
+  0.0253,
+  0.0232,
+  0.0178,
+  0.0168
+ ],
+ "discretized": {
+  "n_genes": 3503,
+  "n_conditions": 129,
+  "n_pheno_median": 21.0
+ },
+ "kim2010": {
+  "rows": 4334,
+  "eliminated_by_authors": 576
+ },
+ "coverage_genes": {
+  "smf_yes32": 3467,
+  "smf_emm32": 3488,
+  "pc1": 3443,
+  "pc2": 3443,
+  "pc3": 3443,
+  "pc4": 3443,
+  "pc5": 3443,
+  "pc6": 3443,
+  "pc7": 3443,
+  "pc8": 3443,
+  "pc9": 3443,
+  "pc10": 3443,
+  "n_sensitive": 3500,
+  "n_resistant": 3500,
+  "n_pheno": 3500,
+  "frac_pheno": 3500,
+  "het_diploid_fitness_kim2010": 3754
+ },
+ "corr_smf_yes32_vs_emm32": 0.8516478665879191,
+ "corr_smf_yes32_vs_kim_het": {
+  "n": 2660,
+  "spearman": 0.014698272832527472
+ },
+ "phen_corr": {
+  "n_genes": 3443,
+  "mean": 0.01764038166218448,
+  "quantiles": {
+   "0.01": -0.3705983080642593,
+   "0.5": 0.019294073265215247,
+   "0.99": 0.4214354099899029
+  }
+ }
+}

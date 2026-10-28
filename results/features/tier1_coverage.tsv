@@ -1,0 +1,76 @@
+feature	file	sources	genes_all	genes_universe	genes_ryan	median	kind	pairs_all	pairs_universe	frac_universe	genes_universe_any	n_ones_universe	median_universe
+CER__has_ortholog	gene/CER.parquet	pombase	5126.0	3779.0	2400.0	1.0	gene						
+CER__n_orthologs	gene/CER.parquet	pombase	5126.0	3779.0	2400.0	1.0	gene						
+CER__n_orthologs_costanzo	gene/CER.parquet	costanzo2016,pombase	5126.0	3779.0	2400.0	1.0	gene						
+CER__any_ortholog_essential	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.0	gene						
+CER__ortholog_smf	gene/CER.parquet	costanzo2016,pombase	2586.0	2300.0	1452.0	0.9892500042915344	gene						
+CER__neg_rate_nxn	gene/CER.parquet	costanzo2016,pombase	2672.0	2370.0	1496.0	0.022937892004847527	gene						
+CER__neg_rate_e	gene/CER.parquet	costanzo2016,pombase	3350.0	2401.0	1600.0	0.039424117654561996	gene						
+CER__emb1	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.029522784054279327	gene						
+CER__emb2	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.024562306702136993	gene						
+CER__emb3	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.00898423045873642	gene						
+CER__emb4	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.025786034762859344	gene						
+CER__emb5	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	-0.01348408218473196	gene						
+CER__emb6	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	-0.004167699720710516	gene						
+CER__emb7	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.0031658029183745384	gene						
+CER__emb8	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.009398458525538445	gene						
+CER__emb9	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	-0.0010296364780515432	gene						
+CER__emb10	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	-0.005161593202501535	gene						
+CER__emb11	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.00024229218252003193	gene						
+CER__emb12	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.004736073315143585	gene						
+CER__emb13	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.0008896279032342136	gene						
+CER__emb14	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	-0.0012708500726148486	gene						
+CER__emb15	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.0014490014873445034	gene						
+CER__emb16	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	-0.00031242414843291044	gene						
+CER__emb17	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	-0.001892241882160306	gene						
+CER__emb18	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.0012258205097168684	gene						
+CER__emb19	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	0.0026200155261904	gene						
+CER__emb20	gene/CER.parquet	costanzo2016,pombase	3598.0	2594.0	1700.0	-0.00380810908973217	gene						
+CER__has_ohnolog_orthologs	gene/CER.parquet	costanzo2016,pombase,ygob	4013.0	2813.0	1805.0	0.0	gene						
+CER__ohnolog_orthologs_neg	gene/CER.parquet	costanzo2016,pombase,ygob	4013.0	2813.0	1805.0	0.0	gene						
+PHEN__smf_yes32	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3467.0	3413.0	2152.0	1.0069999694824219	gene						
+PHEN__smf_emm32	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3488.0	3432.0	2158.0	1.0089999437332153	gene						
+PHEN__pc1	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	1.2560250759124756	gene						
+PHEN__pc2	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	-0.15658439695835114	gene						
+PHEN__pc3	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	-0.15773159265518188	gene						
+PHEN__pc4	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	-0.04991621524095535	gene						
+PHEN__pc5	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	0.12336606532335281	gene						
+PHEN__pc6	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	0.2556624114513397	gene						
+PHEN__pc7	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	-0.028759317472577095	gene						
+PHEN__pc8	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	0.009776209481060505	gene						
+PHEN__pc9	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	-0.027806442230939865	gene						
+PHEN__pc10	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3443.0	3389.0	2147.0	0.00300015602260828	gene						
+PHEN__n_sensitive	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3500.0	3444.0	2161.0	9.0	gene						
+PHEN__n_resistant	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3500.0	3444.0	2161.0	10.0	gene						
+PHEN__n_pheno	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3500.0	3444.0	2161.0	21.0	gene						
+PHEN__frac_pheno	gene/PHEN.parquet	rodriguez_lopez_2023_phenomics	3500.0	3444.0	2161.0	0.1705426424741745	gene						
+PHEN__het_diploid_fitness_kim2010	gene/PHEN.parquet	kim2010_deletion_library	3754.0	2838.0	1992.0	1.0034711360931396	gene						
+PPI__degree	gene/PPI.parquet	biogrid	5126.0	3779.0	2400.0	1.0	gene						
+PPI__pagerank	gene/PPI.parquet	biogrid	5126.0	3779.0	2400.0	0.4661155343055725	gene						
+PPI__degree_htp	gene/PPI.parquet	biogrid	5126.0	3779.0	2400.0	0.0	gene						
+PPI__pagerank_htp	gene/PPI.parquet	biogrid	5126.0	3779.0	2400.0	0.29459771513938904	gene						
+PPI__cer_ortholog_degree	gene/PPI.parquet	biogrid,pombase	4013.0	2813.0	1805.0	40.0	gene						
+CER__eps_kmin		costanzo2016,pombase					pair	5175839.0	2887961.0	0.4045595655464689	2594.0		0.0013500000350177288
+CER__eps_mean		costanzo2016,pombase					pair	5175839.0	2887961.0	0.4045595655464689	2594.0		-0.0026499999221414328
+CER__eps_min		costanzo2016,pombase					pair	5175839.0	2887961.0	0.4045595655464689	2594.0		-0.010499999858438969
+CER__frac_neg		costanzo2016,pombase					pair	5175839.0	2887961.0	0.4045595655464689	2594.0		0.0
+CER__measured		costanzo2016,pombase					pair	13135375.0	7138531.0	1.0	3779.0	2887961	0.0
+CER__n_pairs		costanzo2016,pombase					pair	13135375.0	7138531.0	1.0	3779.0		0.0
+CER__ohnolog_sl		costanzo2016,pombase,ygob					pair	8050078.0	3955078.0	0.5540464837933743	2813.0	88	0.0
+CER__shared_ortholog		pombase					pair	8050078.0	3955078.0	0.5540464837933743	2813.0	602	0.0
+PPI__edge		biogrid					pair	13135375.0	7138531.0	1.0	3779.0	3308	0.0
+PPI__edge_cer		biogrid,pombase					pair	8050078.0	3955078.0	0.5540464837933743	2813.0	77979	0.0
+PPI__edge_htp		biogrid					pair	13135375.0	7138531.0	1.0	3779.0	1920	0.0
+PPI__jaccard		biogrid					pair	4056976.0	1908081.0	0.26729322881696527	1954.0		0.0
+PPI__jaccard_htp		biogrid					pair	2344695.0	1054878.0	0.1477724198438026	1453.0		0.0
+PPI__shared_nbrs		biogrid					pair	13135375.0	7138531.0	1.0	3779.0		0.0
+PPI__shared_nbrs_htp		biogrid					pair	13135375.0	7138531.0	1.0	3779.0		0.0
+PPI__shared_noedge		biogrid					pair	13135375.0	7138531.0	1.0	3779.0	133598	0.0
+PPI__shared_noedge_htp		biogrid					pair	13135375.0	7138531.0	1.0	3779.0	102920	0.0
+PPI__sp		biogrid					pair	4056976.0	1908081.0	0.26729322881696527	1954.0		4.0
+PPI__sp_htp		biogrid					pair	2344695.0	1054878.0	0.1477724198438026	1453.0		4.0
+cer_profile_corr		costanzo2016,pombase					sim	6470708.0	3362878.0	0.47108823930301624	2594.0		0.0035696104168891907
+phen_corr		rodriguez_lopez_2023_phenomics					sim	5925403.0	5740966.0	0.8042223252935373	3389.0		0.01810765266418457
+ppi_cer_rwr		biogrid,pombase					sim	7986006.0	3918600.0	0.5489364688617308	2800.0		2.2024494683137164e-05
+ppi_rwr		biogrid					sim	4056976.0	1908081.0	0.26729322881696527	1954.0		3.968754299421562e-06
+ppi_rwr_htp		biogrid					sim	2344695.0	1054878.0	0.1477724198438026	1453.0		4.895765869150637e-06

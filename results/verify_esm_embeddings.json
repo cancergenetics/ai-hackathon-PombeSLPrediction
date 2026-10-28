@@ -1,0 +1,43 @@
+{
+  "pombe_parquet_exists": {
+    "pass": true,
+    "detail": ""
+  },
+  "pombe_no_nan_inf": {
+    "pass": true,
+    "detail": ""
+  },
+  "pombe_float32": {
+    "pass": true,
+    "detail": ""
+  },
+  "pombe_index_unique": {
+    "pass": true,
+    "detail": ""
+  },
+  "pombe_no_degenerate_rows": {
+    "pass": true,
+    "detail": "n=5126 dim=1280 norm range=(4.78,10.20)"
+  },
+  "pombe_log_consistent": {
+    "pass": true,
+    "detail": "log: model=esm2_t33_650M_UR50D device=mps wall=2579.1s cpu_fallbacks=0"
+  },
+  "pombe_all_protein_coding_covered": {
+    "pass": true,
+    "detail": "protein_coding=5126 covered=5126 missing=0 [] extra_in_embeddings=0 []"
+  },
+  "ryan_protein_coding_genes_covered": {
+    "pass": true,
+    "detail": "ryan_pc=2400 missing=0 []"
+  },
+  "positive_control_pombe_paralogs": {
+    "pass": true,
+    "detail": "n_pairs=1354 mean_cos_related=0.9870 mean_cos_random=0.9327 AUC=0.952 perm_p=0.0010 null_half_split_diff=-0.0006",
+    "n_pairs": 1354,
+    "mean_related": 0.9870486929418718,
+    "mean_random": 0.9326672505724198,
+    "auc": 0.9520321085672083,
+    "perm_p": 0.000999000999000999
+  }
+}

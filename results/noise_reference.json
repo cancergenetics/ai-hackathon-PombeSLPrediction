@@ -1,0 +1,35 @@
+{
+ "label_threshold": -2.3,
+ "single_orientation_raw_threshold": -3.7609,
+ "source": "labels_dev (dev genes only, lockbox-C1 pairs excluded)",
+ "all_dev_reciprocal": {
+  "n_pairs": 35646,
+  "a_predicts_b": {
+   "ap": 0.3392,
+   "prevalence": 0.0216,
+   "lift": 15.7
+  },
+  "b_predicts_a": {
+   "ap": 0.3567,
+   "prevalence": 0.0223,
+   "lift": 15.99
+  },
+  "mean_ap": 0.348,
+  "pearson_r": 0.398
+ },
+ "eval_eligible_reciprocal": {
+  "n_pairs": 34856,
+  "a_predicts_b": {
+   "ap": 0.3519,
+   "prevalence": 0.0212,
+   "lift": 16.6
+  },
+  "b_predicts_a": {
+   "ap": 0.3685,
+   "prevalence": 0.02235,
+   "lift": 16.49
+  },
+  "mean_ap": 0.3602,
+  "pearson_r": 0.4051
+ }
+}

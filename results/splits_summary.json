@@ -1,0 +1,161 @@
+{
+ "protocol_sha256": "73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230",
+ "data_root": "data/processed",
+ "s2_pairs": 1337033,
+ "s2_genes": 2404,
+ "lockbox_genes_in_s2": 480,
+ "universe_genes": 3779,
+ "eval_eligible_pairs_all": 1078622,
+ "excluded_damp_only_universe_pairs": 16557,
+ "damp_mixed_universe_pairs": 16948,
+ "merged_id_universe_pairs": 4862,
+ "train_drop_pairs": 9800,
+ "lockbox": {
+  "C1": {
+   "pairs_eligible": 69169,
+   "positives": 1444,
+   "pairs_all": 69169
+  },
+  "C2": {
+   "pairs_eligible": 344186,
+   "positives": 7247,
+   "pairs_all": 425084
+  },
+  "C3": {
+   "pairs_eligible": 42752,
+   "positives": 983,
+   "pairs_all": 52543
+  }
+ },
+ "dev": {
+  "pairs": 790237,
+  "positives": 14641,
+  "genes": 1924,
+  "eval_eligible_pairs": 622515,
+  "eval_eligible_positives": 12992
+ },
+ "folds": {
+  "20261028": {
+   "0": {
+    "genes": 385,
+    "train_pairs": 460699,
+    "train_positives": 8562,
+    "C1_pairs": 40061,
+    "C2_pairs": 197612,
+    "C3_pairs": 24289,
+    "C1_positives": 832,
+    "C2_positives": 4135,
+    "C3_positives": 536
+   },
+   "1": {
+    "genes": 385,
+    "train_pairs": 462417,
+    "train_positives": 8404,
+    "C1_pairs": 40348,
+    "C2_pairs": 195489,
+    "C3_pairs": 23542,
+    "C1_positives": 837,
+    "C2_positives": 4102,
+    "C3_positives": 518
+   },
+   "2": {
+    "genes": 385,
+    "train_pairs": 461066,
+    "train_positives": 8484,
+    "C1_pairs": 39877,
+    "C2_pairs": 199005,
+    "C3_pairs": 24737,
+    "C1_positives": 836,
+    "C2_positives": 4101,
+    "C3_positives": 529
+   },
+   "3": {
+    "genes": 385,
+    "train_pairs": 463689,
+    "train_positives": 8432,
+    "C1_pairs": 39180,
+    "C2_pairs": 204294,
+    "C3_pairs": 26423,
+    "C1_positives": 821,
+    "C2_positives": 4238,
+    "C3_positives": 546
+   },
+   "4": {
+    "genes": 384,
+    "train_pairs": 462077,
+    "train_positives": 8431,
+    "C1_pairs": 39700,
+    "C2_pairs": 200386,
+    "C3_pairs": 25131,
+    "C1_positives": 838,
+    "C2_positives": 4074,
+    "C3_positives": 538
+   }
+  },
+  "7": {
+   "0": {
+    "genes": 385,
+    "train_pairs": 458165,
+    "train_positives": 8480,
+    "C1_pairs": 39749,
+    "C2_pairs": 199996,
+    "C3_pairs": 25035,
+    "C1_positives": 823,
+    "C2_positives": 4227,
+    "C3_positives": 538
+   },
+   "1": {
+    "genes": 385,
+    "train_pairs": 464283,
+    "train_positives": 8468,
+    "C1_pairs": 39784,
+    "C2_pairs": 199825,
+    "C3_pairs": 24850,
+    "C1_positives": 850,
+    "C2_positives": 4059,
+    "C3_positives": 431
+   },
+   "2": {
+    "genes": 385,
+    "train_pairs": 463491,
+    "train_positives": 8570,
+    "C1_pairs": 39652,
+    "C2_pairs": 200764,
+    "C3_pairs": 25238,
+    "C1_positives": 845,
+    "C2_positives": 4047,
+    "C3_positives": 498
+   },
+   "3": {
+    "genes": 385,
+    "train_pairs": 461544,
+    "train_positives": 8344,
+    "C1_pairs": 39756,
+    "C2_pairs": 199886,
+    "C3_pairs": 25077,
+    "C1_positives": 820,
+    "C2_positives": 4287,
+    "C3_positives": 510
+   },
+   "4": {
+    "genes": 384,
+    "train_pairs": 462403,
+    "train_positives": 8321,
+    "C1_pairs": 40226,
+    "C2_pairs": 196369,
+    "C3_pairs": 23895,
+    "C1_positives": 814,
+    "C2_positives": 4304,
+    "C3_positives": 553
+   }
+  }
+ },
+ "manifest_outputs_sha256": {
+  "c1_holdout_seed20261028.parquet": "8fb6847f58ea72580b7da4c2efd853cc7b1248475eb513da6a3626f9ce986883",
+  "c1_holdout_seed7.parquet": "98c7a3c81357d04003aaacd81e95523c1b89ce98251b269aad05e3937a255a01",
+  "dev_folds_seed20261028.tsv": "5f32ee254e670297a57f6b9669559d7685ae41da22f76e461511d930d548b383",
+  "dev_folds_seed7.tsv": "2594aabd05fc6a786a36a0a376fe538cbf01c61387e2f1d34a1e074119870d3a",
+  "labels_dev.parquet": "7537a2c7f63f4d5bd0e28639a05d6277ccd82ad561ccba0de90c54d921afd468",
+  "labels_lockbox.parquet": "0d46790e1ed3c167aa50944fab6e0a992669fa56c2cf269c1ad4dee1753d22d8"
+ }
+}

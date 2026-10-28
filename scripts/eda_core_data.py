@@ -17,7 +17,10 @@ P = ROOT / "data/processed"
 RAW = ROOT / "data/raw"
 DOC = ROOT / "docs/data_inventory.md"
 RES = ROOT / "results/eda"
-THR = -2.3
+sys.path.insert(0, str(ROOT))
+from src import protocol  # noqa: E402
+
+THR = protocol.threshold()  # label threshold from config/protocol.yaml
 POS_THR = 1.8
 
 L = []
