@@ -1,0 +1,86 @@
+fold 0 seed 0 {'seed': 0, 'best_iter': 37, 'inner_wAP': 0.0195} 223s
+fold 0 seed 1 {'seed': 1, 'best_iter': 47, 'inner_wAP': 0.019} 269s
+fold 0 seed 2 {'seed': 2, 'best_iter': 7, 'inner_wAP': 0.0194} 306s
+{"primary": 0.0208, "weighted_prevalence": 0.0211, "class_AP": {"C1": 0.0208, "C2": 0.0208, "C3": 0.0215}, "class_prevalence": {"C1": 0.0208, "C2": 0.0209, "C3": 0.0221}, "stacker_pos_rate": 0.0186, "target_consistent_with_y": true, "fits": [{"seed": 0, "best_iter": 37, "inner_wAP": 0.0195}, {"seed": 1, "best_iter": 47, "inner_wAP": 0.019}, {"seed": 2, "best_iter": 7, "inner_wAP": 0.0194}]}
+fold 1 seed 0 {'seed': 0, 'best_iter': 16, 'inner_wAP': 0.0183} 513s
+fold 1 seed 1 {'seed': 1, 'best_iter': 74, 'inner_wAP': 0.0185} 567s
+fold 1 seed 2 {'seed': 2, 'best_iter': 97, 'inner_wAP': 0.0185} 625s
+{"primary": 0.0235, "weighted_prevalence": 0.0211, "class_AP": {"C1": 0.0222, "C2": 0.0235, "C3": 0.0256}, "class_prevalence": {"C1": 0.0207, "C2": 0.021, "C3": 0.022}, "stacker_pos_rate": 0.0182, "target_consistent_with_y": true, "fits": [{"seed": 0, "best_iter": 16, "inner_wAP": 0.0183}, {"seed": 1, "best_iter": 74, "inner_wAP": 0.0185}, {"seed": 2, "best_iter": 97, "inner_wAP": 0.0185}]}
+{
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "perm_seed": 99,
+ "folds": {
+  "0": {
+   "primary": 0.0208,
+   "weighted_prevalence": 0.0211,
+   "class_AP": {
+    "C1": 0.0208,
+    "C2": 0.0208,
+    "C3": 0.0215
+   },
+   "class_prevalence": {
+    "C1": 0.0208,
+    "C2": 0.0209,
+    "C3": 0.0221
+   },
+   "stacker_pos_rate": 0.0186,
+   "target_consistent_with_y": true,
+   "fits": [
+    {
+     "seed": 0,
+     "best_iter": 37,
+     "inner_wAP": 0.0195
+    },
+    {
+     "seed": 1,
+     "best_iter": 47,
+     "inner_wAP": 0.019
+    },
+    {
+     "seed": 2,
+     "best_iter": 7,
+     "inner_wAP": 0.0194
+    }
+   ]
+  },
+  "1": {
+   "primary": 0.0235,
+   "weighted_prevalence": 0.0211,
+   "class_AP": {
+    "C1": 0.0222,
+    "C2": 0.0235,
+    "C3": 0.0256
+   },
+   "class_prevalence": {
+    "C1": 0.0207,
+    "C2": 0.021,
+    "C3": 0.022
+   },
+   "stacker_pos_rate": 0.0182,
+   "target_consistent_with_y": true,
+   "fits": [
+    {
+     "seed": 0,
+     "best_iter": 16,
+     "inner_wAP": 0.0183
+    },
+    {
+     "seed": 1,
+     "best_iter": 74,
+     "inner_wAP": 0.0185
+    },
+    {
+     "seed": 2,
+     "best_iter": 97,
+     "inner_wAP": 0.0185
+    }
+   ]
+  }
+ },
+ "mean_primary": 0.02215,
+ "wall_s": 625
+}

@@ -1,0 +1,92 @@
+{
+ "fold": 0,
+ "registered_best_iter": [
+  150,
+  337,
+  390,
+  261,
+  434
+ ],
+ "a_cached": {
+  "best_iter": [
+   150,
+   337,
+   390,
+   261,
+   434
+  ],
+  "fold_primary_seedavg": 0.17832,
+  "vs_registered": {
+   "0": {
+    "bit_identical": false,
+    "max_abs": 2.8399504969911504e-13
+   },
+   "1": {
+    "bit_identical": false,
+    "max_abs": 0.026773710568253728
+   },
+   "2": {
+    "bit_identical": false,
+    "max_abs": 0.010989411929869242
+   },
+   "3": {
+    "bit_identical": false,
+    "max_abs": 0.01353197505795356
+   },
+   "4": {
+    "bit_identical": false,
+    "max_abs": 0.007721772455027198
+   }
+  }
+ },
+ "fresh_vs_cached_feature_diff": {
+  "Xtr": {
+   "mf_score": {
+    "n_diff": 518194,
+    "max_abs": 0.000560760498046875
+   }
+  },
+  "Xev": {
+   "mf_score": {
+    "n_diff": 260974,
+    "max_abs": 0.00012254714965820312
+   }
+  }
+ },
+ "fresh_vs_cached_target_s_identical": true,
+ "fresh_vs_cached_w_identical": true,
+ "fresh_vs_cached_y_identical": true,
+ "b_fresh": {
+  "best_iter": [
+   80,
+   245,
+   468,
+   259,
+   156
+  ],
+  "fold_primary_seedavg": 0.17703,
+  "vs_registered": {
+   "0": {
+    "bit_identical": false,
+    "max_abs": 0.8113537026900324
+   },
+   "1": {
+    "bit_identical": false,
+    "max_abs": 0.5999067816421799
+   },
+   "2": {
+    "bit_identical": false,
+    "max_abs": 0.7340412963536953
+   },
+   "3": {
+    "bit_identical": false,
+    "max_abs": 0.11250233195326809
+   },
+   "4": {
+    "bit_identical": false,
+    "max_abs": 1.6163790723809415
+   }
+  }
+ },
+ "wall_s": 1308
+}

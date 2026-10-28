@@ -66,7 +66,7 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [-] XSP features: +0.0002 [−0.003, +0.003] (≈1% gain importance) → merged into the store but excluded from models
   - [-] Seed bagging alone: +0.0028 [0.0011, 0.0045] < 0.005 bar → not adopted
   - [-] C3-focused logistic blend (pre-stated rule): −0.0001 → C3 stuck at ≈0.095 under every idea so far
-  - [~] Independent verification of the Huber incumbent (agent)
+  - [x] Independent verification of the Huber incumbent → reviews/verify_huber/REPORT.md: target canary bit-identical (2 planted leaks detected), permutation 0.022 ≈ prevalence, metric + paired Δ re-derived, eval rows/labels unchanged. Note: rebuild noise ≈ ±0.001 per single run (MF torch threads up to 5.6e-4; LightGBM thread count); paired Δs on shared cache unaffected
 - [x] 11. Deliverable tooling (docs/deliverable.md; merged f8a3fba): predict_all_pairs.py scores 7,693,003 pairs (3,923 genes incl. 144 viability-unknown) with M2 trained on dev genes in 985 s on 3 threads, peak footprint 6.3 GB; out-of-fold scores for measured pairs (in-sample AP 0.307 vs OOF 0.201 → users must read OOF); lockbox_eval.py one-shot with access log + prereg template (toy-tested only); config/models.yaml
   - [!] Linkage: Ryan barely measured pairs < 300 kb apart (coverage ≤6% vs ~77%). Same-chromosome 300–1,000 kb pairs have a small excess hit rate (2.15% vs 1.82% inter-chromosomal, OR 1.18, p 3e-8) that M2 does not predict. → `linked` flag at 300 kb, no score penalty; reported as a limitation
   - [!] Top-ranked universe pairs are almost all C1/C2 (top 10k: 1 C3 pair); C3 scores are compressed, so absolute scores are not comparable across classes
