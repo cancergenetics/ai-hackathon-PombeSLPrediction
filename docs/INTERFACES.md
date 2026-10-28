@@ -18,3 +18,8 @@
 
 ## Toy data
 - `data/toy/` mirrors `data/processed/` layout (ryan_pairs.parquet, ryan_genes.tsv, features/...) so the whole pipeline can run on it by switching the data root (`PSL_DATA_ROOT` env var, default `data/processed`).
+
+## Additions after round-3 review
+- Fold-scoped Ryan-derived feature cache: `data/processed/cache/<split_seed>/fold<k>/<name>.parquet` (outer) and `.../fold<k>/inner<j>/<name>.parquet` (nested); cache key includes the label-file hash.
+- NaN similarity → weight 0 in all NBR computations.
+- Lockbox evaluation: `scripts/lockbox_eval.py` is the ONLY reader of `labels_lockbox.parquet`; it calls `src/evaluate.py` metric functions on lockbox predictions.

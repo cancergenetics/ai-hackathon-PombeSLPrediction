@@ -1,6 +1,6 @@
 # DESIGN.md — Predicting synthetic-lethal (strong negative) genetic interactions in *S. pombe*
 
-Version: **v3** (after review rounds 1–2) · 2026-10-28 · Owner: PI agent
+Version: **v3.1** (after review rounds 1–3; round-3 fixes in Appendix C) · 2026-10-28 · Owner: PI agent
 Inputs: PROMPT.md (fixed goal), LITERATURE.md, DATA.md, docs/data_inventory.md, docs/data_aux_inventory.md, reviews/round1_*.md
 Change log vs v1 and the disposition of every reviewer proposal: Appendix A.
 
@@ -25,7 +25,8 @@ Change log vs v1 and the disposition of every reviewer proposal: Appendix A.
   - pairs involving merged Ryan IDs (train-only).
 
   Mixed DAmP+deletion pairs (≈17k) are kept, with a report-only sensitivity check that excludes them. **Secondary:** viable×viable only.
-- **Training pairs:** all S2 pairs, including inviable/DAmP genes, are allowed. Experiment E-ALLELE (all vs universe-only training) decides this. A `hypomorph` indicator (always 0 at inference) prevents missingness of deletion-based features from acting as an essentiality proxy.
+- **Training pairs:** all S2 pairs except those involving the 12 PomBase-inviable genes with a Ryan "deletion" array strain; inviable/DAmP genes are otherwise included. Experiment E-ALLELE (default vs universe-only training) tests this.
+- **Hypomorph indicator:** `hypomorph_a/b` = 1 if the gene's Ryan data come from a DAmP/hypomorph allele, else 0. It is the one permitted exception to §4 rule 1: it describes the allele the label was measured on, not the screen layout. It is always 0 on eval rows and in the deliverable, and a test checks this. It stops missing deletion-based features from acting as an essentiality proxy.
 - Pseudogenes, ncRNAs and unmapped IDs are dropped.
 - **Linkage:** E-MAP filters linked pairs. A diagnostic plots hit rate vs chromosomal distance, using PomBase coordinates. Distance is **never** a deliverable feature. Universe pairs within the linkage window are flagged "not E-MAP-testable" in the deliverable.
 
@@ -51,6 +52,7 @@ Classes (Park & Marcotte 2012): **C1** both genes seen in training, **C2** exact
 
 ## 3. Metrics and statistics
 - **Primary selection metric:** the **pooled, universe-weighted AUPRC**. Within each dev fold, C1_k, C2_k and C3_k predictions are pooled into one ranking. `average_precision_score` is computed with sample weights that scale each class's total weight to the fractions of **unmeasured universe pairs** (≈0.25/0.57/0.18, computed by script and frozen in protocol.yaml). The score is averaged over the 5 folds. Why pooled: the deliverable is one ranked list, so scores must be comparable across classes.
+- **C1 composition:** the C1 term consists of query×array pairs, the only C1 pairs Ryan measures. C1-arr (simulated array×array; §2) is reported next to the headline.
 - **Secondary:** per-class AUPRC; the weighted mean of per-class AUPRCs; the pooled score under all-pairs weights (0.37/0.48/0.15) and equal weights. Decisions whose sign flips across weightings are flagged. Also lift (AUPRC/prevalence), AUROC, precision@1k, and C1 split into reciprocal vs single-orientation pairs. Per-gene macro AUPRC is a diagnostic only.
 - **Uncertainty (one shared gene bootstrap):**
   - Each of 1,000 replicates draws one Poisson(1) count per gene, shared across all classes and folds.
@@ -60,7 +62,7 @@ Classes (Park & Marcotte 2012): **C1** both genes seen in training, **C2** exact
   - The procedure is validated on the toy data.
 - **Adoption rule:** a change is adopted only if the paired 95% CI on Δ(primary) excludes 0 **and** Δ ≥ 0.005.
   - Main ladder steps must also show Δ > 0 on the seed-7 dev partition.
-  - If the sign flips across weightings, keep the simpler model.
+  - If the paired CI under the all-pairs or equal weighting **excludes 0 in the opposite direction**, keep the simpler model.
   - Feature-group ablations are run one group at a time.
   - Every comparison goes into the registry, adopted or not.
   - Expect about one false adoption per 30–40 null comparisons; the lockbox is the guard against this.
@@ -74,7 +76,6 @@ Classes (Park & Marcotte 2012): **C1** both genes seen in training, **C2** exact
     - how boosting rounds are fixed for the all-dev retrain;
     - that the headline model is reported and shipped whatever the lockbox ranking shows;
     - the shortlist: one headline model, ≤4 others, all baselines, and the contrasts to test.
-  - Before opening it, a shortlist is pre-registered: one headline model, ≤4 others, all baselines, and the contrasts to test (Holm-corrected).
   - Reported alongside: the dev-minus-lockbox gap and per-class CIs.
 - **Noise reference (not a ceiling):** among reciprocal pairs, predict orientation B's single-orientation label (raw < −3.76) from orientation A's raw score. AP ≈ 0.35 (lift ≈16) is a lower bound on achievable replicate agreement.
 
@@ -86,7 +87,7 @@ All features are computed for every universe gene. Pair features are symmetric i
 | Group | Source | Gene-level features | Pair-level features |
 |---|---|---|---|
 | SMF/PHEN | Rodríguez-López 2023 (standard-condition fitness + 129 conditions); Kim 2010 (heterozygous-diploid fitness, labelled as such) | haploid SMF; phenotype-vector PCA; # conditions with phenotype | min/max/product SMF; phenotype-profile correlation |
-| CER | Costanzo 2016 via PomBase curated orthologs | ortholog degree as a **rate**, separately for NxN and ExN/ExE; ortholog SMF; any-ortholog-essential (Costanzo strain class); n-orthologs; has-ortholog; **Costanzo-profile embedding** (PCA of the ortholog's GI profile) | ε aggregated after collapsing alleles: mean, min, k-corrected min, n_pairs; ohnolog-pair-SL flag; ortholog GI-profile Pearson r; **module×module negative density** (our own clustering of Costanzo profiles, never the GO-derived SAFE labels; fractional membership for 1:many orthologs; the Ryan-density variant computed out-of-fold); measured flag |
+| CER | Costanzo 2016 via PomBase curated orthologs | ortholog degree as a **rate**, separately for NxN and ExN/ExE; ortholog SMF; any-ortholog-essential (Costanzo strain class); n-orthologs; has-ortholog; **Costanzo-profile embedding** (PCA of the ortholog's GI profile) | ε aggregated after collapsing alleles: mean, min, k-corrected min, n_pairs; ohnolog-pair-SL flag; ortholog GI-profile Pearson r; **module×module negative density** (our own clustering of Costanzo profiles, never the GO-derived SAFE labels; fractional membership for 1:many orthologs); measured flag |
 | PPI | BioGRID physical, protein–protein systems only (Affinity Capture-RNA, Protein-RNA and Co-localization dropped), with a **PMID blocklist**: re-download BIOGRID-ORGANISM-5.0.262, stream the pombe member, keep only the PMIDs of genetic rows (sha256 recorded), delete the zip, block by PMID. Plus an HTP-only ablation; Vo 2016 Y2H; cerevisiae BioGRID physical via orthologs | degree, PageRank | direct edge; # shared neighbours; Jaccard; "shared neighbours but no edge"; capped shortest path; inductive diffusion (random-walk-with-restart) similarity |
 | EXPR | COXPRESdb RNA-seq and microarray matrices; Marguerat/Carpy abundance | level, variability | rank-normalised co-expression per platform |
 | KOPROT | Öztürk 2022 (KO and WT strains only) | # proteins changed in KO | KO-profile correlation; **directed** "KO of a changes b's abundance" (and vice versa) |
@@ -94,7 +95,7 @@ All features are computed for every universe gene. Pair features are symmetric i
 | SEQ | PomBase peptides, Pfam/PANTHER family IDs, Ensembl paralogues, ESM-2 650M embeddings | length, # domains, ESM PCA | paralog flag (recent vs ancient by % identity); shared family; ESM cosine |
 | CONS | Ensembl Compara (367 fungi), S. japonicus presence | conservation breadth; phylogenetic profile | profile correlation |
 | **NBR** (similarity transfer; key C2/C3 lever) | For each non-GI similarity space (phenomics, KO-proteome, co-expression, PPI-diffusion, ESM, Costanzo-profile): kNN among **training** genes | similarity-weighted mean training hit rate of a gene's k nearest training neighbours | for (a, b): weighted mean training S2 / hit rate of (a, c) over b's training neighbours c (and symmetric); for C3, block mean over (c, d) neighbour pairs |
-| **RYAN-fold** (C1/C2) | Ryan training pairs only | out-of-fold additive-logit propensity β (shrunk); training mean S | out-of-fold logistic-MF score; training-profile correlation; `seen_a`/`seen_b` flags |
+| **RYAN-fold** (C1/C2; includes the Ryan module×module density, computed nested) | Ryan training pairs only | out-of-fold additive-logit propensity β (shrunk); training mean S | out-of-fold logistic-MF score; training-profile correlation; `seen_a`/`seen_b` flags |
 
 **Leakage rules for features**
 1. **No design features.** No feature encodes Ryan design (query/array status, measurement count, reciprocal flag).
@@ -107,14 +108,15 @@ All features are computed for every universe gene. Pair features are symmetric i
      - C1-like: H_j.
    - Class weights are 0.25/0.57/0.18. All features are rates, not counts.
    - **Outer eval rows** get features computed exactly the same way, from all outer-training pairs.
-   - Inner folds also serve tuning and early stopping.
+   - Inner folds also serve tuning and early stopping. **Gene-grouped validation:** when validating on the inner-fold-j rows, drop every training row that involves a T_j gene, so the stacker never validates on its own training rows.
 3. **NBR specification.**
    - **Similarity.** W per source (non-GI only), with weights max(sim, 0) and self excluded.
    - **Neighbours.** Each gene's k = 20 nearest training genes, chosen separately among query-role and array-role training genes. k ∈ {10, 20, 50} is tuned once.
    - **Features**, with Y = training hit (or S) matrix and M = measured mask:
      - directional: `dir(a→b) = (Y Wᵀ + λp₀)/(M Wᵀ + λ)` at (a, b), with λ = 1 and p₀ = global training prevalence (never a's own rate);
      - block: `W Y Wᵀ / W M Wᵀ`;
-     - support: `M Wᵀ`.
+     - support: `M Wᵀ / ΣW`, i.e. the normalised fraction of neighbour weight with measurements, so it does not scale with training-set size.
+   - NaN similarities get weight 0.
    - Symmetrised as nan-max and nan-mean, for both hit and S, per source, plus a cross-source mean.
 4. **Allowlist** (granular to file, sheet and column). Every feature table records its sources in a manifest. A test checks that every source is on DATA.md's `use=feature` allowlist. Not allowed: FYPO, `results/eda/*`, `docs/data_inventory.md`, Koch 2012 columns, NET-FF, and anything else not on the list.
 5. **One ID mapper.** All sources go through a single mapper (`src/idmap.py`: exact, then PomBase synonyms/obsolete IDs), which logs unmapped IDs. No silent drops.
@@ -127,7 +129,7 @@ All features are computed for every universe gene. Pair features are symmetric i
 - **Order of work:** B0 → B1 → B4 → B2/B3 → build the full M2 table once → M2, with M1 and M1N as ablations → M4-as-feature → M3 (one attempt) → M5 (average of ≤3 models). E-TARGET compares binary vs Huber only.
 - **M1** LightGBM on non-Ryan G+P features. The inner-fold B1 logit is passed as `init_score`; with and without this is an ablation. Symmetric (min/max plus propensity-ordered raw features); a test asserts `score(a,b) == score(b,a)`.
 - **M1N** M1 + NBR features.
-- **M2** M1N + RYAN-fold features (out-of-fold, masked mix). Also compared with separate per-class models.
+- **M2** M1N + RYAN-fold features, built by nested stacking (§4 rule 2).
 - **M3** Inductive neural pair model: gene encoder → e; score = MLP([e_a+e_b, e_a⊙e_b, P]). BCE + Huber S2 auxiliary loss; feature dropout for cold-start.
 - **M5** Ensemble / stacking: nested out-of-fold, isotonic calibration per class if pooled ranking requires it.
 - **M4** Cross-species pre-training on Costanzo. First as a **feature**: a Costanzo-trained model's score on ortholog pairs. A full transfer model follows only if that helps, and is restricted to features available in both species (ESM, PPI topology, sequence/conservation). More cerevisiae data is acquired only if M4 shows promise.
@@ -201,7 +203,7 @@ Reviewers: external PI (PI), prior work (PW), statistics (ST), data (DA), algori
 - Noise reference fixed (ST9) → §3.
 - Shift diagnostics: C1-arr, partner role, covariate shift, homology (PI5, PI8, ST10, PW5, PW6, GE10) → §2.
 - Protocol.yaml freeze and lint (AI1); single evaluate entry point (AI2); lockbox separation (AI3) → §0, §2, §8.
-- EDA files forbidden as inputs (AI6) → §4 rule 3.
+- EDA files forbidden as inputs (AI6) → §4 rule 4.
 - Explicit train ids / nested supervised steps (AI7) → §4, §5.
 - Broken-variant tests and toy generator by another agent (AI8) → §6.
 - Independent re-derivation with own code (AI9) → §6.
@@ -296,3 +298,33 @@ Reviewers: external PI (PI), statistics (ST), AI failure modes (AI), data+domain
 
 **Folded in**
 - R1 AI11 (literal gene-ID lint) becomes part of the Phase A protocol lint.
+
+## Appendix C — Round-3 (final) review disposition
+Reviewer: fresh senior reviewer; full text in reviews/round3_final.md. Verdict: GO-with-fixes.
+
+**Applied:** fixes 1–7.
+1. Contradictions removed:
+   - "masked mix" and per-class models dropped from M2;
+   - one training-pairs rule;
+   - rule numbering fixed;
+   - duplicate bullet removed.
+2. Gene-grouped validation in the stacker.
+3. Ryan module density moved to RYAN-fold.
+4. NBR support normalised.
+5. Hypomorph indicator defined, with a test.
+6. Sign-flip veto applies only when the opposite-direction CI excludes 0.
+7. C1 composition stated; C1-arr reported next to the headline.
+
+**Applied in docs/INTERFACES.md:** fix 8.
+
+**Partly accepted:** fix 9 (cuts).
+- The HTP-only PPI ablation and importance weighting become **report-only, run once**.
+- FEWSHOT is limited to k ∈ {5, 20}.
+- Full M4 stays gated on M4-as-feature helping.
+
+**Implementation detail:** fix 10 (definitions). The implementing scripts document it:
+- −3.76 = the raw-score equivalent of S2 = −2.3 for single-orientation pairs (docs/data_inventory.md);
+- the linkage window is derived empirically in the diagnostic;
+- "k-corrected min" and the ExN/ExE definitions are documented in build_cer.py.
+
+**Design frozen** for implementation as of v3.1. Further changes go in the decision log in RESEARCH_TREE.md.
