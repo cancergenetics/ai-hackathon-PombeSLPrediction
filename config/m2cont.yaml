@@ -1,0 +1,77 @@
+# E-CONT rung (docs/m2cont.md; scripts/run_m2cont.py). NOT the frozen protocol: config/protocol.yaml is
+# unchanged and still defines labels, metric, splits, bootstrap and the adoption rule (DESIGN §3).
+# Written BEFORE any toy-check or outer-fold result of this rung existed (2026-10-28 ~21:15).
+# Later edits must be logged in docs/m2cont.md.
+#
+# Amendment log (before any result):
+#  - 2026-10-28 21:10, PI message received before this file was first written: the incumbent is M2r_huber
+#    (3 seeds 0-2, Huber stacker), NOT M2r_bag5_huber (bagging alone failed the 0.005 bar). Variants use 3
+#    seeds; the seed-7 comparator is the 3-seed Huber run on split seed 7, which did not exist and is run
+#    here (M2r_huber_split7). This file was written with that decision from the start.
+
+compute:
+  stacker_threads: 4          # LightGBM num_threads (brief: at most 4 threads)
+  feature_workers: 2          # nested feature build: 2 folds in parallel x 2 threads
+
+seeds: [0, 1, 2]              # = incumbent M2r_huber (protocol seeds.ladder); stacker seed s early-stops on inner fold s mod 5
+
+incumbent:
+  model: M2r_huber
+  run_id: M2r_huber__20261028T205545__7b5e9e          # primary 0.1791, commit 592bdf1
+  split7_model: M2r_huber_split7                       # run in this rung (same code path, 3 seeds, split seed 7)
+  # The stacker is the incumbent's, imported unchanged from scripts/run_m2plus.py (fit_stacker_huber:
+  # LightGBM huber on t = -min(S2, 0), alpha = |label threshold|, early stopping on class-weighted binary AP
+  # of the protocol label on gene-grouped inner validation rows). Same LF groups (XSP excluded), same
+  # incumbent nested-feature cache (m2feat_3d35f8c314e9); the new columns are JOINED onto those rows.
+
+# Continuous target used by every new feature: t = -min(S2, 0) (S2 = protocol label column, positive S2
+# clipped to 0; same target as the incumbent's Huber stacker). Computed ONLY from the training pairs of the
+# set the features are built from (outer-training pairs for eval rows; inner-fold training pairs for stacker
+# rows), exactly the nesting of the binary RYAN/NBR/GP features (src/stacking inner_rows/outer_rows).
+target: neg_min_s2_0
+
+# (a) GP_CONT: gene-propensity target = continuous additive propensity theta instead of B1 beta.
+#     theta: joint ridge additive model t_ab = c + theta_a + theta_b (intercept unpenalised), L2 alpha set by
+#     an empirical-Bayes moment rule on the same training pairs (nothing tuned on outcomes):
+#       tau2 = max(var_g(m_g) - mean_g(var(t) / n_g), 1e-6 * var(t)),  alpha = var(t) / tau2
+#     (m_g, n_g = gene mean of t and number of training pairs of g).
+#     GP regressor, inputs, cross-fitting and pair features are the incumbent GP's, unchanged (inputs keep
+#     the binary LOO NBR gene rates); only the target changes. New columns gpc_{hat,beta,best}_{min,max,sum}
+#     (family GPC). Variant (a) REPLACES the binary GP family (gp_*) by GPC.
+# (b) NBR_CONT: NBR rates on t instead of binary y, same neighbour matrices W (per source + cross-source mean):
+#     directional (T W^T + lam p0t)/(M W^T + lam) -> dmax, dmean; block W T W^T / W M W^T; neighbour gene
+#     mean of t -> gen_min, gen_max. New columns nbrc_<src>__* (family NBRC). Variant (b) ADDS them; the
+#     binary NBR columns (and the existing unclipped -S 'negs' columns) stay.
+# (c) both: binary GP replaced by GPC, plus NBRC.
+variants:
+  M2c_gp:   {families: [LF, RYAN, NBR, GPC]}
+  M2c_nbr:  {families: [LF, RYAN, NBR, GP, NBRC]}
+  M2c_both: {families: [LF, RYAN, NBR, GPC, NBRC]}
+
+# Adoption (DESIGN §3, applied by src/evaluate.compare against the incumbent run id above):
+#  1. paired gene-bootstrap 95% CI of delta(primary) excludes 0 and delta >= 0.005 (protocol adoption block);
+#  2. delta > 0 on the seed-7 partition (variant_split7 vs M2r_huber_split7). Seed-7 runs are made for every
+#     variant that passes 1 (and for the incumbent comparator regardless);
+#  3. sign-flip veto: if the all-pairs or equal-weighting CI excludes 0 in the opposite direction, keep the
+#     incumbent. Per-class AP and all-pairs/equal deltas are reported for every variant;
+#  4. if more than one variant passes 1-3: adopt the single variant (a or b) with the larger delta, unless
+#     (c) passes rule 1 against that single variant (then adopt c);
+#  5. gene-permuted control for the variant that would be adopted: its new columns rebuilt from training pairs
+#     whose gene identities are permuted within design role (query/array/both) for the continuous features only
+#     (binary columns untouched; permutation seed below; one fresh permutation per training set, derived from the
+#     seed and the sorted gene list). Pass: variant - variant_perm paired CI excludes 0 (> 0). Fail -> not adopted.
+#  Every run and comparison is registered and reported, including failures.
+adoption:
+  max_candidates: 3
+  perm_seed: 20261028
+
+# Toy known-answer check (PSL_DATA_ROOT=data/toy; truth data/toy/_truth/gene_truth.tsv, read only by the check).
+# Per toy dev fold (split seed 20261028), on the outer training pairs (drop_noncoding applied):
+#   rho_b1    = Spearman(B1 beta, true beta) over training genes
+#   rho_theta = Spearman(continuous theta, true beta) over training genes
+# Pre-stated bar (fold mean): rho_theta >= rho_b1 + 0.05.  (primary)
+# Secondary (reported, pass/fail stated): unseen-gene Spearman(GP beta_hat, true beta) with the continuous
+# target > the same with the B1 target (full GP inputs, same regressor).
+# Diagnostic only: shrunken gene mean of t (m_g n_g / (n_g + alpha)).
+toy_check:
+  primary_margin: 0.05
