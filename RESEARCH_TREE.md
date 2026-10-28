@@ -28,16 +28,18 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [x] 3d. DESIGN v2
   - [x] 3e. Review round 2 (5 reviewers) → DESIGN v3 (nested stacking replaces masked-mix; precise NBR spec; shared Poisson gene bootstrap; per-pair DAmP exclusion; vertical slice)
   - [~] 3f. Review round 3 (final go/no-go, 1 fresh reviewer)
-- [~] 4. Phase A infrastructure: protocol.yaml, splits, evaluate.py, registry, tests, B0 smoke test
-  - [~] 4a. Toy generator with known answers (separate agent)
-  - [~] 4b. LITERATURE.md fixes, DATA.md completion + allowlist
-- [~] 4'. Phase B tier-1 features: idmap, PPI (PMID blocklist), SMF/PHEN, CER (docs/INTERFACES.md format)
-- [ ] 5. Baselines
+- [x] 4. Phase A infrastructure: protocol.yaml, splits, evaluate.py, registry, tests (57 pass), B0 smoke test (primary 0.0209 = prevalence)
+  - [x] 4a. Toy generator with known answers (oracle AUPRC all .66; feature-informed oracle .38; propensity-only .22)
+  - [x] 4b. LITERATURE.md fixes, DATA.md complete register + config/data_allowlist.yaml
+  - [~] 4c. Independent review of Phase A (re-derive counts with own code)
+- [x] 5a. Tier-1 label-free features: idmap, PPI (PMID blocklist removes 40% of pombe physical rows), SMF/PHEN, CER (+YGOB ohnologs)
+- [~] 5b. Tier-2 features: EXPR, KOPROT, LOC, SEQ (+ESM), CONS
 - [ ] 6. Feature-based models
 - [ ] 7. Advanced models / cross-species transfer
 - [ ] 8. Final evaluation on held-out test → REPORT.md
 
 ## Decision log
+- 2026-10-28: **Protocol FROZEN**: config/protocol.yaml sha256 73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230. Class weights (unmeasured universe) C1/C2/C3 = 0.2365/0.5698/0.1937. B0 primary = 0.0209 (= weighted prevalence). Accepted Phase A deviations: 22 (not 21) unknown-viability genes; C1 hold-outs drawn from eval-eligible pairs only; comparisons logged in results/comparisons.tsv.
 - 2026-10-28: **Lockbox drawn** (scripts/draw_lockbox.py; 480/2404 S2 genes; seed 20261028; config/lockbox_genes.txt sha256 77fb02e1a5d688884e0a282c49c9f100840ee0f1988b74247abee150228d3457). From now on all analyses use dev genes only. Why now: R2 external PI — prevent further exposure.
 - 2026-10-28: Lockbox exposure note — during R1 review two reviewers ran exploratory probes on ALL Ryan pairs (random 10% pair hold-out; per-gene propensity variance demo). No model/feature selection was made from them; lockbox genes not yet drawn. Logged for transparency.
 - 2026-10-28: DESIGN v2 — universe = viable + condition-dependent (+ Ryan deletion strains of unknown viability); primary metric = pooled AUPRC weighted to unmeasured-universe class mix; Koch 2012 SMF rejected (E-MAP-derived).
