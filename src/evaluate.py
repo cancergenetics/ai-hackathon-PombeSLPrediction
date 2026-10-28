@@ -221,8 +221,11 @@ def git_info() -> dict:
         return subprocess.run(["git", "-C", str(root), *a], capture_output=True, text=True).stdout
 
     commit = run("rev-parse", "HEAD").strip() or "nogit"
-    status = run("status", "--porcelain", "--untracked-files=all")
-    h = hashlib.sha256((run("diff", "HEAD") + status).encode())
+    # Only code/config/docs determine "dirty": run outputs (results/, reviews/ scratch) are written by every
+    # run and would otherwise make consecutive clean runs impossible (PI decision 2026-10-28).
+    excl = ["--", ".", ":(exclude)results", ":(exclude)reviews"]
+    status = run("status", "--porcelain", "--untracked-files=all", *excl)
+    h = hashlib.sha256((run("diff", "HEAD", *excl) + status).encode())
     for line in status.splitlines():
         if line.startswith("??"):
             p = root / line[3:].strip()
