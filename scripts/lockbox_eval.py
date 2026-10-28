@@ -152,6 +152,14 @@ def validate_prereg(P: dict, real: bool) -> None:
               "headline_model", "baselines", "seeds", "boosting_rounds", "metric", "holm_family"):
         if k not in P:
             raise Refused(f"prereg lacks field {k!r}")
+    if not (P["seeds"] == "model" or isinstance(P["seeds"], list) or P["seeds"] in protocol.load()["seeds"]):
+        raise Refused(f"prereg seeds {P['seeds']!r}: 'model', a protocol seeds key or a list")
+    from src import deliverable as DL
+    for mid in list(P["shortlist"]) + list(P["baselines"]):
+        try:
+            DL.model_spec(mid, ROOT / P["models_file"])
+        except KeyError as e:
+            raise Refused(f"model {mid!r} is not in {P['models_file']}: {e}")
     if P["headline_model"] not in P["shortlist"]:
         raise Refused("headline_model must be in the shortlist")
     if len(P["shortlist"]) > 5:
@@ -224,6 +232,24 @@ def class_weightings() -> dict:
 
 
 # ============================================================================================ run
+def resolve_seeds(model_seeds, prereg_seeds) -> list:
+    """Seeds of one model in the lockbox run: prereg `seeds` = 'model' keeps the model's own config/models.yaml
+    seeds (e.g. M2r_huber = ladder 0-2, M2r_bag5_huber = all 0-4); a protocol seeds key or an explicit list
+    overrides every seeded model."""
+    if prereg_seeds == "model":
+        return [int(s) for s in model_seeds]
+    return [int(s) for s in (protocol.load()["seeds"][prereg_seeds] if isinstance(prereg_seeds, str) else prereg_seeds)]
+
+
+def model_spec_for(mid: str, P: dict) -> dict:
+    """Resolved config/models.yaml spec of a shortlisted model / baseline with the prereg seed rule applied."""
+    from src import deliverable as DL
+    spec = DL.model_spec(mid, ROOT / P["models_file"])
+    if "seeds" in spec:
+        spec["seeds"] = resolve_seeds(spec["seeds"], P["seeds"])
+    return spec
+
+
 def run(P: dict, sha: str, threads: int, n_boot: int | None, log=print) -> dict:
     from src import deliverable as DL
     from src.evaluate import _ci, bootstrap_counts, bootstrap_replicates, pooled_metrics
@@ -238,9 +264,7 @@ def run(P: dict, sha: str, threads: int, n_boot: int | None, log=print) -> dict:
     scores, fits = {}, {}
     q = ev[["gene_a", "gene_b"]]
     for mid in models:
-        spec = DL.model_spec(mid, ROOT / P["models_file"])
-        if "seeds" in spec:
-            spec["seeds"] = [int(s) for s in (protocol.load()["seeds"][seeds] if isinstance(seeds, str) else seeds)]
+        spec = model_spec_for(mid, P)
         t0 = time.perf_counter()
         m = DL.TrainedModel(spec, dev, threads=threads, lfspec=lfspec, cover_genes=genes, log=log).fit()
         s = m.predict(q)
@@ -275,7 +299,7 @@ def run(P: dict, sha: str, threads: int, n_boot: int | None, log=print) -> dict:
                     **{f"n_{c}": met[f"n_{c}"] for c in ("C1", "C2", "C3")},
                     **{f"pos_{c}": met[f"pos_{c}"] for c in ("C1", "C2", "C3")}}
         spec = DL.model_spec(mid, ROOT / P["models_file"])
-        dev_run = U.latest_run_id(spec.get("dev_run_model", mid))
+        dev_run = DL.dev_run_id(spec)
         if dev_run:
             from src.evaluate import load_run
             dp = load_run(dev_run)["primary"]

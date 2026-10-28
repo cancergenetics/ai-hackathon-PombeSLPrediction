@@ -2,8 +2,9 @@
 """THE DELIVERABLE (DESIGN.md §9): train a model on all permitted Ryan data and score every pair of the
 prediction universe.
 
-    predict_all_pairs.py [--model M2] [--train-set dev|all] [--out PATH] [--oof-run RUN_ID|--no-oof]
+    predict_all_pairs.py [--model M2r_huber] [--train-set dev|all] [--out PATH] [--oof-run RUN_ID|--no-oof]
 
+--model           a key of config/models.yaml; default = its `default_model` (the incumbent, M2r_huber).
 --train-set dev   all dev training pairs (src.data.dev_pairs: lockbox genes and lockbox-C1 pairs excluded).
                   The interim deliverable, usable before the lockbox evaluation.
 --train-set all   dev + lockbox pairs: the FINAL deliverable. Refused until scripts/lockbox_eval.py has
@@ -84,7 +85,7 @@ def training_pairs(train_set: str, log=print) -> tuple[pd.DataFrame, pd.DataFram
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="score every universe pair")
-    ap.add_argument("--model", default="M2")
+    ap.add_argument("--model", default=None, help="config/models.yaml model id (default: its default_model)")
     ap.add_argument("--models-file", default=str(DL.MODELS_PATH))
     ap.add_argument("--train-set", default="dev", choices=["dev", "all"])
     ap.add_argument("--out", default=None, help="parquet path (default <data root>/universe/...)")
@@ -106,6 +107,7 @@ def main(argv=None) -> int:
     T = Timings()
     t_all = time.perf_counter()
     lfspec = PA.load_spec()
+    a.model = a.model or DL.default_model(Path(a.models_file))
     spec = DL.model_spec(a.model, Path(a.models_file))
     tag = f"{a.model}_{a.train_set}" + (f"_first{a.limit_genes}" if a.limit_genes else "")
     print(f"data root {protocol.data_root()}; model {a.model} ({spec['kind']}); train set {a.train_set}; "
@@ -174,7 +176,7 @@ def main(argv=None) -> int:
         oof = np.full(N, np.nan, np.float32)
         oofn = np.zeros(N, np.int8)
         src = np.zeros(N, np.int8)              # 0 none, 1 dev_cv, 2 lockbox
-        run = None if a.no_oof else (a.oof_run or U.latest_run_id(spec.get("dev_run_model", a.model)))
+        run = None if a.no_oof else (a.oof_run or DL.dev_run_id(spec))
         o = None
         if a.oof_file and not a.no_oof:
             o = pd.read_parquet(a.oof_file, columns=["gene_a", "gene_b", "score"]).groupby(
@@ -182,6 +184,9 @@ def main(argv=None) -> int:
             run = f"file:{a.oof_file}"
         elif run and (protocol.preds_dir() / f"{run}.parquet").exists():
             o = U.oof_scores(run)
+        elif run and U.is_real_data():
+            raise SystemExit(f"out-of-fold predictions of {run} not found in {protocol.preds_dir()} (use --no-oof "
+                             "to ship without them)")
         if o is not None:
             k = linear_keys(gi, o.gene_a, o.gene_b, n)
             ok = k >= 0

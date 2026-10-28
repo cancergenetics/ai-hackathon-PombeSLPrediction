@@ -1,8 +1,9 @@
 """Tests for the deliverable tooling: src/universe.py, src/deliverable.py, scripts/predict_all_pairs.py,
 scripts/lockbox_eval.py, scripts/linkage_diagnostic.py.
 
-Fast unit tests run everywhere. Toy end-to-end tests (PSL_DATA_ROOT=data/toy, results in a temp dir) check:
-  * the deliverable M2 path reproduces scripts/run_m2.py's dev-CV fold predictions bit-for-bit;
+Fast unit tests run everywhere. Toy end-to-end tests (PSL_DATA_ROOT=data/toy, results in a temp dir; 2 threads) check:
+  * the deliverable M2 path reproduces scripts/run_m2.py's dev-CV fold predictions, and the M2r_huber path
+    (default model) reproduces scripts/run_m2plus.py's Huber fold predictions;
   * universe scoring: row count n(n-1)/2, no NaN, rank/sort, flags, determinism with fixed seeds, invariance to
     the block sizes (Ryan-feature blocks and label-free blocks), in-sample vs out-of-fold consistency;
   * lockbox_eval refusal paths (untracked / modified / TODO prereg, one-shot, override without reason), a
@@ -109,14 +110,53 @@ def test_todo_detection():
 
 def test_model_specs_resolve():
     from src import deliverable as DL
+    from src.models import stacker
     for mid in yaml.safe_load(DL.MODELS_PATH.read_text())["models"]:
         s = DL.model_spec(mid, real=True)
         assert s["kind"] in ("m2_stack", "lf_lgbm", "b1", "b4")
+        assert s.get("objective", "binary") in stacker.OBJECTIVES
+        if s.get("objective") == "huber":
+            assert not s.get("init_score") and s["etarget"] == {"target": "neg_min_s2_0", "delta": "label_threshold_abs"}
         if s["kind"] in ("m2_stack", "lf_lgbm"):
             assert isinstance(s["lf_groups"], list) and "HYPO" in s["lf_groups"]
         t = DL.model_spec(mid, real=False)
         if "lf_groups" in t:
             assert t["lf_groups"] == "all"
+
+
+def test_default_model_is_the_huber_incumbent():
+    """PI 2026-10-28: incumbent = M2r_huber (Huber stacker, ladder seeds); M2r_bag5_huber and M2 selectable."""
+    from src import deliverable as DL
+    assert DL.default_model() == "M2r_huber"
+    s = DL.model_spec("M2r_huber", real=True)
+    assert s["objective"] == "huber" and s["seeds"] == protocol.load()["seeds"]["ladder"]
+    assert s["families"] == ["LF", "RYAN", "NBR", "GP"] and "XSP" not in s["lf_groups"]
+    assert DL.dev_run_id(s) == "M2r_huber__20261028T205545__7b5e9e"
+    b = DL.model_spec("M2r_bag5_huber", real=True)
+    assert b["seeds"] == protocol.load()["seeds"]["all"] and b["objective"] == "huber"
+    m = DL.model_spec("M2", real=True)
+    assert m.get("objective", "binary") == "binary"
+    assert DL.model_spec("M2r_huber", real=False).get("dev_run") is None     # toy: latest toy run, not the pin
+    pap = (ROOT / "scripts" / "predict_all_pairs.py").read_text()
+    assert 'ap.add_argument("--model", default=None' in pap and "DL.default_model(" in pap
+
+
+def test_lockbox_seed_rule_and_model_validation():
+    from src import deliverable as DL
+    lb = load_script("lockbox_eval")
+    assert lb.resolve_seeds([0, 1, 2], "model") == [0, 1, 2]
+    assert lb.resolve_seeds([0, 1, 2], "all") == protocol.load()["seeds"]["all"]
+    assert lb.resolve_seeds([0, 1, 2, 3, 4], [7]) == [7]
+    P = {**_prereg({"models": DL.MODELS_PATH}, models=("M2r_huber",), contrasts=(("M2r_huber", "B1_additive_logit"),)),
+         "seeds": "model"}
+    lb.validate_prereg(P, real=False)
+    s = lb.model_spec_for("M2r_huber", P)
+    assert s["objective"] == "huber" and s["seeds"] == protocol.load()["seeds"]["ladder"]
+    assert lb.model_spec_for("M2r_huber", {**P, "seeds": "all"})["seeds"] == protocol.load()["seeds"]["all"]
+    with pytest.raises(lb.Refused, match="not in"):
+        lb.validate_prereg({**P, "shortlist": ["M2r_huber", "M9"]}, real=False)
+    with pytest.raises(lb.Refused, match="seeds"):
+        lb.validate_prereg({**P, "seeds": "some"}, real=False)
 
 
 def test_universe_genes_synthetic(synth_env):
@@ -171,15 +211,16 @@ def test_m2_path_reproduces_dev_cv_fold(toy):
     from src.ryanfeat import SimStore
     from src.timing import Timings
     R = load_script("run_m2")
+    R.N_JOBS = 2
     spec = PA.load_spec()
     sims = SimStore(names=SimStore().names)
     D = R.FoldData(None, 1, spec, sims, Timings())
     cols = D.cols(["LF", "RYAN", "NBR", "GP"])
-    b, _ = R.fit_stacker(D, cols, lgbm.params_for("default", 3), 0, False, 0)
+    b, _ = R.fit_stacker(D, cols, lgbm.params_for("default", 2), 0, False, 0)
     ref = R.predict(b, D, cols, False)
     tr, ev = data.fold_split(None, 1)
     ms = DL.model_spec("M2", toy["models"])
-    m = DL.TrainedModel(ms, tr, threads=3, sims=sims, lfspec=spec, use_cache=False).fit()
+    m = DL.TrainedModel(ms, tr, threads=2, sims=sims, lfspec=spec, use_cache=False).fit()
     s = m.predict(ev)
     # identical procedure; the only numerical difference allowed is the MF fit, which the deliverable runs with
     # deterministic torch (run_m2 does not: ~1e-6 run-to-run jitter), so scores agree except for at most a few
@@ -190,6 +231,36 @@ def test_m2_path_reproduces_dev_cv_fold(toy):
     m.cover_genes = spec.genes
     s2 = m.predict(ev)
     assert np.corrcoef(s, s2)[0, 1] > 0.9999 and np.max(np.abs(s - s2)) < 1e-2
+
+
+@toy_only
+def test_huber_path_reproduces_m2plus_fold(toy):
+    """Deliverable M2r_huber trained on an outer fold's training pairs == scripts/run_m2plus.py (variant M2r,
+    --objective huber) fold predictions: same shared stacker (src/models/stacker.fit_huber), same rows."""
+    from src import data
+    from src import deliverable as DL
+    from src import pairs as PA
+    from src.models import lgbm
+    from src.ryanfeat import SimStore
+    from src.timing import Timings
+    sys.path.insert(0, str(ROOT / "scripts"))
+    MP = load_script("run_m2plus")
+    MP.R.N_JOBS = 2
+    spec = PA.load_spec()
+    sims = SimStore(names=SimStore().names)
+    D = MP.FoldDataP(None, 1, spec, sims, Timings(), "M2r")
+    cols = D.cols(MP.FAMILIES)
+    b, inf = MP.fit_stacker_huber(D, cols, lgbm.params_for("default", 2), 0, 0)
+    ref = MP.R.predict(b, D, cols, False)
+    tr, ev = data.fold_split(None, 1)
+    ms = DL.model_spec("M2r_huber", toy["models"])
+    m = DL.TrainedModel(ms, tr, threads=2, sims=sims, lfspec=spec, use_cache=False).fit()
+    assert m.info["objective"] == "huber" and m.info["fits"][0]["huber_delta"] == inf["huber_delta"]
+    s = m.predict(ev)
+    diff = np.abs(s - ref)
+    assert np.mean(diff > 1e-9) < 1e-3 and np.corrcoef(s, ref)[0, 1] > 0.99999, (np.mean(diff > 1e-9), diff.max())
+    # the score is the predicted -min(S2, 0) (>= 0 up to the regression's extrapolation), not a log-odds margin
+    assert np.median(s) > -0.5
 
 
 def _run_pap(args):
@@ -204,14 +275,15 @@ def toy_universe(toy):
     from src import deliverable as DL
     tmp = toy["tmp"]
     # out-of-fold scores for dev pairs, produced by the same code path fold by fold (= run_m2 OOF, see above)
-    spec = DL.model_spec("M2", toy["models"])
+    spec = DL.model_spec(DL.default_model(), toy["models"])     # M2r_huber (the default of predict_all_pairs)
     oof = []
     for k in range(protocol.load()["dev_cv"]["n_folds"]):
         tr, ev = data.fold_split(None, k)
-        m = DL.TrainedModel(spec, tr, threads=3, log=lambda *a: None).fit()
+        m = DL.TrainedModel(spec, tr, threads=2, log=lambda *a: None).fit()
         oof.append(ev[["gene_a", "gene_b"]].assign(score=m.predict(ev)))
     pd.concat(oof).to_parquet(tmp / "oof.parquet")
-    base = ["--models-file", str(toy["models"]), "--limit-genes", "150", "--oof-file", str(tmp / "oof.parquet")]
+    base = ["--models-file", str(toy["models"]), "--limit-genes", "150", "--oof-file", str(tmp / "oof.parquet"),
+            "--threads", "2"]
     _run_pap(base + ["--out", str(tmp / "u1.parquet"), "--summary", str(tmp / "s1.json")])
     _run_pap(base + ["--out", str(tmp / "u2.parquet"), "--summary", str(tmp / "s2.json"), "--no-cache",
                      "--ryan-chunk", "2500", "--lf-chunk", "700"])
@@ -222,6 +294,7 @@ def toy_universe(toy):
 @toy_only
 def test_universe_rows_scores_and_flags(toy_universe):
     u, s = toy_universe["u1"], toy_universe["s1"]
+    assert s["model"] == "M2r_huber" and s["fit_info"]["objective"] == "huber"
     n = 150
     assert len(u) == n * (n - 1) // 2 == s["checks"]["expected_rows"]
     assert np.isfinite(u.score).all()
@@ -266,7 +339,7 @@ def _git(d, *a):
     return subprocess.run(["git", "-C", str(d), *a], capture_output=True, text=True, check=True)
 
 
-def _prereg(toy, models=("M2",), seeds=(0,), contrasts=(("M2", "B1_additive_logit"),)) -> dict:
+def _prereg(toy, models=("M2r_huber",), seeds=(0,), contrasts=(("M2r_huber", "B1_additive_logit"),)) -> dict:
     from src import deliverable as DL
     return {"prereg_version": 1, "protocol_sha256": protocol.protocol_sha256(),
             "lockbox_genes_sha256": "toy", "models_file": str(toy["models"]),
@@ -288,7 +361,7 @@ def lockbox_repo(toy):
 
 def _lb(args):
     lb = load_script("lockbox_eval")
-    return lb.main(args + ["--n-boot", "50", "--threads", "3"]), lb
+    return lb.main(args + ["--n-boot", "50", "--threads", "2"]), lb
 
 
 @toy_only
@@ -319,7 +392,7 @@ def test_lockbox_sequence(toy, lockbox_repo):
     assert rc == 2 and "TODO" in lb.read_log().detail.iloc[-1]
     # 4. --train-set all before any completed lockbox run -> refused
     with pytest.raises(PermissionError):
-        _run_pap(["--models-file", str(toy["models"]), "--train-set", "all", "--limit-genes", "60",
+        _run_pap(["--models-file", str(toy["models"]), "--train-set", "all", "--limit-genes", "60", "--threads", "2",
                   "--out", str(toy["tmp"] / "all0.parquet"), "--summary", str(toy["tmp"] / "all0.json")])
     # 5. valid -> completed
     rc, lb = _lb(["--prereg", str(f)])
@@ -329,15 +402,16 @@ def test_lockbox_sequence(toy, lockbox_repo):
     sha = protocol.sha256_file(f)
     assert (L.prereg_sha256.iloc[-1] == sha) and L.user.iloc[-1] and L.git_commit.iloc[-1]
     res = json.loads((protocol.results_root() / "lockbox" / f"lockbox_result_{sha[:12]}.json").read_text())
-    for m in ("M2", "B1_additive_logit"):
+    for m in ("M2r_huber", "B1_additive_logit"):
         r = res["models"][m]
         assert 0 <= r["primary"] <= 1 and r["primary_ci"][0] <= r["primary"] + 1e-9
         assert all(f"ap_{c}_ci" in r for c in ("C1", "C2", "C3"))
         assert r["n_C1"] > 0 and r["n_C2"] > 0 and r["n_C3"] > 0
-    c = res["contrasts"]["M2 - B1_additive_logit"]
-    assert c["p_holm"] >= c["p"] and res["shipped_model"] == "M2"
-    assert res["models"]["M2"]["primary"] > res["models"]["B1_additive_logit"]["primary"]   # toy has signal
-    assert lb.lockbox_preds_path("M2").exists()
+    c = res["contrasts"]["M2r_huber - B1_additive_logit"]
+    assert c["p_holm"] >= c["p"] and res["shipped_model"] == "M2r_huber"
+    assert res["models"]["M2r_huber"]["primary"] > res["models"]["B1_additive_logit"]["primary"]   # toy has signal
+    assert res["fits"]["M2r_huber"]["objective"] == "huber"            # lockbox_eval trains the Huber stacker
+    assert lb.lockbox_preds_path("M2r_huber").exists()
     # 6. second access -> refused; override without reason -> refused; with reason -> completed + logged
     rc, lb = _lb(["--prereg", str(f)])
     assert rc == 2 and "one-shot" in lb.read_log().detail.iloc[-1]
@@ -351,7 +425,7 @@ def test_lockbox_sequence(toy, lockbox_repo):
     assert "second access" in L.detail.iloc[-2]
     assert (L.event == "completed").sum() == 2
     # 7. --train-set all now allowed: lockbox pairs become training pairs, lockbox OOF attached
-    _run_pap(["--models-file", str(toy["models"]), "--train-set", "all", "--limit-genes", "120",
+    _run_pap(["--models-file", str(toy["models"]), "--train-set", "all", "--limit-genes", "120", "--threads", "2",
               "--out", str(toy["tmp"] / "all.parquet"), "--summary", str(toy["tmp"] / "all.json"), "--no-oof"])
     u = pd.read_parquet(toy["tmp"] / "all.parquet")
     lbg = set(U.lockbox_gene_list())
@@ -370,7 +444,7 @@ def test_lockbox_toy_skip_refused_on_real_data(toy):
     with pytest.raises(lb.Refused, match="headline_model"):
         lb.validate_prereg({**P, "headline_model": "B4_logistic_MF"}, real=False)
     with pytest.raises(lb.Refused, match="outside shortlist"):
-        lb.validate_prereg({**P, "holm_family": {"contrasts": [["M2", "M1"]]}}, real=False)
+        lb.validate_prereg({**P, "holm_family": {"contrasts": [["M2r_huber", "M1"]]}}, real=False)
     with pytest.raises(lb.Refused, match="not an ancestor"):
         lb.validate_prereg({**P, "code_commit": "0" * 40}, real=False)
 
