@@ -1,0 +1,475 @@
+{
+ "run_id": "M1_minus_INFB__20261028T161849__63103d",
+ "model": "M1_minus_INFB",
+ "primary": 0.15747715262359327,
+ "se": 0.03392203242206625,
+ "ci": [
+  0.09797262683257583,
+  0.22889122114261395
+ ],
+ "metrics_mean": {
+  "ap_C1": 0.2729528319223819,
+  "ap_C2": 0.14865835949294665,
+  "ap_C3": 0.05127826162710727,
+  "prevalence_primary": 0.018433771262839422,
+  "lift": 8.593962431295093,
+  "auroc": 0.7938840141496079,
+  "pooled_all_pairs": 0.17520599672531287,
+  "pooled_equal": 0.1565708295539937,
+  "mean_per_class": 0.15918599167213393,
+  "precision_at_k": 0.1652705497260727
+ },
+ "groups": [
+  "HYPO",
+  "MODF",
+  "MODSIM",
+  "NOISE",
+  "NOISESIM",
+  "PAIRINF",
+  "PAIRNOISE"
+ ],
+ "n_features": 34,
+ "runtime": {
+  "stages": [
+   {
+    "stage": "select_cols_f0",
+    "wall_s": 0.007,
+    "cpu_s": 0.006,
+    "peak_rss_mb": 715.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f0_s0",
+    "wall_s": 1.186,
+    "cpu_s": 6.976,
+    "peak_rss_mb": 715.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f0_s0",
+    "wall_s": 0.041,
+    "cpu_s": 0.262,
+    "peak_rss_mb": 715.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f0_s1",
+    "wall_s": 1.381,
+    "cpu_s": 8.049,
+    "peak_rss_mb": 715.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f0_s1",
+    "wall_s": 0.035,
+    "cpu_s": 0.224,
+    "peak_rss_mb": 715.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f0_s2",
+    "wall_s": 2.962,
+    "cpu_s": 17.945,
+    "peak_rss_mb": 723.8,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f0_s2",
+    "wall_s": 0.207,
+    "cpu_s": 1.394,
+    "peak_rss_mb": 723.8,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "select_cols_f1",
+    "wall_s": 0.004,
+    "cpu_s": 0.024,
+    "peak_rss_mb": 723.8,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f1_s0",
+    "wall_s": 2.501,
+    "cpu_s": 14.286,
+    "peak_rss_mb": 724.1,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f1_s0",
+    "wall_s": 0.151,
+    "cpu_s": 1.045,
+    "peak_rss_mb": 724.1,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f1_s1",
+    "wall_s": 1.532,
+    "cpu_s": 8.523,
+    "peak_rss_mb": 724.1,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f1_s1",
+    "wall_s": 0.055,
+    "cpu_s": 0.365,
+    "peak_rss_mb": 724.1,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f1_s2",
+    "wall_s": 1.284,
+    "cpu_s": 7.426,
+    "peak_rss_mb": 730.1,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f1_s2",
+    "wall_s": 0.04,
+    "cpu_s": 0.265,
+    "peak_rss_mb": 730.1,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "select_cols_f2",
+    "wall_s": 0.005,
+    "cpu_s": 0.032,
+    "peak_rss_mb": 730.1,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f2_s0",
+    "wall_s": 3.583,
+    "cpu_s": 12.422,
+    "peak_rss_mb": 734.6,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f2_s0",
+    "wall_s": 0.18,
+    "cpu_s": 0.809,
+    "peak_rss_mb": 734.6,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f2_s1",
+    "wall_s": 4.704,
+    "cpu_s": 9.305,
+    "peak_rss_mb": 736.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f2_s1",
+    "wall_s": 0.087,
+    "cpu_s": 0.368,
+    "peak_rss_mb": 736.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f2_s2",
+    "wall_s": 9.569,
+    "cpu_s": 32.239,
+    "peak_rss_mb": 753.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f2_s2",
+    "wall_s": 0.404,
+    "cpu_s": 2.761,
+    "peak_rss_mb": 753.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "select_cols_f3",
+    "wall_s": 0.004,
+    "cpu_s": 0.026,
+    "peak_rss_mb": 753.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f3_s0",
+    "wall_s": 2.296,
+    "cpu_s": 13.471,
+    "peak_rss_mb": 754.9,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f3_s0",
+    "wall_s": 0.127,
+    "cpu_s": 0.851,
+    "peak_rss_mb": 754.9,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f3_s1",
+    "wall_s": 1.713,
+    "cpu_s": 10.797,
+    "peak_rss_mb": 754.9,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f3_s1",
+    "wall_s": 0.123,
+    "cpu_s": 0.93,
+    "peak_rss_mb": 754.9,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f3_s2",
+    "wall_s": 1.495,
+    "cpu_s": 10.201,
+    "peak_rss_mb": 755.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f3_s2",
+    "wall_s": 0.11,
+    "cpu_s": 0.875,
+    "peak_rss_mb": 755.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "select_cols_f4",
+    "wall_s": 0.004,
+    "cpu_s": 0.01,
+    "peak_rss_mb": 755.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f4_s0",
+    "wall_s": 1.077,
+    "cpu_s": 7.821,
+    "peak_rss_mb": 755.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f4_s0",
+    "wall_s": 0.098,
+    "cpu_s": 0.747,
+    "peak_rss_mb": 755.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f4_s1",
+    "wall_s": 0.946,
+    "cpu_s": 5.883,
+    "peak_rss_mb": 755.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f4_s1",
+    "wall_s": 0.029,
+    "cpu_s": 0.22,
+    "peak_rss_mb": 755.5,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f4_s2",
+    "wall_s": 1.132,
+    "cpu_s": 7.114,
+    "peak_rss_mb": 760.3,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f4_s2",
+    "wall_s": 0.049,
+    "cpu_s": 0.385,
+    "peak_rss_mb": 760.3,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   }
+  ],
+  "wall_s": 39.121,
+  "cpu_s": 184.057,
+  "peak_rss_mb": 760.3,
+  "threads": 8,
+  "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+ },
+ "config": "default",
+ "dropped_group": "INFB",
+ "fits": [
+  {
+   "fold": 0,
+   "seed": 0,
+   "best_iteration": 60,
+   "valid_ap": 0.16463457938905193,
+   "n_fit": 32440,
+   "n_valid": 12443,
+   "pos_fit": 599,
+   "pos_valid": 275
+  },
+  {
+   "fold": 0,
+   "seed": 1,
+   "best_iteration": 59,
+   "valid_ap": 0.1568570979012764,
+   "n_fit": 32329,
+   "n_valid": 12554,
+   "pos_fit": 606,
+   "pos_valid": 268
+  },
+  {
+   "fold": 0,
+   "seed": 2,
+   "best_iteration": 304,
+   "valid_ap": 0.15380363458031857,
+   "n_fit": 31680,
+   "n_valid": 13203,
+   "pos_fit": 548,
+   "pos_valid": 326
+  },
+  {
+   "fold": 1,
+   "seed": 0,
+   "best_iteration": 228,
+   "valid_ap": 0.147512960076282,
+   "n_fit": 31868,
+   "n_valid": 11835,
+   "pos_fit": 642,
+   "pos_valid": 190
+  },
+  {
+   "fold": 1,
+   "seed": 1,
+   "best_iteration": 91,
+   "valid_ap": 0.11000199824770222,
+   "n_fit": 31368,
+   "n_valid": 12335,
+   "pos_fit": 549,
+   "pos_valid": 283
+  },
+  {
+   "fold": 1,
+   "seed": 2,
+   "best_iteration": 65,
+   "valid_ap": 0.14143646619218203,
+   "n_fit": 30809,
+   "n_valid": 12894,
+   "pos_fit": 632,
+   "pos_valid": 200
+  },
+  {
+   "fold": 2,
+   "seed": 0,
+   "best_iteration": 176,
+   "valid_ap": 0.10194560850328876,
+   "n_fit": 31720,
+   "n_valid": 12487,
+   "pos_fit": 576,
+   "pos_valid": 268
+  },
+  {
+   "fold": 2,
+   "seed": 1,
+   "best_iteration": 97,
+   "valid_ap": 0.15212575318265825,
+   "n_fit": 32438,
+   "n_valid": 11769,
+   "pos_fit": 625,
+   "pos_valid": 219
+  },
+  {
+   "fold": 2,
+   "seed": 2,
+   "best_iteration": 598,
+   "valid_ap": 0.1655531988284962,
+   "n_fit": 31481,
+   "n_valid": 12726,
+   "pos_fit": 606,
+   "pos_valid": 238
+  },
+  {
+   "fold": 3,
+   "seed": 0,
+   "best_iteration": 192,
+   "valid_ap": 0.11219452033337823,
+   "n_fit": 31743,
+   "n_valid": 12688,
+   "pos_fit": 533,
+   "pos_valid": 247
+  },
+  {
+   "fold": 3,
+   "seed": 1,
+   "best_iteration": 214,
+   "valid_ap": 0.11707602878470222,
+   "n_fit": 32502,
+   "n_valid": 11929,
+   "pos_fit": 512,
+   "pos_valid": 268
+  },
+  {
+   "fold": 3,
+   "seed": 2,
+   "best_iteration": 204,
+   "valid_ap": 0.11963932466826525,
+   "n_fit": 31562,
+   "n_valid": 12869,
+   "pos_fit": 562,
+   "pos_valid": 218
+  },
+  {
+   "fold": 4,
+   "seed": 0,
+   "best_iteration": 181,
+   "valid_ap": 0.15435262335437702,
+   "n_fit": 31390,
+   "n_valid": 13207,
+   "pos_fit": 591,
+   "pos_valid": 226
+  },
+  {
+   "fold": 4,
+   "seed": 1,
+   "best_iteration": 62,
+   "valid_ap": 0.08537969185325542,
+   "n_fit": 32212,
+   "n_valid": 12385,
+   "pos_fit": 532,
+   "pos_valid": 285
+  },
+  {
+   "fold": 4,
+   "seed": 2,
+   "best_iteration": 100,
+   "valid_ap": 0.19774455940938251,
+   "n_fit": 32968,
+   "n_valid": 11629,
+   "pos_fit": 601,
+   "pos_valid": 216
+  }
+ ]
+}

@@ -1,0 +1,261 @@
+{
+ "run_id": "M1_s0__20261028T165637__3be436",
+ "model": "M1_s0",
+ "primary": 0.1289799910662198,
+ "se": 0.010166661987977417,
+ "ci": [
+  0.10986561882630697,
+  0.1502018773156015
+ ],
+ "metrics_mean": {
+  "ap_C1": 0.18910433581603284,
+  "ap_C2": 0.11920318132584788,
+  "ap_C3": 0.08091041749257864,
+  "prevalence_primary": 0.020915592091347086,
+  "lift": 6.1668654018307905,
+  "auroc": 0.8210423923026425,
+  "pooled_all_pairs": 0.1385658645759328,
+  "pooled_equal": 0.13074446986716892,
+  "mean_per_class": 0.12831447688988296,
+  "precision_at_k": 0.3132639901475205
+ },
+ "groups": [
+  "CER",
+  "CONS",
+  "EXPR",
+  "HYPO",
+  "KOPROT",
+  "LOC",
+  "PHEN",
+  "PPI",
+  "SEQ"
+ ],
+ "n_features": 358,
+ "runtime": {
+  "stages": [
+   {
+    "stage": "train_f0_s0",
+    "wall_s": 43.283,
+    "cpu_s": 198.813,
+    "peak_rss_mb": 5565.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f0_s0",
+    "wall_s": 1.503,
+    "cpu_s": 9.424,
+    "peak_rss_mb": 5565.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f1_s0",
+    "wall_s": 22.507,
+    "cpu_s": 133.093,
+    "peak_rss_mb": 5580.4,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f1_s0",
+    "wall_s": 0.628,
+    "cpu_s": 4.891,
+    "peak_rss_mb": 5580.4,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f2_s0",
+    "wall_s": 54.568,
+    "cpu_s": 249.501,
+    "peak_rss_mb": 7198.4,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f2_s0",
+    "wall_s": 2.005,
+    "cpu_s": 12.596,
+    "peak_rss_mb": 7198.4,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f3_s0",
+    "wall_s": 29.554,
+    "cpu_s": 153.619,
+    "peak_rss_mb": 7198.4,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f3_s0",
+    "wall_s": 0.823,
+    "cpu_s": 6.135,
+    "peak_rss_mb": 7198.4,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f4_s0",
+    "wall_s": 60.131,
+    "cpu_s": 322.04,
+    "peak_rss_mb": 7198.4,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f4_s0",
+    "wall_s": 2.679,
+    "cpu_s": 17.447,
+    "peak_rss_mb": 7198.4,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   }
+  ],
+  "wall_s": 217.681,
+  "cpu_s": 1107.559,
+  "peak_rss_mb": 7198.4,
+  "threads": 8,
+  "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+ },
+ "config": "ff0.4",
+ "params": {
+  "objective": "binary",
+  "learning_rate": 0.05,
+  "num_leaves": 63,
+  "feature_fraction": 0.4,
+  "bagging_fraction": 0.8,
+  "bagging_freq": 1,
+  "min_data_in_leaf": 200,
+  "lambda_l2": 1.0,
+  "max_bin": 255,
+  "num_threads": 8,
+  "verbosity": -1,
+  "force_col_wise": true,
+  "metric": "average_precision"
+ },
+ "seeds": [
+  0
+ ],
+ "fits": [
+  {
+   "fold": 0,
+   "seed": 0,
+   "best_iteration": 270,
+   "valid_ap": 0.1298505323121496,
+   "n_fit": 328323,
+   "n_valid": 127788,
+   "pos_fit": 6001,
+   "pos_valid": 2533
+  },
+  {
+   "fold": 1,
+   "seed": 0,
+   "best_iteration": 130,
+   "valid_ap": 0.1188873962343554,
+   "n_fit": 330208,
+   "n_valid": 127626,
+   "pos_fit": 5582,
+   "pos_valid": 2803
+  },
+  {
+   "fold": 2,
+   "seed": 0,
+   "best_iteration": 396,
+   "valid_ap": 0.12279815164023455,
+   "n_fit": 328529,
+   "n_valid": 126427,
+   "pos_fit": 6278,
+   "pos_valid": 2175
+  },
+  {
+   "fold": 3,
+   "seed": 0,
+   "best_iteration": 183,
+   "valid_ap": 0.14410157910527083,
+   "n_fit": 331233,
+   "n_valid": 126892,
+   "pos_fit": 5877,
+   "pos_valid": 2537
+  },
+  {
+   "fold": 4,
+   "seed": 0,
+   "best_iteration": 537,
+   "valid_ap": 0.13403939816826607,
+   "n_fit": 332261,
+   "n_valid": 124177,
+   "pos_fit": 5669,
+   "pos_valid": 2734
+  }
+ ],
+ "importance_top30": {
+  "PHEN__frac_pheno__min": 0.033616548316018645,
+  "PHEN__n_sensitive__min": 0.02246372429326796,
+  "PHEN__n_sensitive__max": 0.02104536152113537,
+  "PHEN__frac_pheno__max": 0.019850109775039586,
+  "PHEN__pc1__min": 0.016651686568115998,
+  "PHEN__n_pheno__min": 0.014629594647586336,
+  "PHEN__n_pheno__max": 0.013635643070334413,
+  "PHEN__pc1__max": 0.009604504555363633,
+  "CER__neg_rate_e__max": 0.009147031884078682,
+  "EXPR__rnaseq_sd__min": 0.008584092296811527,
+  "HYPO__max": 0.008293351943558177,
+  "EXPR__rnaseq_mean__min": 0.007823294761728921,
+  "CER__ortholog_smf__max": 0.007633985213867498,
+  "KOPROT__ko_rms_z__min": 0.007358036115243093,
+  "PHEN__smf_yes32__max": 0.006876212760621102,
+  "CER__emb18__max": 0.006793641043682082,
+  "KOPROT__ko_pc4__min": 0.006535876847855929,
+  "CONS__phylo_pc1__max": 0.0061902346988814165,
+  "KOPROT__ko_pc1__max": 0.005984461511540286,
+  "PHEN__sim_phen_corr": 0.005486533361870721,
+  "PHEN__pc7__max": 0.005404314291596055,
+  "CER__neg_rate_nxn__max": 0.005383277079181357,
+  "SEQ__esm_pc23__min": 0.005249482941802021,
+  "KOPROT__ko_frac_changed__min": 0.004948786776337889,
+  "CER__emb9__max": 0.004917995701155531,
+  "KOPROT__ko_n_regulated_paper__min": 0.004846062783383483,
+  "SEQ__esm_pc32__max": 0.004834534739225647,
+  "KOPROT__ko_pc1__min": 0.004728425486934673,
+  "SEQ__esm_pc16__min": 0.004555232697932893,
+  "PHEN__pc6__max": 0.004472596575470629
+ },
+ "importance_by_group": {
+  "PHEN": 0.26579721729209876,
+  "SEQ": 0.24675948265000866,
+  "CER": 0.16292531283140216,
+  "EXPR": 0.09647844873252588,
+  "KOPROT": 0.08977272346791042,
+  "CONS": 0.08324291849217869,
+  "PPI": 0.03224774952247915,
+  "LOC": 0.014482795067838077,
+  "HYPO": 0.008293351943558177
+ },
+ "dropped_training_pairs_not_in_genes_txt": {
+  "0": {
+   "pairs": 4588,
+   "positives": 28
+  },
+  "1": {
+   "pairs": 4583,
+   "positives": 19
+  },
+  "2": {
+   "pairs": 6110,
+   "positives": 31
+  },
+  "3": {
+   "pairs": 5564,
+   "positives": 18
+  },
+  "4": {
+   "pairs": 5639,
+   "positives": 28
+  }
+ },
+ "symmetry_checked": true,
+ "models_dir": null
+}

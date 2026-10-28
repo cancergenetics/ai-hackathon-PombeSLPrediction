@@ -1,0 +1,100 @@
+{
+ "thresholds": {
+  "abs_z": 3.0,
+  "abs_log2fc": 0.5849625007211562
+ },
+ "input": {
+  "rows": 11013018,
+  "strains": {
+   "KO": 3308,
+   "WT": 461
+  },
+  "protein_groups": 2922,
+  "decoy_groups": 2
+ },
+ "normalisation": {
+  "n_core_proteins": 852,
+  "sd_floor": 0.09929688793102014,
+  "sd_median": 0.15609879399135773,
+  "n_proteins_with_scale": 2706
+ },
+ "ko_strains_dropped_duplicate_gene": {
+  "Sp18C07-SPAC27D7.10c": "SPAC27D7.10c -> SPAC27D7.09c"
+ },
+ "ids": {
+  "ko_strains": 3308,
+  "ko_strains_mapped": 3303,
+  "ko_genes_unique": true,
+  "single_gene_protein_groups": 2880,
+  "protein_groups_mapped": 2880,
+  "self_protein_values_masked": 891
+ },
+ "profile": {
+  "n_protein_groups": 1535,
+  "n_ko_genes": 3303,
+  "frac_missing_cells": 0.11469072139531628,
+  "n_pc_removed": 10,
+  "explained_variance_ratio_top_pcs": [
+   0.2129,
+   0.1009,
+   0.0409,
+   0.0308,
+   0.0192,
+   0.0172,
+   0.0139,
+   0.0128,
+   0.0117,
+   0.01
+  ]
+ },
+ "significance": {
+  "ko_n_changed_median": 9.0,
+  "ko_n_changed_mean": 45.858524788391776,
+  "wt_n_changed_median": 199.0,
+  "spearman_vs_paper_Regulated_pFDR_05": 0.8761354945788354,
+  "paper_Regulated_pFDR_05_median": 15.0,
+  "note": "WT controls differ systematically from the KO library; they are not the reference"
+ },
+ "coverage_genes": {
+  "ko_n_changed": 3303,
+  "ko_frac_changed": 3303,
+  "ko_rms_z": 3303,
+  "ko_n_regulated_paper": 3303,
+  "protein_frac_kos_changed": 2667,
+  "ko_pc1": 3303,
+  "ko_pc2": 3303,
+  "ko_pc3": 3303,
+  "ko_pc4": 3303,
+  "ko_pc5": 3303
+ },
+ "sim_distribution": {
+  "koprot_corr": {
+   "n_sampled": 2000000,
+   "mean": 0.0001045579607049885,
+   "sd": 0.050405502380652285,
+   "skewness": 0.3332343665891199,
+   "quantiles": {
+    "min": -0.7336078882217407,
+    "q01": -0.11828209601342678,
+    "q05": -0.07775487564504147,
+    "q25": -0.03093137266114354,
+    "median": -0.0003912375250365585,
+    "q75": 0.03029459062963724,
+    "q95": 0.07895098067820072,
+    "q99": 0.12632557958364488,
+    "max": 0.8916978240013123
+   },
+   "frac_at_min": 5e-07,
+   "n_distinct_sampled": 10000,
+   "heavily_skewed": false
+  }
+ },
+ "directed": {
+  "n_ko_rows": 3303,
+  "n_protein_cols": 2880,
+  "n_directed_measured": 5096444,
+  "n_directed_significant": 148391,
+  "n_pairs_measured_either_direction": 4670043,
+  "n_pairs_changed": 147920
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "input": {
+  "rows": 5073,
+  "rows_with_id": 4971,
+  "genes": 4966,
+  "genes_with_multiple_rows": 5,
+  "status_counts": {
+   "observed": 4404,
+   "no_signal": 388,
+   "missing": 174
+  },
+  "observed_without_canonical_compartment": 26,
+  "unmatched_tokens_top": {
+   "ambiguous structure": 46,
+   "filamentous structure": 6,
+   "faint filamentous structures": 4,
+   "filamentous structures, occasionally": 1,
+   "filamentous structures by over expression": 1,
+   "clear filamentous structure": 1,
+   "short filamentous structure": 1,
+   "filaments": 1,
+   "aggregates of ambiguous structure by over expression": 1,
+   "bar at random place": 1
+  },
+  "n_unmatched_token_occurrences": 63
+ },
+ "compartment_counts": {
+  "nucleolus": 224,
+  "nuclear_envelope": 93,
+  "nuclear_dots": 255,
+  "spb": 203,
+  "microtubules": 84,
+  "cytoplasmic_dots": 486,
+  "nucleus": 2196,
+  "cytosol": 2260,
+  "mitochondrion": 497,
+  "er": 473,
+  "golgi": 240,
+  "vacuole": 90,
+  "periphery": 353
+ },
+ "coverage_genes": {
+  "nucleus": 4792,
+  "nmt1_protein_level_log10": 4806
+ },
+ "pair_distribution": {
+  "LOC__same_primary": {
+   "n_sampled": 2000000,
+   "mean": 0.2459715,
+   "sd": 0.43066172477682524,
+   "skewness": 1.1797124535812464,
+   "quantiles": {
+    "min": 0.0,
+    "q01": 0.0,
+    "q05": 0.0,
+    "q25": 0.0,
+    "median": 0.0,
+    "q75": 0.0,
+    "q95": 1.0,
+    "q99": 1.0,
+    "max": 1.0
+   },
+   "frac_at_min": 0.7540285,
+   "n_distinct_sampled": 2,
+   "heavily_skewed": true
+  },
+  "LOC__jaccard": {
+   "n_sampled": 2000000,
+   "mean": 0.25312056419308854,
+   "sd": 0.34377853332920566,
+   "skewness": 1.1062393238705226,
+   "quantiles": {
+    "min": 0.0,
+    "q01": 0.0,
+    "q05": 0.0,
+    "q25": 0.0,
+    "median": 0.0,
+    "q75": 0.5,
+    "q95": 1.0,
+    "q99": 1.0,
+    "max": 1.0
+   },
+   "frac_at_min": 0.5710405,
+   "n_distinct_sampled": 20,
+   "heavily_skewed": true
+  }
+ },
+ "n_genes_pair_features": 4378
+}

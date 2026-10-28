@@ -1,0 +1,160 @@
+{
+ "platforms": {
+  "rnaseq": {
+   "prefix": "Spo-r.c3-0",
+   "n_rows_raw": 5512,
+   "n_samples": 556,
+   "rows_without_pombase_id": 32,
+   "rows_sharing_a_gene_averaged": 0,
+   "n_genes_protein_coding": 4703,
+   "n_genes_sim": 4703,
+   "sample_median_range_before_centring": [
+    8.4435,
+    11.9754
+   ]
+  },
+  "array": {
+   "prefix": "Spo-m.c4-0",
+   "n_rows_raw": 4881,
+   "n_samples": 166,
+   "rows_without_pombase_id": 30,
+   "rows_sharing_a_gene_averaged": 0,
+   "n_genes_protein_coding": 4845,
+   "n_genes_sim": 4845,
+   "sample_median_range_before_centring": [
+    10.2332,
+    11.1132
+   ]
+  }
+ },
+ "sim_distribution": {
+  "expr_rnaseq": {
+   "n_sampled": 2000000,
+   "mean": 0.006208454415236675,
+   "sd": 0.2108037487409483,
+   "skewness": 0.25869810246189673,
+   "quantiles": {
+    "min": -0.7721191644668579,
+    "q01": -0.46058234244585033,
+    "q05": -0.32778725922107693,
+    "q25": -0.13476918265223503,
+    "median": -0.0020921934628859162,
+    "q75": 0.13776874542236328,
+    "q95": 0.3686574444174766,
+    "q99": 0.5512549811601639,
+    "max": 0.9462158679962158
+   },
+   "frac_at_min": 5e-07,
+   "n_distinct_sampled": 10000,
+   "heavily_skewed": false
+  },
+  "EXPR__mr_rnaseq": {
+   "n_sampled": 2000000,
+   "mean": 0.11823129714333863,
+   "sd": 0.11429060772523711,
+   "skewness": 1.7411589114566774,
+   "quantiles": {
+    "min": 0.0,
+    "q01": 0.002274436177685857,
+    "q05": 0.007912086974829438,
+    "q25": 0.03357194550335407,
+    "median": 0.08201079070568085,
+    "q75": 0.16850776970386505,
+    "q95": 0.34710081070661525,
+    "q99": 0.5134565019607545,
+    "max": 1.0
+   },
+   "frac_at_min": 0.0668855,
+   "n_distinct_sampled": 10000,
+   "heavily_skewed": false
+  },
+  "expr_array": {
+   "n_sampled": 2000000,
+   "mean": 0.0050313993672087545,
+   "sd": 0.24182896496425466,
+   "skewness": 0.09453975879372142,
+   "quantiles": {
+    "min": -0.8392986059188843,
+    "q01": -0.5276203829050065,
+    "q05": -0.3869269952178001,
+    "q25": -0.16389789059758186,
+    "median": 0.0005748305993620306,
+    "q75": 0.16949862986803055,
+    "q95": 0.41171523779630603,
+    "q99": 0.5733085298538207,
+    "max": 0.9326843023300171
+   },
+   "frac_at_min": 1e-06,
+   "n_distinct_sampled": 10000,
+   "heavily_skewed": false
+  },
+  "EXPR__mr_array": {
+   "n_sampled": 2000000,
+   "mean": 0.11784600246453143,
+   "sd": 0.11552739997624753,
+   "skewness": 1.8324699347038431,
+   "quantiles": {
+    "min": 0.0,
+    "q01": 0.0017866363050416112,
+    "q05": 0.007208873215131463,
+    "q25": 0.03367596212774515,
+    "median": 0.08153834939002991,
+    "q75": 0.16581463813781738,
+    "q95": 0.34955641627311707,
+    "q99": 0.526262104511261,
+    "max": 1.0
+   },
+   "frac_at_min": 0.0723305,
+   "n_distinct_sampled": 10000,
+   "heavily_skewed": false
+  }
+ },
+ "quant": {
+  "n_rows": 30029,
+  "columns": {
+   "carpy_protein_G1": 2651,
+   "carpy_protein_G2": 2654,
+   "carpy_protein_M": 2598,
+   "carpy_protein_S": 2598,
+   "carpy_protein_prolif": 3175,
+   "marguerat_protein_prolif": 3398,
+   "marguerat_protein_quiesc": 2721,
+   "marguerat_rna_prolif": 5117,
+   "marguerat_rna_quiesc": 5117
+  },
+  "n_zero_values": {
+   "carpy_protein_G1": 0,
+   "carpy_protein_G2": 0,
+   "carpy_protein_M": 0,
+   "carpy_protein_S": 0,
+   "carpy_protein_prolif": 0,
+   "marguerat_protein_prolif": 0,
+   "marguerat_protein_quiesc": 0,
+   "marguerat_rna_prolif": 70,
+   "marguerat_rna_quiesc": 53
+  }
+ },
+ "consistency": {
+  "spearman_rnaseq_mean_vs_marguerat_mrna": 0.7235759988751911,
+  "spearman_array_mean_vs_marguerat_mrna": 0.7780430174263196,
+  "spearman_marguerat_vs_carpy_protein": 0.7900701509802536,
+  "pearson_rnaseq_vs_array_coexp_random_pairs": {
+   "n": 312128,
+   "r": 0.6287164204006755
+  }
+ },
+ "coverage_genes": {
+  "rnaseq_mean": 4703,
+  "rnaseq_sd": 4703,
+  "array_mean": 4845,
+  "array_sd": 4845,
+  "mrna_prolif_log10": 5117,
+  "mrna_quiesc_log10": 5117,
+  "mrna_quiesc_vs_prolif_log2": 5117,
+  "protein_prolif_log10": 3398,
+  "protein_quiesc_log10": 2721,
+  "protein_per_mrna_log10": 3398,
+  "carpy_protein_log10": 3175,
+  "carpy_cellcycle_sd_log2": 2416
+ }
+}

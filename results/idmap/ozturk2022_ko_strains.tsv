@@ -1,0 +1,9 @@
+input_id	input_name	pombase_id	status
+SPAC27D7.09c		SPAC27D7.09c	many_to_one
+SPAC27D7.10c		SPAC27D7.09c	many_to_one
+SPBC1348.14c		SPBC1348.14c	not_protein_coding
+SPBC530.06c		SPBC530.06c	not_protein_coding
+SPBC8E4.02c		SPNCRNA.9001	not_protein_coding
+SPCC622.17		SPCC622.17	not_protein_coding
+SPAC27D7.10c		SPAC27D7.09c	synonym
+SPAC823.02		SPAC823.17	synonym

@@ -1,0 +1,84 @@
+{
+ "input": {
+  "ortholog_rows": 1156947,
+  "n_genomes": 367,
+  "types": {
+   "ortholog_one2one": 754933,
+   "ortholog_one2many": 297059,
+   "ortholog_many2many": 104955
+  },
+  "schizo_genomes_present": [
+   "schizosaccharomyces_japonicus",
+   "schizosaccharomyces_octosporus",
+   "schizosaccharomyces_cryophilus"
+  ],
+  "has_scerevisiae_genome": true
+ },
+ "genes": {
+  "n_with_any_ortholog": 4833,
+  "n_in_all_genomes": 0,
+  "n_species_quantiles": {
+   "0.1": 2.0,
+   "0.25": 19.0,
+   "0.5": 252.0,
+   "0.75": 323.0,
+   "0.9": 334.0
+  },
+  "n_has_sjaponicus": 4066,
+  "n_has_scerevisiae": 2859,
+  "phylo_pca_explained_variance": [
+   0.6538,
+   0.0568,
+   0.0366,
+   0.0146,
+   0.0105,
+   0.0074,
+   0.0068,
+   0.006,
+   0.0053,
+   0.0051
+  ]
+ },
+ "coverage_genes": {
+  "n_species": 5126,
+  "frac_species": 5126,
+  "has_sjaponicus": 5126,
+  "n_schizo": 5126,
+  "has_scerevisiae": 5126,
+  "mean_ortholog_identity": 4833,
+  "frac_one2one": 4833,
+  "phylo_pc1": 5126,
+  "phylo_pc2": 5126,
+  "phylo_pc3": 5126,
+  "phylo_pc4": 5126,
+  "phylo_pc5": 5126,
+  "phylo_pc6": 5126,
+  "phylo_pc7": 5126,
+  "phylo_pc8": 5126,
+  "phylo_pc9": 5126,
+  "phylo_pc10": 5126
+ },
+ "sim_distribution": {
+  "cons_phylo": {
+   "n_sampled": 2000000,
+   "mean": 0.20541743905143942,
+   "sd": 0.23667030587926757,
+   "skewness": 0.6819268850166925,
+   "quantiles": {
+    "min": -0.8394109010696411,
+    "q01": -0.27936130166053774,
+    "q05": -0.07798668518662452,
+    "q25": 0.03521560877561569,
+    "median": 0.13801423460245132,
+    "q75": 0.35534313321113586,
+    "q95": 0.643318772315979,
+    "q99": 0.8648349642753601,
+    "max": 1.0
+   },
+   "frac_at_min": 2.5e-06,
+   "n_distinct_sampled": 10000,
+   "heavily_skewed": false
+  }
+ },
+ "n_genes_sim": 4833
+}

@@ -1,0 +1,144 @@
+{
+ "id_databases": [
+  "Pfam",
+  "PANTHER",
+  "CATH-Gene3D",
+  "SUPERFAMILY",
+  "SMART",
+  "PROSITE profiles",
+  "PROSITE patterns",
+  "CDD",
+  "PRINTS"
+ ],
+ "id_databases_not_used": [
+  "CATH-FunFam",
+  "NCBIFAM",
+  "PIRSF",
+  "HAMAP",
+  "SFLD"
+ ],
+ "recent_identity": 40.0,
+ "database_rows": {
+  "Pfam": 8146,
+  "CATH-Gene3D": 6978,
+  "SUPERFAMILY": 5768,
+  "DeepTMHMM": 4723,
+  "PANTHER": 4489,
+  "CATH-FunFam": 3741,
+  "MobiDB-Disorder": 3703,
+  "SMART": 3417,
+  "PROSITE profiles": 3202,
+  "CDD": 3100,
+  "PRINTS": 3094,
+  "MobiDB-Polar": 2110,
+  "PROSITE patterns": 1605,
+  "Coiled coils": 1597,
+  "MobiDB-Polyampholyte": 1478,
+  "MobiDB-Low-complexity": 1074,
+  "NCBIFAM": 979,
+  "PIRSF": 612,
+  "MobiDB-Negative-Polyelectrolyte": 410,
+  "MobiDB-Positive-Polyelectrolyte": 408,
+  "HAMAP": 369,
+  "Signal-Peptide-DeepTMHMM": 234,
+  "SFLD": 122,
+  "MobiDB-Proline-rich": 55,
+  "MobiDB-Glycine-rich": 21
+ },
+ "tm_agreement": {
+  "genes_tm_file": 941,
+  "genes_deeptmhmm": 798,
+  "both": 751
+ },
+ "pair_distribution": {
+  "SEQ__domain_jaccard": {
+   "n_sampled": 2000000,
+   "mean": 0.0017481612779330462,
+   "sd": 0.025384696755464075,
+   "skewness": 21.732497089252846,
+   "quantiles": {
+    "min": 0.0,
+    "q01": 0.0,
+    "q05": 0.0,
+    "q25": 0.0,
+    "median": 0.0,
+    "q75": 0.0,
+    "q95": 0.0,
+    "q99": 0.0,
+    "max": 1.0
+   },
+   "frac_at_min": 0.990865,
+   "n_distinct_sampled": 275,
+   "heavily_skewed": true
+  }
+ },
+ "paralogs": {
+  "rows": 5619,
+  "types": {
+   "other_paralog": 4265,
+   "within_species_paralog": 1354
+  },
+  "n_pairs": 5619,
+  "n_pairs_recent": 732,
+  "n_genes_with_paralog": 2452,
+  "identity_quantiles": {
+   "0.1": 10.93213939666748,
+   "0.25": 14.285699844360352,
+   "0.5": 19.205299377441406,
+   "0.75": 28.417749404907227,
+   "0.9": 47.22125244140625
+  },
+  "median_identity_by_type": {
+   "other_paralog": 17.551,
+   "within_species_paralog": 35.8635
+  }
+ },
+ "sim_distribution": {
+  "esm_cos": {
+   "n_sampled": 2000000,
+   "mean": 0.0026472367170100107,
+   "sd": 0.3531707917827157,
+   "skewness": 0.044718621401821326,
+   "quantiles": {
+    "min": -0.8423250913619995,
+    "q01": -0.6824727672338485,
+    "q05": -0.5720268726348877,
+    "q25": -0.26643383502960205,
+    "median": 0.0037321463460102677,
+    "q75": 0.2639627307653427,
+    "q95": 0.5878141999244686,
+    "q99": 0.738441260457039,
+    "max": 1.0
+   },
+   "frac_at_min": 2.5e-06,
+   "n_distinct_sampled": 10000,
+   "heavily_skewed": false
+  }
+ },
+ "esm": {
+  "n_genes": 5126,
+  "dim": 1280,
+  "n_pc": 32,
+  "explained_variance_ratio_cum": 0.7899509240775007
+ },
+ "coverage_genes": {
+  "length": 5126,
+  "mass_kda": 5126,
+  "pI": 5126,
+  "charge": 5126,
+  "cai": 5126,
+  "n_pfam": 5126,
+  "n_pfam_ids": 5126,
+  "n_domain_ids": 5126,
+  "has_panther": 5126,
+  "n_tm": 5126,
+  "n_tm_deeptmhmm": 5126,
+  "signal_peptide": 5126,
+  "disorder_frac": 5126,
+  "n_coiled_coils": 5126,
+  "n_paralogs": 5126,
+  "n_paralogs_recent": 5126,
+  "max_paralog_identity": 5126,
+  "esm_pc1": 5126
+ }
+}

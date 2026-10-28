@@ -1,0 +1,21 @@
+{
+ "models_dir": "data/processed/models/m1/M1_ff0.4",
+ "model": "fold0_seed0.txt",
+ "n_universe_genes": 3779,
+ "n_pairs": 7138531,
+ "chunk": 1000000,
+ "n_chunks": 8,
+ "n_features": 358,
+ "wall_s_total": 79.73,
+ "wall_s_by_stage": {
+  "assemble": 44.91,
+  "predict": 33.69
+ },
+ "cpu_s": 282.312,
+ "peak_rss_mb": 6025.3,
+ "threads": 8,
+ "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0",
+ "score_mean": 0.016214800041801435,
+ "score_sd": 0.032742984692161616,
+ "note": "scores not saved (smoke test)"
+}

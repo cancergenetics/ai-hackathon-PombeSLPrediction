@@ -1,0 +1,575 @@
+{
+ "run_id": "M1_minus_PAIRINF__20261028T162111__73f104",
+ "timestamp": "20261028T162111",
+ "model": "M1_minus_PAIRINF",
+ "split_seed": 20261028,
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "data_root": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/toy",
+ "git_commit": "e93c211d2b8b8d4ceefd3f02c3145f3301adf100",
+ "git_dirty": true,
+ "git_diff_sha256": "f5bdde261f374dee7e04a70f7af95360fd2a223a874364cfb347459b92dd7b7c",
+ "protocol_sha256": "73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230",
+ "splits_sha256": "542cf818a0fe267054cec9f377898a14f645d3bafeb825ad621134fc3b5c24ff",
+ "labels_dev_sha256": "e18f29f77ff9c85ca8a2a9ee0f741028951c988d260edee81d91254f1502fe5f",
+ "feature_hashes": {
+  "gene/INFB.parquet": "34a29e5d875ec650abf4552ebe053c0d184624f8e9fcc945ed289d88b97b6e50",
+  "gene/MODF.parquet": "e8ffd997f7572fee9c4d8415eae7b3a9a0cdccf5b8fbd7a3648f9b820328f5bc",
+  "gene/NOISE.parquet": "b6dfc5988098e615e8e9968320bedd7013d6dce5de5b7ed97d67c8187f9e678f",
+  "pair/PAIRNOISE__n.npy": "928eb6f98421b9d04054453655ba638a89dd843549d30bf52a81013590675bd9",
+  "sim/MODSIM.npy": "17b6072a89e0808b01cd9aef9be597dd24d9d0abe7ff22956fd71722b52dc089",
+  "sim/NOISESIM.npy": "4295d7116747770e1ce6d92cbff445c1f883206f4af92914167d3fd65a934abf"
+ },
+ "primary": 0.2059355010283957,
+ "bootstrap": {
+  "primary": {
+   "se": 0.046396853039099274,
+   "ci": [
+    0.11940692602797548,
+    0.29745373633329875
+   ],
+   "mean": 0.20654748357801025
+  },
+  "all_pairs": {
+   "se": 0.04831285137331047,
+   "ci": [
+    0.12282397487419967,
+    0.30984790817645597
+   ],
+   "mean": 0.21557760191064432
+  },
+  "equal": {
+   "se": 0.04681930357886024,
+   "ci": [
+    0.11703062447635794,
+    0.30007600558440095
+   ],
+   "mean": 0.20711900372223704
+  }
+ },
+ "n_boot": 1000,
+ "metrics_mean": {
+  "ap_C1": 0.2639148840442062,
+  "ap_C1_reciprocal": 0.44345043350513647,
+  "ap_C1_single": 0.2628596631999644,
+  "ap_C2": 0.20535508580143064,
+  "ap_C3": 0.1611130140630645,
+  "auroc": 0.8358628331356444,
+  "auroc_C1": 0.8654992419635456,
+  "auroc_C2": 0.83588473758232,
+  "auroc_C3": 0.800017888297553,
+  "lift": 11.202780082031726,
+  "mean_per_class": 0.21063221087011064,
+  "n_C1": 4367.6,
+  "n_C1_reciprocal": 336.2,
+  "n_C1_single": 4031.4,
+  "n_C2": 21850.8,
+  "n_C3": 2724.6,
+  "pooled": 0.2059355010283957,
+  "pooled_all_pairs": 0.21436226979137776,
+  "pooled_equal": 0.20422655749683732,
+  "pooled_excl_damp_mixed": 0.2059355010283957,
+  "pooled_viable_viable": 0.20672400358811913,
+  "pos_C1": 80.6,
+  "pos_C2": 403.6,
+  "pos_C3": 49.8,
+  "precision_at_k": 0.19393897687353914,
+  "precision_at_k_C1": 0.0632,
+  "precision_at_k_C2": 0.1682,
+  "precision_at_k_C3": 0.039400000000000004,
+  "prevalence_C1_reciprocal": 0.014076004356067096,
+  "prevalence_C1_single": 0.01879803791885657,
+  "prevalence_all_pairs": 0.018437067208922003,
+  "prevalence_equal": 0.018406827741597243,
+  "prevalence_primary": 0.018433771262839422
+ },
+ "metrics_per_fold": {
+  "0": {
+   "pooled": 0.2110543480107432,
+   "prevalence_primary": 0.017018235803409557,
+   "pooled_all_pairs": 0.23326044861656658,
+   "prevalence_all_pairs": 0.017344998414405587,
+   "pooled_equal": 0.22920923776651114,
+   "prevalence_equal": 0.016559722912116312,
+   "lift": 12.4016584591253,
+   "auroc": 0.8377226234833226,
+   "precision_at_k": 0.1925491122668935,
+   "n_C1": 4389,
+   "pos_C1": 84,
+   "ap_C1": 0.341827997807446,
+   "auroc_C1": 0.8860737791051381,
+   "precision_at_k_C1": 0.07,
+   "n_C2": 21675,
+   "pos_C2": 379,
+   "ap_C2": 0.1708210770299692,
+   "auroc_C2": 0.8177406189723837,
+   "precision_at_k_C2": 0.147,
+   "n_C3": 2681,
+   "pos_C3": 35,
+   "ap_C3": 0.14923102091440618,
+   "auroc_C3": 0.8292732966202354,
+   "precision_at_k_C3": 0.03,
+   "mean_per_class": 0.20707512228028158,
+   "ap_C1_reciprocal": 0.022406354159908663,
+   "n_C1_reciprocal": 312,
+   "prevalence_C1_reciprocal": 0.009615384615384616,
+   "ap_C1_single": 0.3609625152275559,
+   "n_C1_single": 4077,
+   "prevalence_C1_single": 0.019867549668874173,
+   "pooled_viable_viable": 0.21465739224422192,
+   "pooled_excl_damp_mixed": 0.2110543480107432
+  },
+  "1": {
+   "pooled": 0.1964592831826878,
+   "prevalence_primary": 0.01847709870370873,
+   "pooled_all_pairs": 0.20301187753518793,
+   "prevalence_all_pairs": 0.018497420605814226,
+   "pooled_equal": 0.1898410677352457,
+   "prevalence_equal": 0.01871268721832271,
+   "lift": 10.632582870992318,
+   "auroc": 0.8166093064165101,
+   "precision_at_k": 0.1784713090710892,
+   "n_C1": 4299,
+   "pos_C1": 80,
+   "ap_C1": 0.2418591714937385,
+   "auroc_C1": 0.8380007110689738,
+   "precision_at_k_C1": 0.057,
+   "n_C2": 22378,
+   "pos_C2": 405,
+   "ap_C2": 0.20356867660749564,
+   "auroc_C2": 0.8284714180647067,
+   "precision_at_k_C2": 0.159,
+   "n_C3": 2882,
+   "pos_C3": 56,
+   "ap_C3": 0.14660715950244424,
+   "auroc_C3": 0.7557564958042665,
+   "precision_at_k_C3": 0.04,
+   "mean_per_class": 0.20158913502848488,
+   "ap_C1_reciprocal": 0.2990300996929172,
+   "n_C1_reciprocal": 337,
+   "prevalence_C1_reciprocal": 0.020771513353115726,
+   "ap_C1_single": 0.23969960036241214,
+   "n_C1_single": 3962,
+   "prevalence_C1_single": 0.018425037859666836,
+   "pooled_viable_viable": 0.19728889529288443,
+   "pooled_excl_damp_mixed": 0.1964592831826878
+  },
+  "2": {
+   "pooled": 0.20338864214958938,
+   "prevalence_primary": 0.017983592069909834,
+   "pooled_all_pairs": 0.20111313602547312,
+   "prevalence_all_pairs": 0.01811385514437469,
+   "pooled_equal": 0.1838544086721443,
+   "prevalence_equal": 0.01784941311487535,
+   "lift": 11.309678364529825,
+   "auroc": 0.83873299727218,
+   "precision_at_k": 0.1906891082628666,
+   "n_C1": 4355,
+   "pos_C1": 82,
+   "ap_C1": 0.20412679796718217,
+   "auroc_C1": 0.8585417225574081,
+   "precision_at_k_C1": 0.065,
+   "n_C2": 21940,
+   "pos_C2": 397,
+   "ap_C2": 0.24141315638790112,
+   "auroc_C2": 0.8447545188458535,
+   "precision_at_k_C2": 0.179,
+   "n_C3": 2767,
+   "pos_C3": 46,
+   "ap_C3": 0.12235826154977382,
+   "auroc_C3": 0.7892478788169311,
+   "precision_at_k_C3": 0.037,
+   "mean_per_class": 0.20953505201237174,
+   "ap_C1_reciprocal": 0.34303793589507875,
+   "n_C1_reciprocal": 369,
+   "prevalence_C1_reciprocal": 0.018970189701897018,
+   "ap_C1_single": 0.2115332784660341,
+   "n_C1_single": 3986,
+   "prevalence_C1_single": 0.018815855494229806,
+   "pooled_viable_viable": 0.2080126996978116,
+   "pooled_excl_damp_mixed": 0.20338864214958938
+  },
+  "3": {
+   "pooled": 0.18279666272480818,
+   "prevalence_primary": 0.019492437418468362,
+   "pooled_all_pairs": 0.18783933110898093,
+   "prevalence_all_pairs": 0.019205168045585752,
+   "pooled_equal": 0.18764813891730703,
+   "prevalence_equal": 0.019407222838920744,
+   "lift": 9.377824784068057,
+   "auroc": 0.8441711614585088,
+   "precision_at_k": 0.1989759323860707,
+   "n_C1": 4368,
+   "pos_C1": 77,
+   "ap_C1": 0.22095071992369184,
+   "auroc_C1": 0.873017218158211,
+   "precision_at_k_C1": 0.06,
+   "n_C2": 21829,
+   "pos_C2": 433,
+   "ap_C2": 0.17309321002043782,
+   "auroc_C2": 0.8371667968414376,
+   "precision_at_k_C2": 0.167,
+   "n_C3": 2746,
+   "pos_C3": 57,
+   "ap_C3": 0.21866959518502846,
+   "auroc_C3": 0.8377992209978273,
+   "precision_at_k_C3": 0.045,
+   "mean_per_class": 0.19323787706657322,
+   "ap_C1_reciprocal": 0.5527777777777778,
+   "n_C1_reciprocal": 335,
+   "prevalence_C1_reciprocal": 0.014925373134328358,
+   "ap_C1_single": 0.21118656441636008,
+   "n_C1_single": 4033,
+   "prevalence_C1_single": 0.017852715100421523,
+   "pooled_viable_viable": 0.17657523803095826,
+   "pooled_excl_damp_mixed": 0.18279666272480818
+  },
+  "4": {
+   "pooled": 0.23597856907414985,
+   "prevalence_primary": 0.01919749231870061,
+   "pooled_all_pairs": 0.24658655567068027,
+   "prevalence_all_pairs": 0.019023893834429758,
+   "pooled_equal": 0.23057993439297858,
+   "prevalence_equal": 0.019505092623751087,
+   "lift": 12.29215593144314,
+   "auroc": 0.8420780770477003,
+   "precision_at_k": 0.20900942238077558,
+   "n_C1": 4427,
+   "pos_C1": 80,
+   "ap_C1": 0.3108097330289727,
+   "auroc_C1": 0.8718627789279964,
+   "precision_at_k_C1": 0.064,
+   "n_C2": 21432,
+   "pos_C2": 404,
+   "ap_C2": 0.23787930896134934,
+   "auroc_C2": 0.8512903351872185,
+   "precision_at_k_C2": 0.189,
+   "n_C3": 2547,
+   "pos_C3": 55,
+   "ap_C3": 0.16869903316366974,
+   "auroc_C3": 0.7880125492485043,
+   "precision_at_k_C3": 0.045,
+   "mean_per_class": 0.24172386796284176,
+   "ap_C1_reciprocal": 1.0,
+   "n_C1_reciprocal": 328,
+   "prevalence_C1_reciprocal": 0.006097560975609756,
+   "ap_C1_single": 0.2909163575274598,
+   "n_C1_single": 4099,
+   "prevalence_C1_single": 0.01902903147109051,
+   "pooled_viable_viable": 0.23708579267471952,
+   "pooled_excl_damp_mixed": 0.23597856907414985
+  }
+ },
+ "weightings": {
+  "primary": {
+   "C1": 0.236459,
+   "C2": 0.569837,
+   "C3": 0.193704
+  },
+  "all_pairs": {
+   "C1": 0.354117,
+   "C2": 0.482028,
+   "C3": 0.163855
+  },
+  "equal": {
+   "C1": 0.3333333333333333,
+   "C2": 0.3333333333333333,
+   "C3": 0.3333333333333333
+  },
+  "primary_name": "unmeasured_universe"
+ },
+ "runtime": {
+  "stages": [
+   {
+    "stage": "select_cols_f0",
+    "wall_s": 0.005,
+    "cpu_s": 0.005,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f0_s0",
+    "wall_s": 0.89,
+    "cpu_s": 6.072,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f0_s0",
+    "wall_s": 0.038,
+    "cpu_s": 0.285,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f0_s1",
+    "wall_s": 1.011,
+    "cpu_s": 6.592,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f0_s1",
+    "wall_s": 0.04,
+    "cpu_s": 0.293,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f0_s2",
+    "wall_s": 1.07,
+    "cpu_s": 6.809,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f0_s2",
+    "wall_s": 0.034,
+    "cpu_s": 0.255,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "select_cols_f1",
+    "wall_s": 0.004,
+    "cpu_s": 0.023,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f1_s0",
+    "wall_s": 1.773,
+    "cpu_s": 11.135,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f1_s0",
+    "wall_s": 0.105,
+    "cpu_s": 0.78,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f1_s1",
+    "wall_s": 0.778,
+    "cpu_s": 5.217,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f1_s1",
+    "wall_s": 0.019,
+    "cpu_s": 0.142,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f1_s2",
+    "wall_s": 0.962,
+    "cpu_s": 6.663,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f1_s2",
+    "wall_s": 0.046,
+    "cpu_s": 0.352,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "select_cols_f2",
+    "wall_s": 0.005,
+    "cpu_s": 0.038,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f2_s0",
+    "wall_s": 0.544,
+    "cpu_s": 3.797,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f2_s0",
+    "wall_s": 0.003,
+    "cpu_s": 0.022,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f2_s1",
+    "wall_s": 1.962,
+    "cpu_s": 13.614,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f2_s1",
+    "wall_s": 0.154,
+    "cpu_s": 1.152,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f2_s2",
+    "wall_s": 2.907,
+    "cpu_s": 18.029,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f2_s2",
+    "wall_s": 0.23,
+    "cpu_s": 1.704,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "select_cols_f3",
+    "wall_s": 0.004,
+    "cpu_s": 0.02,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f3_s0",
+    "wall_s": 1.109,
+    "cpu_s": 7.117,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f3_s0",
+    "wall_s": 0.062,
+    "cpu_s": 0.424,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f3_s1",
+    "wall_s": 1.05,
+    "cpu_s": 7.201,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f3_s1",
+    "wall_s": 0.059,
+    "cpu_s": 0.443,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f3_s2",
+    "wall_s": 1.203,
+    "cpu_s": 8.291,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f3_s2",
+    "wall_s": 0.075,
+    "cpu_s": 0.558,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "select_cols_f4",
+    "wall_s": 0.004,
+    "cpu_s": 0.024,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f4_s0",
+    "wall_s": 0.854,
+    "cpu_s": 5.938,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f4_s0",
+    "wall_s": 0.036,
+    "cpu_s": 0.262,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f4_s1",
+    "wall_s": 0.741,
+    "cpu_s": 5.044,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f4_s1",
+    "wall_s": 0.025,
+    "cpu_s": 0.177,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "train_f4_s2",
+    "wall_s": 1.273,
+    "cpu_s": 8.245,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   {
+    "stage": "predict_f4_s2",
+    "wall_s": 0.08,
+    "cpu_s": 0.581,
+    "peak_rss_mb": 862.2,
+    "threads": 8,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   }
+  ],
+  "wall_s": 19.155,
+  "cpu_s": 127.304,
+  "peak_rss_mb": 862.2,
+  "threads": 8,
+  "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+ },
+ "notes": "M1 ablation drop PAIRINF, config=default",
+ "eval_wall_s": 2.43
+}
