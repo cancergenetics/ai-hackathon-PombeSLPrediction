@@ -92,33 +92,40 @@ peak RSS, class and flag counts, top-k composition, and the in-sample vs out-of-
 
 ### Real run: M2, train-set dev (`results/universe/summary_M2_dev.json`)
 
-Data root `data/frozen_m2`: the feature store of the adopted M2 run. Apple M4, **3 threads**.
+Clean run at commit `a269a5f`, `--no-cache`. Data root `data/frozen_m2`: the feature store of the adopted M2
+run. Apple M4, **3 threads**.
 
 | quantity | value |
 |---|---|
-| pairs scored | 7,693,003 = 3,923·3,922/2; no NaN; row count check passed |
+| pairs scored | 7,693,003 = 3,923·3,922/2; no NaN; row count check passed; padding rows bit-identical across the 4 Ryan blocks |
 | classes | C1 1,620,900 · C2 3,821,722 · C3 2,250,381 |
 | flags | `linked` 353,615 · `viability_unknown` 554,472 · `in_training` 637,564 · `measured_in_ryan` unknown 1,892,561 · with OOF 622,515 |
-| **wall time** | **≈18 min total (1,053 s)**: fit 331 s (stacker nested features 140 s, stacker LightGBM ×3 173 s), universe scoring 717 s (Ryan features from the full training set 613 s in 4 blocks, LF assembly 54 s, prediction 46 s), flags/write 4 s |
-| **peak RSS** | **11.5 GB** (`/usr/bin/time` maxrss 12.1 GB; macOS peak footprint 6.5 GB) |
-| stacker | 734k stacker rows, 475 features; best_iter 119 / 53 / 27 (seeds 0/1/2) |
+| **wall time** | **985 s (16.4 min) total**: fit 289 s (stacker nested features 124 s, stacker LightGBM ×3 152 s), universe scoring 690 s (Ryan features from the full training set 598 s in 4 blocks, LF assembly 49 s, prediction 40 s), flags/write 4 s |
+| **peak RSS** | **12.4 GB** (`/usr/bin/time` maxrss 13.0 GB). This includes about 4.1 GB of memory-mapped feature-store pages (42 G×G matrices). The macOS peak physical footprint was **6.3 GB**. |
+| stacker | 975k stacker rows, 475 features; best_iter 110 / 53 / 27 (seeds 0/1/2) |
+
+A shakedown run before the deterministic-MF fix took 1,053 s with peak RSS 11.5 GB. Its padding rows differed
+by 2.9e-6 because of MF jitter.
 
 The cost is dominated by refitting the Ryan builder (B1, MF, GP, NBR on a 4.1k-gene index) once per 2M-pair
 block, about 150 s each. Larger blocks are faster but use more memory: the block DataFrames are about 1 GB per
 1M pairs.
 
+**Toy, full universe** (`results/universe/toy_summary_M2_dev.json`): 1,200 genes, 719,400 pairs, all checks
+pass, 56 s, peak RSS 2.4 GB.
+
 **In-sample vs out-of-fold.** On the 622,515 measured dev pairs with a dev-CV OOF score (12,992 positives):
 
 | score | AP |
 |---|---|
-| in-sample deliverable `score` | 0.309 |
+| in-sample deliverable `score` | 0.307 |
 | out-of-fold (`M2__20261028T183713__024416`) | 0.201 |
 
 The Spearman correlation between the two is 0.87. In-sample scores are optimistic, as expected, which is why
-the OOF columns exist. 525 of the top-1,000 pairs are in-sample training pairs.
+the OOF columns exist. 522 of the top-1,000 pairs are in-sample training pairs.
 
 **Top-k composition.**
-- Top 1,000: 826 C1, 174 C2, 0 C3.
+- Top 1,000: 822 C1, 178 C2, 0 C3.
 - Top 100,000: 32% C1, 54% C2, 14% C3. C3 is 29% of the universe.
 
 ## 2. `lockbox_eval.py` + `config/lockbox_prereg.yaml`

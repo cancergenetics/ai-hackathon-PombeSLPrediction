@@ -51,9 +51,9 @@
  "output": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/frozen_m2/universe/predictions_M2_dev.parquet",
  "protocol_sha256": "73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230",
  "git": {
-  "git_commit": "07628da97e328af7ed8d3abc76141ed03ad55de6",
-  "git_dirty": true,
-  "git_diff_sha256": "ec2a9052e3397080a0617c3aa3be10693df8e583c3dcf877df5f1f72742d2ebf"
+  "git_commit": "a269a5fb2e40de885c53852210a660734cea5566",
+  "git_dirty": false,
+  "git_diff_sha256": ""
  },
  "checks": {
   "n_genes": 3923,
@@ -62,8 +62,8 @@
   "row_count_ok": true,
   "no_nan_scores": true,
   "pairs_unique_sorted": true,
-  "cover_rows_identical_across_blocks": false,
-  "cover_max_abs_diff": 2.86102294921875e-06
+  "cover_rows_identical_across_blocks": true,
+  "cover_max_abs_diff": 0.0
  },
  "fit_info": {
   "model": "M2",
@@ -92,9 +92,9 @@
   "fits": [
    {
     "seed": 0,
-    "best_iteration": 119,
+    "best_iteration": 110,
     "inner_fold_valid": 0,
-    "valid_ap_weighted": 0.1461995363786366,
+    "valid_ap_weighted": 0.14499511356834302,
     "n_fit": 538915,
     "n_valid": 195367
    },
@@ -120,25 +120,25 @@
   "n_features": 475
  },
  "model_timings_s": {
-  "stacker_features": 140.47,
-  "stacker_rows": 145.53,
-  "stacker_assemble": 9.83,
-  "stacker_train": 172.74,
-  "fit_total": 329.37,
-  "ryan_features": 613.29,
-  "lf_assemble": 53.91,
-  "predict": 46.12
+  "stacker_features": 124.04,
+  "stacker_rows": 124.43,
+  "stacker_assemble": 10.34,
+  "stacker_train": 151.7,
+  "fit_total": 288.81,
+  "ryan_features": 598.04,
+  "lf_assemble": 48.85,
+  "predict": 40.37
  },
  "runtime": {
-  "total_wall_s": 1053.0,
+  "total_wall_s": 984.8,
   "stages_wall_s": {
-   "load_training_pairs": 0.127,
-   "fit": 330.831,
-   "score_universe": 716.502,
-   "flags_and_write": 4.131
+   "load_training_pairs": 0.088,
+   "fit": 288.975,
+   "score_universe": 690.016,
+   "flags_and_write": 4.374
   },
-  "cpu_s": 1527.692,
-  "peak_rss_mb": 11529.3,
+  "cpu_s": 1448.822,
+  "peak_rss_mb": 12404.7,
   "threads": 3,
   "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0",
   "ryan_chunk": 2000000,
@@ -160,46 +160,46 @@
   "with_oof": 622515
  },
  "score_quantiles": {
-  "0.5": -4.765753336367035,
-  "0.9": -3.023103283335554,
-  "0.99": -1.6284445681166702,
-  "0.999": -0.5612939036722407
+  "0.5": -4.758838402408945,
+  "0.9": -3.022762604052049,
+  "0.99": -1.6331197390484755,
+  "0.999": -0.5625509336145923
  },
  "score_mean_by_class": {
-  "C1": -4.795653820037842,
-  "C2": -4.596620559692383,
-  "C3": -4.349634647369385
+  "C1": -4.779970169067383,
+  "C2": -4.588290214538574,
+  "C3": -4.34197473526001
  },
  "top_k_composition": {
   "1000": {
    "class": {
-    "C1": 826,
-    "C2": 174,
+    "C1": 822,
+    "C2": 178,
     "C3": 0
    },
-   "linked": 36,
+   "linked": 34,
    "viability_unknown": 0,
-   "in_training": 525
+   "in_training": 522
   },
   "10000": {
    "class": {
-    "C1": 6297,
-    "C2": 3702,
+    "C1": 6304,
+    "C2": 3695,
     "C3": 1
    },
-   "linked": 524,
+   "linked": 516,
    "viability_unknown": 7,
-   "in_training": 3477
+   "in_training": 3486
   },
   "100000": {
    "class": {
-    "C2": 53733,
-    "C1": 32269,
-    "C3": 13998
+    "C2": 53858,
+    "C1": 32354,
+    "C3": 13788
    },
-   "linked": 5013,
-   "viability_unknown": 507,
-   "in_training": 15835
+   "linked": 5000,
+   "viability_unknown": 515,
+   "in_training": 15853
   }
  },
  "oof_run": "M2__20261028T183713__024416",
@@ -207,14 +207,14 @@
  "in_sample_vs_oof": {
   "n_pairs": 622515,
   "positives": 12992,
-  "ap_in_sample": 0.30908833916611134,
+  "ap_in_sample": 0.30729976649151347,
   "ap_out_of_fold": 0.20141447674899812,
-  "spearman_in_sample_vs_oof": 0.8710936419892756,
+  "spearman_in_sample_vs_oof": 0.8704847589749024,
   "note": "in-sample scores are optimistic on training pairs; use oof_score for measured pairs",
   "by_class_of_pair_in_universe": {
    "C1": {
     "n": 622515,
-    "ap_in_sample": 0.30908833916611134,
+    "ap_in_sample": 0.30729976649151347,
     "ap_out_of_fold": 0.20141447674899812
    }
   }

@@ -1,0 +1,175 @@
+{
+ "model": "M2",
+ "spec": {
+  "kind": "m2_stack",
+  "families": [
+   "LF",
+   "RYAN",
+   "NBR",
+   "GP"
+  ],
+  "init_score": false,
+  "lgbm_config": "default",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "rounds": "inner_early_stopping",
+  "lf_groups": "all",
+  "sims": "all",
+  "ryan_cfg": {},
+  "gp_cfg": {},
+  "drop_noncoding": true,
+  "dev_run_model": "M2",
+  "id": "M2"
+ },
+ "models_sha256": "a2b2e6b27455249faed85e88716f572873dac31ccfbc074204705d892bd0329b",
+ "train_set": "dev",
+ "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_deliv/data/toy",
+ "real_data": false,
+ "output": "/private/tmp/claude-503/-Users-colmclaude-ClaudeExperiments-PombeSL-prediction/b2f61750-ea96-4fbb-9f26-9936c21c7a69/scratchpad/toy_full.parquet",
+ "protocol_sha256": "73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230",
+ "git": {
+  "git_commit": "a269a5fb2e40de885c53852210a660734cea5566",
+  "git_dirty": true,
+  "git_diff_sha256": "f1a417df63c1145e9c9f7e00036ada5444095382fdee446066f7987105aa3bae"
+ },
+ "checks": {
+  "n_genes": 1200,
+  "n_rows": 719400,
+  "expected_rows": 719400,
+  "row_count_ok": true,
+  "no_nan_scores": true,
+  "pairs_unique_sorted": true,
+  "cover_rows_identical_across_blocks": true,
+  "cover_max_abs_diff": 0.0
+ },
+ "fit_info": {
+  "model": "M2",
+  "kind": "m2_stack",
+  "n_train_pairs": 76150,
+  "n_train_positives": 1423,
+  "n_train_genes": 612,
+  "noncoding_dropped": {
+   "pairs": 0,
+   "positives": 0,
+   "genes": []
+  },
+  "train_hash": "70f813597b1b0d8709ca7220af5d0a5c52161e1ead1a59a0c77f6655fa62c78f",
+  "fits": [
+   {
+    "seed": 0,
+    "best_iteration": 51,
+    "inner_fold_valid": 0,
+    "valid_ap_weighted": 0.3373662513357823,
+    "n_fit": 53400,
+    "n_valid": 19752
+   },
+   {
+    "seed": 1,
+    "best_iteration": 227,
+    "inner_fold_valid": 1,
+    "valid_ap_weighted": 0.2714444230450662,
+    "n_fit": 52882,
+    "n_valid": 19473
+   },
+   {
+    "seed": 2,
+    "best_iteration": 489,
+    "inner_fold_valid": 2,
+    "valid_ap_weighted": 0.3130047440125271,
+    "n_fit": 53102,
+    "n_valid": 19810
+   }
+  ],
+  "stacker_cache": "/Users/colmclaude/ClaudeExperiments/psl_wt_deliv/data/toy/cache/deliverable/30db411ba6c06b3a",
+  "n_stacker_rows": 97989,
+  "n_features": 85
+ },
+ "model_timings_s": {
+  "stacker_rows": 0.11,
+  "stacker_assemble": 0.25,
+  "stacker_train": 14.16,
+  "fit_total": 17.16,
+  "ryan_features": 15.98,
+  "lf_assemble": 0.52,
+  "predict": 21.61
+ },
+ "runtime": {
+  "total_wall_s": 56.1,
+  "stages_wall_s": {
+   "load_training_pairs": 0.016,
+   "fit": 17.186,
+   "score_universe": 38.231,
+   "flags_and_write": 0.326
+  },
+  "cpu_s": 126.676,
+  "peak_rss_mb": 2432.5,
+  "threads": 3,
+  "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0",
+  "ryan_chunk": 2000000,
+  "lf_chunk": 500000
+ },
+ "counts": {
+  "class": {
+   "C2": 359856,
+   "C1": 186966,
+   "C3": 172578
+  },
+  "viability_unknown_pairs": 0,
+  "linked_pairs": 0,
+  "linked_window_kb": 300.0,
+  "genes_with_coords": 0,
+  "in_training": 76150,
+  "measured_true": 82717,
+  "measured_unknown": 236883,
+  "with_oof": 0
+ },
+ "score_quantiles": {
+  "0.5": -7.720675667946908,
+  "0.9": -4.645163021033681,
+  "0.99": -1.146082121504069,
+  "0.999": 0.8221562519490316
+ },
+ "score_mean_by_class": {
+  "C1": -7.463354110717773,
+  "C2": -7.230263710021973,
+  "C3": -7.04916524887085
+ },
+ "top_k_composition": {
+  "1000": {
+   "class": {
+    "C2": 513,
+    "C1": 423,
+    "C3": 64
+   },
+   "linked": 0,
+   "viability_unknown": 0,
+   "in_training": 219
+  },
+  "10000": {
+   "class": {
+    "C2": 5381,
+    "C1": 3106,
+    "C3": 1513
+   },
+   "linked": 0,
+   "viability_unknown": 0,
+   "in_training": 1238
+  },
+  "100000": {
+   "class": {
+    "C2": 50585,
+    "C1": 25315,
+    "C3": 24100
+   },
+   "linked": 0,
+   "viability_unknown": 0,
+   "in_training": 10054
+  }
+ },
+ "oof_run": null,
+ "lockbox_oof": null,
+ "in_sample_vs_oof": null
+}
