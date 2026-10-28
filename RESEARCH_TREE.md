@@ -4,6 +4,11 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-28 — M1: design complete (3 review rounds), implementation started
+Literature, data acquisition and design are done. DESIGN.md v3 is the result of 12 independent reviews in two rounds plus a final go/no-go check. Key decisions: labels = Ryan S2 < −2.3 (1.88% positives); universe = non-essential (viable + condition-dependent) protein-coding genes; gene-disjoint splits with a lockbox of 480 genes drawn once; primary metric = pooled AUPRC weighted to the class mix of unmeasured universe pairs (C1/C2/C3); Ryan-derived features only via nested stacking; similarity-transfer (NBR) features as the main lever for unseen genes.
+
+Implementation runs as a vertical slice: Phase A infrastructure (protocol, splits, evaluate, registry, tests), tier-1 label-free features, a toy generator written by a separate agent, and docs fixes are all in progress in parallel. Next: baselines B0/B1/B4, then NBR and the M2 model.
+
 ### 2026-10-28 — M0: project kickoff
 Project initialised: git repo, Python 3.10 venv (`scripts/setup_env.sh`, `requirements.txt`; LightGBM/XGBoost need a libomp rpath fix on this Mac), PROMPT.md saved verbatim. Literature review and data discovery launched in parallel as independent agents.
 
@@ -21,8 +26,12 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [x] 3b. Review round 1 (7 reviewers) → reviews/round1_*.md; disposition in DESIGN.md App. A
   - [!] 3c. Consensus of 4–7 independent reviewers: Ryan-derived features must be out-of-fold with masked-mix training; similarity-transfer (NBR) features are the main lever for unseen genes; select on pooled universe-weighted AUPRC.
   - [x] 3d. DESIGN v2
-  - [~] 3e. Review round 2 (5 reviewers)
-- [ ] 4. Data pipeline, gene ID mapping, labels, splits (+ verification)
+  - [x] 3e. Review round 2 (5 reviewers) → DESIGN v3 (nested stacking replaces masked-mix; precise NBR spec; shared Poisson gene bootstrap; per-pair DAmP exclusion; vertical slice)
+  - [~] 3f. Review round 3 (final go/no-go, 1 fresh reviewer)
+- [~] 4. Phase A infrastructure: protocol.yaml, splits, evaluate.py, registry, tests, B0 smoke test
+  - [~] 4a. Toy generator with known answers (separate agent)
+  - [~] 4b. LITERATURE.md fixes, DATA.md completion + allowlist
+- [~] 4'. Phase B tier-1 features: idmap, PPI (PMID blocklist), SMF/PHEN, CER (docs/INTERFACES.md format)
 - [ ] 5. Baselines
 - [ ] 6. Feature-based models
 - [ ] 7. Advanced models / cross-species transfer
