@@ -129,7 +129,8 @@ def check_prereg_committed(path: Path) -> None:
     top = _git(repo, "rev-parse", "--show-toplevel")
     if top.returncode != 0:
         raise Refused(f"prereg {path} is not inside a git repository")
-    rel = str(path.resolve().relative_to(Path(top.stdout.strip()).resolve()))
+    repo = Path(top.stdout.strip()).resolve()   # run git from the top level: `rel` is relative to it
+    rel = str(path.resolve().relative_to(repo))
     if _git(repo, "ls-files", "--error-unmatch", rel).returncode != 0:
         raise Refused(f"prereg {rel} is not committed (untracked)")
     st = _git(repo, "status", "--porcelain", "--", rel).stdout.strip()

@@ -103,7 +103,10 @@ def test_todo_detection():
     lb = load_script("lockbox_eval")
     assert lb._has_todo({"a": [1, {"b": "TODO"}]}) and not lb._has_todo({"a": ["M2", 3]})
     P = yaml.safe_load((ROOT / "config" / "lockbox_prereg.yaml").read_text())
-    assert lb._has_todo(P), "the committed prereg must stay a template until the PI fills it"
+    # The PI filled the prereg on 2026-10-28 (RESEARCH_TREE decision log). Before that it had to stay a
+    # template; now it must be complete and valid (headline in shortlist, contrasts over shortlist/baselines).
+    assert not lb._has_todo(P)
+    lb.validate_prereg(P, real=False)
     assert P["protocol_sha256"] == protocol.protocol_sha256()
     assert P["lockbox_genes_sha256"] == protocol.load()["lockbox"]["genes_sha256"]
 
@@ -457,3 +460,22 @@ def test_linkage_bin_table_and_wilson():
     assert lo[0] == pytest.approx(0, abs=1e-12) and 0 < hi[0] < 0.35 and lo[1] < 0.5 < hi[1]
     T = ld.bin_table(np.array([5.0, 15.0, 15.0, 2000.0]), np.array([True, False, True, False]), [0, 10, 1000])
     assert T.n_pairs.tolist() == [1, 2, 1] and T.hits.tolist() == [1, 1, 0]
+
+
+def test_prereg_committed_check_in_subdirectory(tmp_path):
+    """Regression (2026-10-28): a committed prereg in a subdirectory (config/) was refused as untracked because
+    git ran with -C <subdir> and a top-level-relative path."""
+    import subprocess
+    lb = load_script("lockbox_eval")
+    g = lambda *a: subprocess.run(["git", "-C", str(tmp_path), *a], check=True, capture_output=True)
+    g("init", "-q"); g("config", "user.email", "t@example.org"); g("config", "user.name", "t")
+    (tmp_path / "config").mkdir()
+    f = tmp_path / "config" / "prereg.yaml"
+    f.write_text("a: 1\n")
+    with pytest.raises(lb.Refused, match="not committed"):
+        lb.check_prereg_committed(f)
+    g("add", "config/prereg.yaml"); g("commit", "-q", "-m", "p")
+    lb.check_prereg_committed(f)                      # committed -> accepted
+    f.write_text("a: 2\n")
+    with pytest.raises(lb.Refused, match="uncommitted modifications"):
+        lb.check_prereg_committed(f)

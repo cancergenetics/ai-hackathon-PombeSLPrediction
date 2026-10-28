@@ -1,0 +1,2 @@
+timestamp	event	git_commit	git_dirty	prereg_path	prereg_sha256	user	data_root	override	reason	detail
+2026-10-28T23:43:28	refused	94a88f79f3ea5007779186f4a70c00731460f405	False	config/lockbox_prereg.yaml	11d462c1b03658aee3ae0fe8c7ca94d4a757aeb960f5586e712b74b2ef4711da	colmclaude	/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/processed	False		prereg config/lockbox_prereg.yaml is not committed (untracked)
