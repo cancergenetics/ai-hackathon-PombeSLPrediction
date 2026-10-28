@@ -10,3 +10,4 @@ data/cache/
 *.pkl
 *.joblib
 *.pt
+results/eda/

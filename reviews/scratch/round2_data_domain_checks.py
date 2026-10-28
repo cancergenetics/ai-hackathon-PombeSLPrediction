@@ -35,6 +35,7 @@ mm = m[m.main_allele].copy()
 mm["damp"] = mm.allele_class == "DAmP"
 gid = dict(zip(g.ryan_id, g.pombase_id))
 mm["qa"] = mm.query_ryan_id.map(gid); mm["ar"] = mm.array_ryan_id.map(gid)
+mm = mm.dropna(subset=["qa", "ar"])
 mm["a"] = mm[["qa", "ar"]].min(axis=1); mm["b"] = mm[["qa", "ar"]].max(axis=1)
 dg = gg[gg.allele_classes.fillna("").str.contains("DAmP") & (gg.viability.isin(uni_via) | gg.viability.isna())]
 print(dg[["pombase_id", "gene_name", "viability", "is_array", "allele_classes"]].to_string())

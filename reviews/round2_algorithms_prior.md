@@ -3,15 +3,9 @@
 Reviewer: combined agent · 2026-10-28
 
 ## Verdict
-The round-1 AL and PW points were adopted correctly, with two gaps:
-- PW3(ii), the smoothed ε feature, is missing.
-- PW11 is still pending. LITERATURE.md still says prevalence ≈0.04 and 131 conditions.
-
-NBR and the masked mix are right but **not yet implementable unambiguously**:
-- They ignore Ryan's query×array structure.
-- k, the weights and the way inner folds produce C1/C2/C3-like rows are all undefined.
-
-Compute is feasible: W·Y·Wᵀ on a 5.2k² float32 matrix takes 1.0 s here.
+- **Round 1:** the AL and PW points were adopted correctly. Gaps: PW3(ii) is missing, and PW11 is pending (LITERATURE.md still says 0.04 and 131 conditions).
+- **NBR and masked mix:** right, but not yet unambiguous. They ignore the query×array structure, and k, the weights and the inner-fold row construction are undefined.
+- **Compute:** feasible. W·Y·Wᵀ on a 5.2k² matrix takes 1.0 s.
 
 ## Changes
 
@@ -39,42 +33,25 @@ Compute is feasible: W·Y·Wᵀ on a 5.2k² float32 matrix takes 1.0 s here.
 - **Scale:** use rates, not counts, so that having 80% vs 100% of the data does not shift the scale.
 
 **3. Treat B1 `init_score` as a Ryan-fold feature. (MUST)**
-- Training offsets come from the inner-fold β.
-- In-sample β leaks labels into a supposedly "non-Ryan" M1.
+Training offsets come from the inner-fold β; in-sample β leaks labels into the "non-Ryan" M1.
 
 **4. Collapse M1 → M1N → M2. (SHOULD)**
-- Build the M2 table once and run M1 and M1N as group ablations. This reaches the best model about two rungs sooner.
-- New order: B0, B1, B4, M2, then ablations, the M4 feature, and M3/M5.
-- B2/B3 become free single-feature AUPRCs.
+Build the M2 table once and run M1/M1N as group ablations, which is about two rungs faster. Order: B0, B1, B4, M2, ablations, the M4 feature, M3/M5. B2/B3 become free single-feature AUPRCs.
 
 **5. Cap tuning cost. (SHOULD)**
-- **Problem:** 30 configs × 5 folds × ~20 ablations × seeds comes to roughly 15–20 h.
-- **Fix:**
-  - Run the full random search only for ladder rungs. Ablations reuse the parent's configuration, with inner-split early stopping.
-  - Tune MF once per outer fold, on inner fold 1.
-  - Freeze the seed count: 3 for the ladder, 5 for the shortlist.
+- **Problem:** 30 configs × 5 folds × ~20 ablations × seeds ≈ 15–20 h.
+- **Fix:** full search only for ladder rungs; ablations reuse the parent's configuration with inner early stopping; tune MF once per outer fold; seeds 3 (ladder) and 5 (shortlist).
 
 **6. Cut or gate. (SHOULD)**
-- M3: one budgeted attempt, after M2.
-- M5: a rank/logit average of ≤3 models, since LightGBM is already the stacker.
-- E-TARGET: two variants only (binary vs Huber).
-- The per-class-model comparison: run it once.
+M3: one attempt, after M2. M5: an average of ≤3 models, since LightGBM is already the stacker. E-TARGET: binary vs Huber only. Per-class models: one comparison.
 
-**7. Add Costanzo neighbourhood-smoothed ε (PW3(ii)). (COULD)**
-- One W·E·Wᵀ product over the ortholog profile neighbours.
+**7. (COULD)** Add Costanzo smoothed ε (PW3(ii)) as one W·E·Wᵀ product.
 
-**8. M4. (COULD)**
-- Rank-normalise inputs within each species (SINaTRA).
-- Add the zero-shot cerevisiae-trained score as a baseline row.
+**8. (COULD)** M4: rank-normalise inputs within each species, and add the zero-shot cerevisiae score as a baseline row.
 
-**9. Homology. (SHOULD)**
-- Also report the NBR-ESM gain on the paralog-family split. Neighbour transfer is what homology leakage inflates most.
+**9. (SHOULD)** Report the NBR-ESM gain on the paralog-family split too, since homology leakage inflates neighbour transfer most.
 
-**10. Apply the LITERATURE.md fixes before Phase B. (SHOULD)**
-- Agents anchor on the 0.04 prevalence.
+**10. (SHOULD)** Apply the LITERATURE.md fixes before Phase B. Agents anchor on 0.04.
 
 ## Compute
-- Memmap store: about 2 GB.
-- Per outer fold: 6 feature builds × ~20 matrix products × ~1 s, plus MF.
-- Bootstrap: 1,000 resamples over 1M rows take about 2 min per model.
-- Nothing is infeasible on 10 cores and 32 GB.
+Store ≈2 GB; ~2 min of matrix products per outer fold; bootstrap ≈2 min per model. Nothing infeasible.
