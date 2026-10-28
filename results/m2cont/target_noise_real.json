@@ -1,0 +1,9 @@
+{
+ "split_seed": 20261028,
+ "fold": 0,
+ "n_pairs": 456111,
+ "n_genes": 1523,
+ "split_half_rho_b1": 0.7823096168977871,
+ "split_half_rho_theta": 0.8927305161908061,
+ "rho_b1_vs_theta_full": 0.907461131013765
+}
