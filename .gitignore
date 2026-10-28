@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 .DS_Store
 # Raw and processed data are never committed (licenses/size); scripts in scripts/ re-download them, checksums in DATA.md
-data/raw/
+data/
 data/processed/
 data/cache/
 # large model artefacts
