@@ -4,6 +4,11 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-28 — M2: baselines and first model
+Infrastructure is built, independently verified (all numbers re-derived; test gaps closed, 11/11 planted mutants caught) and frozen (protocol sha256 73edd56d…). Label-free features cover 9 groups (PPI with PMID blocklist, phenomics/SMF, Costanzo orthologs, expression, KO proteome, localisation, sequence/ESM-2, conservation). Dev results (pooled universe-weighted AUPRC; prevalence 0.021): B1 degree 0.103, B4 MF 0.108, NBR mean 0.125, **M1 LightGBM 0.145** (C3 0.088 vs ≈0.02 for degree baselines). An oracle diagnostic (true held-out-gene propensity) reaches 0.220, so predicting how "hub-like" an unseen gene is matters most.
+
+Next: M2 (nested stacking adding Ryan-derived, NBR and an explicit gene-propensity model) with clean reruns and paired comparisons; then E-TARGET, M3/M5, M4-as-feature. All runs so far were flagged dirty (fixed); adoption decisions wait for clean reruns.
+
 ### 2026-10-28 — M1: design complete (3 review rounds), implementation started
 Literature, data acquisition and design are done. DESIGN.md v3 is the result of 12 independent reviews in two rounds plus a final go/no-go check. Key decisions: labels = Ryan S2 < −2.3 (1.88% positives); universe = non-essential (viable + condition-dependent) protein-coding genes; gene-disjoint splits with a lockbox of 480 genes drawn once; primary metric = pooled AUPRC weighted to the class mix of unmeasured universe pairs (C1/C2/C3); Ryan-derived features only via nested stacking; similarity-transfer (NBR) features as the main lever for unseen genes.
 
@@ -38,7 +43,9 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [x] B0 random 0.0209 · B1 additive logit 0.103 (C1 .207/C2 .080/C3 .022) · B4 logistic MF 0.108 (C1 .232) · B2 Costanzo ε 0.026 · B3 Costanzo profile 0.025
   - [!] DIAG oracle propensity (true held-out hit rates) = 0.220 (C3 .235) → predicting gene propensity for unseen genes is the dominant lever
   - [x] DIAG NBR cross-source mean = 0.125 (C2 .117 > B1 .080); C3 still ≈ chance for all single scores
-- [~] 7. M1 LightGBM on label-free features (pair assembler src/pairs.py)
+- [x] 7. M1 LightGBM on label-free features (src/pairs.py; 358 features/9 groups): primary 0.145 ± 0.011 (C1 .214/C2 .134/C3 .088); M1−B1 +0.041 [0.031, 0.051]; gene-permuted control 0.071 (C3 → prevalence) ✓; ablation: PHEN Δ+0.022, CER +0.004, others ≈0; universe scoring 7.14M pairs in 80 s
+  - [!] M1 signal is mostly gene-level "sickness" (phenotype breadth, cerevisiae-ortholog negative rate, ortholog fitness); pair-similarity features add little
+- [~] 8. M2: nested stacking = label-free + Ryan/NBR + explicit gene-propensity model (β̂ from gene features); clean reruns of B1/B4/M1
 - [ ] 6. Feature-based models
 - [ ] 7. Advanced models / cross-species transfer
 - [ ] 8. Final evaluation on held-out test → REPORT.md
