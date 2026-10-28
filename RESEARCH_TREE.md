@@ -76,7 +76,7 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [!] Ryan has no genes that are rarely *measured*: every seen dev gene has ≥106 training pairs. The practical "rarely seen" case is genes with few *hits*. For seen genes with 0 / 1–2 / 3–9 / 10+ training hits, C2 AUPRC is 0.008 / 0.022 / 0.055 / 0.194 against prevalence 0.25 / 0.42 / 0.93 / 4.3% (lift ≈3–6×). Absolute AUPRC follows the gene's base rate.
   - [!] E-FEWSHOT (reveal k measured pairs per held-out gene). Pooled C2+C3 AUPRC: k=0 0.149, k=5 0.143 (−0.006 [−0.015, +0.003]), k=20 0.170 (+0.021 [0.010, 0.031]; C3 +0.043). A gene with about 5 measurements is predicted no better than an unmeasured one: the stacker never saw sparse genes, so a noisy β replaces the regularised GP prediction. This does not affect the deliverable, where every Ryan gene has ≥100 pairs. Follow-up: add sparse-reveal rows to the inner folds, or treat genes with < 20 partners as unseen.
 - [-] 9. XSP cross-species gene/pair transfer (docs/features_xsp.md): cer gene-propensity CV ρ 0.391, transfer ρ 0.246; merged into the store, null on M2 (item 10)
-- [ ] 15. M5 rank ensemble / M3 neural (≤1 attempt each)
+- [~] 15. M5 rank ensemble / M3 neural (≤1 attempt each; branch m5m3)
 - [ ] 16. Lockbox: fill config/lockbox_prereg.yaml (shortlist, headline), commit, run scripts/lockbox_eval.py once
 - [ ] 17. Final model retrained on all Ryan (dev + lockbox) → universe predictions
 - [ ] 18. REPORT.md
@@ -88,8 +88,8 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 4. [-] C3-focused low-capacity model (blend null) (monotone constraints on sickness/propensity features)
 5. [x] E-TARGET (Huber on S2) → adopted
 6. [~] E-CONT: continuous targets for the Ryan-derived GP / NBR features (last attempt aimed at C3)
-7. [ ] Rank-average ensemble (M5) of incumbent + MF + NBR-mean
-8. [ ] M3 neural inductive pair model (one attempt)
+7. [~] Rank-average ensemble (M5) of incumbent + MF + NBR-mean
+8. [~] M3 neural inductive pair model (one attempt)
 
 ## Decision log
 - 2026-10-28: E-FEWSHOT k=5 non-improvement is not fixed now. Why: Ryan contains no sparsely-measured genes (min 106 pairs), so neither dev CV, the lockbox nor the deliverable exercises that regime. Sparse-reveal stacker training goes in REPORT follow-ups.
