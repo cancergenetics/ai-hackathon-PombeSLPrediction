@@ -1,4 +1,4 @@
-# Lockbox pre-registration (DESIGN.md §3 "Lockbox"). TEMPLATE — the PI fills every TODO, commits this file,
+# Lockbox pre-registration (DESIGN.md §3 "Lockbox"). FILLED by the PI 2026-10-28 (was a template), committed,
 # and only then runs scripts/lockbox_eval.py (which refuses while any TODO remains, while this file is
 # uncommitted or modified, or if results/lockbox/access_log.tsv already records a completed run for this
 # file's sha256). Changing ANY byte after the run changes the sha256: the run is tied to these exact bytes.
@@ -8,8 +8,8 @@ prereg_version: 1
 protocol_sha256: 73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230   # config/protocol.yaml
 lockbox_genes_sha256: 77fb02e1a5d688884e0a282c49c9f100840ee0f1988b74247abee150228d3457   # config/lockbox_genes.txt
 models_file: config/models.yaml
-models_sha256: TODO          # sha256 of config/models.yaml at code_commit (exact model configs)
-code_commit: TODO            # full git hash; HEAD may differ from it only outside src/, scripts/, config/models.yaml,
+models_sha256: 8d2e29f528bae4d4d633482bcd6db382b81655c7477e59beab1c0924c01a87ed   # sha256 of config/models.yaml at code_commit (exact model configs)
+code_commit: be18596db2f437a60951d4b0f008a0a1a5adac49   # full git hash; HEAD may differ from it only outside src/, scripts/, config/models.yaml,
                              # config/protocol.yaml, config/deliverable.yaml (checked with git diff)
 
 # ---- models ------------------------------------------------------------------------------------------------
@@ -19,9 +19,11 @@ code_commit: TODO            # full git hash; HEAD may differ from it only outsi
 # Available ids (config/models.yaml): M2r_huber (incumbent, Huber stacker, seeds 0-2), M2r_bag5_huber (Huber, 0-4),
 # M2 (binary stacker), M2_init, M1N, M1, B1_additive_logit, B4_logistic_MF. The stacker objective of each id is
 # part of its spec (`objective`, `etarget`), so the models_sha256 below pins it.
-shortlist:
-  - TODO                     # e.g. M2r_huber
-headline_model: TODO         # reported and SHIPPED (scripts/predict_all_pairs.py --train-set all) whatever the
+shortlist:                   # PI 2026-10-28: incumbent + the two previous ladder incumbents
+  - M2r_huber
+  - M2
+  - M1
+headline_model: M2r_huber    # reported and SHIPPED (scripts/predict_all_pairs.py --train-set all) whatever the
                              # lockbox ranking shows
 baselines: [B1_additive_logit, B4_logistic_MF]
 
@@ -30,7 +32,7 @@ baselines: [B1_additive_logit, B4_logistic_MF]
 #                 note: with `all`, M2r_huber is retrained with seeds 0-4, i.e. as M2r_bag5_huber);
 #   model         each model keeps its own config/models.yaml seeds (M2r_huber 0-2 = the adopted incumbent);
 #   [list]        explicit seeds for every seeded model.
-seeds: all                   # TODO-PI: keep `all` (DESIGN §3) or switch to `model` (ship M2r_huber exactly as adopted)
+seeds: model                 # PI 2026-10-28: evaluate each model exactly as adopted (M2r_huber seeds 0-2); see tree decision log
 
 # Boosting rounds for the all-dev retrain, fixed from the dev-CV procedure (no lockbox information):
 #   m2_stack: per seed s, early stopping (patience 100, max 2000 rounds) on inner fold j = s mod 5 of the
@@ -63,5 +65,7 @@ metric:
 holm_family:
   alpha: 0.05
   contrasts:                 # [a, b] pairs tested as Delta = primary(a) - primary(b)
-    - [TODO, B1_additive_logit]
-    - [TODO, B4_logistic_MF]
+    - [M2r_huber, B1_additive_logit]
+    - [M2r_huber, B4_logistic_MF]
+    - [M2r_huber, M1]
+    - [M2r_huber, M2]
