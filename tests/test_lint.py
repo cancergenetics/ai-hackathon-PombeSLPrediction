@@ -123,7 +123,8 @@ import ast  # noqa: E402
 import fnmatch  # noqa: E402
 
 # Only these files may touch src.evaluate's label-returning helpers. Keep explicit and short.
-EVAL_HELPER_ALLOW = ("scripts/run_*.py", "scripts/lockbox_eval.py", "src/evaluate.py")
+EVAL_HELPER_ALLOW = ("scripts/run_*.py", "scripts/lockbox_eval.py", "src/evaluate.py",
+                     "scripts/rarely_seen.py")  # report-only evaluation of saved OOF preds (PI, 2026-10-28)
 # Helpers that return (or join) eval labels. The AST test below checks this set covers every function of
 # src/evaluate.py that touches the label file, so a newly added label helper cannot slip through.
 LABEL_HELPERS = {"prepare", "_labels_for", "_run_frame"}

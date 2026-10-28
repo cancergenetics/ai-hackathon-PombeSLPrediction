@@ -89,10 +89,9 @@ def patched_fold_split(split_seed=None, fold: int = 0):
     if k == 0:
         return tr, ev
     rev = reveal_pairs(split_seed, fold, k)
-    lab = data.labels_dev()[data.TRAIN_COLUMNS]
+    lab = data.dev_pairs()  # training-eligible dev pairs (train_drop excluded) via the sanctioned helper
     add = rev.merge(lab, on=["gene_a", "gene_b"], how="left")
-    assert len(add) == len(rev) and add.y.notna().all()
-    assert not data.labels_dev().merge(rev, on=["gene_a", "gene_b"]).train_drop.any()
+    assert len(add) == len(rev) and add.y.notna().all()  # also proves no revealed pair is train_drop
     tr2 = pd.concat([tr, add], ignore_index=True)
     return tr2, eval_set(split_seed, fold)
 

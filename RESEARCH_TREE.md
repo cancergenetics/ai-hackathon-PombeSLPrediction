@@ -77,7 +77,10 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - Measured pairs: OOF AP 0.211 (in-sample 0.337).
   - Top 100k pairs: 34% C1 / 49% C2 / 17% C3.
   - [!] The Huber stacker is not invariant to LightGBM thread count; the binary stacker is. Δ between 2 and 6 threads: primary −6e-7, max per-row 0.027. The lockbox and final runs therefore use a fixed thread count.
-- [~] 13. E-CONT rung (branch m2cont): GP / NBR built from continuous −min(S2,0) instead of binary hits — aimed at C2/C3
+- [-] 13. E-CONT rung (docs/m2cont.md; merged 8236f70): GP / NBR built from continuous −min(S2,0). **Null** (rung failure #1 after Huber):
+  - GP 0.1791 (−0.0001), NBR 0.1785 (−0.0007), both 0.1790 (−0.0002); all CIs include 0. Runtime 841–1,144 s per variant.
+  - The toy check passed (ρ 0.81 vs 0.55), and θ is more reliable on real data (split-half 0.89 vs 0.78). But θ vs β on real data is ρ 0.91, and RYAN/NBR `negs_*` were already continuous.
+  - [!] C3 is limited by the label-free inputs to the gene-propensity model, not by target noise. The C3 stop rule now applies: no more C3-aimed rungs.
 - [x] 14. Rarely-seen genes (docs/rarely_seen.md; merged e9efd28; report-only; 4,471 s)
   - [!] Ryan has no genes that are rarely *measured*: every seen dev gene has ≥106 training pairs. The practical "rarely seen" case is genes with few *hits*. For seen genes with 0 / 1–2 / 3–9 / 10+ training hits, C2 AUPRC is 0.008 / 0.022 / 0.055 / 0.194 against prevalence 0.25 / 0.42 / 0.93 / 4.3% (lift ≈3–6×). Absolute AUPRC follows the gene's base rate.
   - [!] E-FEWSHOT (reveal k measured pairs per held-out gene). Pooled C2+C3 AUPRC: k=0 0.149, k=5 0.143 (−0.006 [−0.015, +0.003]), k=20 0.170 (+0.021 [0.010, 0.031]; C3 +0.043). A gene with about 5 measurements is predicted no better than an unmeasured one: the stacker never saw sparse genes, so a noisy β replaces the regularised GP prediction. This does not affect the deliverable, where every Ryan gene has ≥100 pairs. Follow-up: add sparse-reveal rows to the inner folds, or treat genes with < 20 partners as unseen.
@@ -93,7 +96,7 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 3. [-] Cross-species gene-propensity transfer (XSP null): learn cerevisiae gene GI degree from cerevisiae ESM/PPI (Costanzo labels), apply to pombe genes (esp. without orthologs) → gene feature (M4-as-feature)
 4. [-] C3-focused low-capacity model (blend null) (monotone constraints on sickness/propensity features)
 5. [x] E-TARGET (Huber on S2) → adopted
-6. [~] E-CONT: continuous targets for the Ryan-derived GP / NBR features (last attempt aimed at C3)
+6. [-] E-CONT: continuous targets for the Ryan-derived GP / NBR features (null)
 7. [~] Rank-average ensemble (M5) of incumbent + MF + NBR-mean
 8. [~] M3 neural inductive pair model (one attempt)
 
