@@ -23,6 +23,26 @@
     "pass": true,
     "detail": "log: model=esm2_t33_650M_UR50D device=mps wall=2579.1s cpu_fallbacks=0"
   },
+  "cerevisiae_no_nan_inf": {
+    "pass": true,
+    "detail": ""
+  },
+  "cerevisiae_float32": {
+    "pass": true,
+    "detail": ""
+  },
+  "cerevisiae_index_unique": {
+    "pass": true,
+    "detail": ""
+  },
+  "cerevisiae_no_degenerate_rows": {
+    "pass": true,
+    "detail": "n=6722 dim=1280 norm range=(4.82,10.20)"
+  },
+  "cerevisiae_log_consistent": {
+    "pass": true,
+    "detail": "log: model=esm2_t33_650M_UR50D device=mps wall=3837.3s cpu_fallbacks=0"
+  },
   "pombe_all_protein_coding_covered": {
     "pass": true,
     "detail": "protein_coding=5126 covered=5126 missing=0 [] extra_in_embeddings=0 []"
@@ -30,6 +50,10 @@
   "ryan_protein_coding_genes_covered": {
     "pass": true,
     "detail": "ryan_pc=2400 missing=0 []"
+  },
+  "cerevisiae_all_SGD_orfs_covered": {
+    "pass": true,
+    "detail": "fasta_records=6722 embedded=6722"
   },
   "positive_control_pombe_paralogs": {
     "pass": true,
@@ -39,5 +63,26 @@
     "mean_random": 0.9326672505724198,
     "auc": 0.9520321085672083,
     "perm_p": 0.000999000999000999
+  },
+  "positive_control_pombe_cerevisiae_one2one_orthologs": {
+    "pass": true,
+    "detail": "n_pairs=2064 mean_cos_related=0.9901 mean_cos_random=0.9227 AUC=0.988 perm_p=0.0010 null_half_split_diff=-0.0001",
+    "n_pairs": 2064,
+    "mean_related": 0.9900628796042625,
+    "mean_random": 0.9227183860901846,
+    "auc": 0.9875214147286822,
+    "perm_p": 0.000999000999000999
+  },
+  "determinism_rerun_bit_identical": {
+    "pass": true,
+    "detail": "proteins=[np.str_('SPBC713.07c'), np.str_('SPBC1604.25'), np.str_('SPCC61.04c'), np.str_('SPBC1271.14'), 'SPCC550.14'] device=mps"
+  },
+  "rerun_matches_stored": {
+    "pass": true,
+    "detail": "min_cosine=1.0000000 max_abs_diff=9.54e-07"
+  },
+  "windowed_embedding_closer_to_own_first_window": {
+    "pass": true,
+    "detail": "n_long=20 cos_own=0.9981 cos_other_long=0.9643 frac_own_is_best_match=1.00"
   }
 }
