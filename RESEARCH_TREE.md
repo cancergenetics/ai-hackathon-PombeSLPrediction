@@ -29,6 +29,7 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 - [ ] 8. Final evaluation on held-out test → REPORT.md
 
 ## Decision log
+- 2026-10-28: **Lockbox drawn** (scripts/draw_lockbox.py; 480/2404 S2 genes; seed 20261028; config/lockbox_genes.txt sha256 77fb02e1a5d688884e0a282c49c9f100840ee0f1988b74247abee150228d3457). From now on all analyses use dev genes only. Why now: R2 external PI — prevent further exposure.
 - 2026-10-28: Lockbox exposure note — during R1 review two reviewers ran exploratory probes on ALL Ryan pairs (random 10% pair hold-out; per-gene propensity variance demo). No model/feature selection was made from them; lockbox genes not yet drawn. Logged for transparency.
 - 2026-10-28: DESIGN v2 — universe = viable + condition-dependent (+ Ryan deletion strains of unknown viability); primary metric = pooled AUPRC weighted to unmeasured-universe class mix; Koch 2012 SMF rejected (E-MAP-derived).
 - 2026-10-28: Labels = Ryan Dataset S2 (authors' per-pair averaged S) < −2.3; raw-scale labels only as sensitivity analysis. Why: brief specifies one quantitative value per pair; S2 is the canonical per-pair matrix.
