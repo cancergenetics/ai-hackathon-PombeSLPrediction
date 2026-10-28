@@ -110,6 +110,31 @@ def fold_labels(split_seed=None, fold: int = 0, part: str = "train") -> pd.DataF
     return fold_split(split_seed, fold)[0]
 
 
+def protein_coding_genes() -> set:
+    """PomBase protein-coding genes = the feature-store gene order (<data root>/features/genes.txt,
+    docs/INTERFACES.md)."""
+    f = protocol.data_root() / "features" / "genes.txt"
+    if not f.exists():
+        raise FileNotFoundError(f"{f} not found: protein-coding gene list (feature store) not built")
+    return {g for g in f.read_text().split() if g}
+
+
+def drop_noncoding(pairs: pd.DataFrame, genes=None) -> pd.DataFrame:
+    """Drop pairs involving a gene that is not protein-coding (pseudogenes, ncRNAs, unmapped IDs;
+    DESIGN.md §1). `genes` defaults to `protein_coding_genes()`. Returns a new frame with a fresh
+    RangeIndex; `.attrs['noncoding_dropped']` = {'pairs': n, 'positives': n_pos (if y present),
+    'genes': sorted dropped genes}. Eval pairs never need this (both genes are in the universe)."""
+    g = protein_coding_genes() if genes is None else set(genes)
+    keep = pairs.gene_a.isin(g).to_numpy() & pairs.gene_b.isin(g).to_numpy()
+    out = pairs[keep].reset_index(drop=True)
+    bad = pairs.loc[~keep, ["gene_a", "gene_b"]].to_numpy().ravel()
+    out.attrs["noncoding_dropped"] = {
+        "pairs": int((~keep).sum()),
+        "positives": int(pairs.y[~keep].sum()) if "y" in pairs else None,
+        "genes": sorted({x for x in bad if x not in g})}
+    return out
+
+
 def all_eval_pairs(split_seed=None) -> pd.DataFrame:
     n = protocol.load()["dev_cv"]["n_folds"]
     return pd.concat([fold_split(split_seed, k)[1] for k in range(n)], ignore_index=True)
