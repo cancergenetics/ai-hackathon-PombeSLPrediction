@@ -75,3 +75,10 @@ adoption:
 # Diagnostic only: shrunken gene mean of t (m_g n_g / (n_g + alpha)).
 toy_check:
   primary_margin: 0.05
+
+# Amendment 2 (2026-10-28 ~22:50, AFTER the three dev-split variant results were seen; logged in docs/m2cont.md):
+# PI note: the Huber stacker is not invariant to LightGBM thread count (primary delta ~1e-6, per-row up to
+# 0.027). The incumbent run above used 6 threads; all E-CONT runs use 4. The incumbent is therefore re-run at
+# 4 threads on the primary split (same code path as the variants) and every variant is ALSO compared with that
+# re-run. The adoption verdicts are reported against both; the same-thread comparison is the like-for-like one.
+# Nothing else changes.

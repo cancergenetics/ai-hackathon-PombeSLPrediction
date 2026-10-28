@@ -22,7 +22,10 @@ Stages
             outer-level held-out canary is tests/test_m2cont.py: the builder only ever receives training pairs.)
   features  add-on tables for --split-seed (2 folds in parallel x 2 threads); --perm = gene-permuted control
   run       --variants (config variants, M2r_huber = incumbent comparator, <variant>_perm = control)
-  compare   --pairs A:B[:A7:B7],...  model names (latest clean run at HEAD, or as registered) or run ids
+  compare   --pairs A:B[:A7:B7],...  model names (incumbent from config, others from results/m2cont/summary.json)
+            or run ids
+  perclass  diagnostic: paired per-class deltas + CI (shared gene bootstrap, one-class weightings), --pairs A:B
+  noise     diagnostic: split-half reliability of B1 beta vs continuous theta on real fold-0 training pairs
 """
 from __future__ import annotations
 
@@ -450,6 +453,60 @@ def stage_canary(j: int = 0) -> dict:
     return res
 
 
+def stage_perclass(pairs: str) -> dict:
+    """Diagnostic (not an adoption rule): paired per-class deltas with the shared gene bootstrap, using
+    one-class weightings ({C: 1, others: 0}) in src/evaluate.bootstrap_replicates -> fold-mean within-class AP."""
+    from src.evaluate import _ci, _run_frame, bootstrap_counts, bootstrap_replicates, load_run
+    W = {c: {cc: float(cc == c) for cc in protocol.CLASSES} for c in protocol.CLASSES}
+    p = out_dir() / "perclass.json"
+    out = json.loads(p.read_text()) if p.exists() else {}
+    for item in pairs.split(","):
+        a, b = item.split(":")
+        A, B = load_run(resolve_run(a)), load_run(resolve_run(b))
+        da, db = _run_frame(A), _run_frame(B)
+        key = ["gene_a", "gene_b", "fold"]
+        db = db.set_index(key).loc[pd.MultiIndex.from_frame(da[key])].reset_index()
+        counts, gidx = bootstrap_counts(data.dev_folds(A["split_seed"]).index, A["n_boot"])
+        ones = np.ones((1, counts.shape[1]), counts.dtype)
+        rec = {}
+        for c in protocol.CLASSES:
+            w = {c: W[c]}
+            pa = bootstrap_replicates(da, ones, gidx, w)[c][0]
+            pb = bootstrap_replicates(db, ones, gidx, w)[c][0]
+            ra, rb = bootstrap_replicates(da, counts, gidx, w)[c], bootstrap_replicates(db, counts, gidx, w)[c]
+            lo, hi = _ci(ra - rb, protocol.load()["adoption"]["ci_level"])
+            rec[c] = {"a": float(pa), "b": float(pb), "delta": float(pa - pb), "ci": [float(lo), float(hi)]}
+        out[f"{a}_vs_{b}"] = rec
+        print(a, "-", b, {c: f"{r['delta']:+.4f} [{r['ci'][0]:+.4f}, {r['ci'][1]:+.4f}]" for c, r in rec.items()},
+              flush=True)
+    p.write_text(json.dumps(out, indent=1))
+    return out
+
+
+def stage_noise(split_seed=None, k: int = 0, seed: int = 0) -> dict:
+    """Diagnostic: split-half reliability of the GP targets on real outer-training pairs of fold k. Pairs are
+    split 50/50 at random; B1 beta and the continuous theta are fitted on each half; Spearman across genes
+    with >= 20 pairs in each half. Higher = less noisy target. Aggregate numbers only."""
+    from scipy.stats import spearmanr
+    from src.models import m2
+    from src.ryanfeat import _clean_train, fit_b1
+    tr = _clean_train(m2.fold_pairs(split_seed, k)[0])
+    h = np.random.default_rng(seed).random(len(tr)) < 0.5
+    halves = [tr[h].reset_index(drop=True), tr[~h].reset_index(drop=True)]
+    cnt = [pd.concat([x.gene_a, x.gene_b]).value_counts() for x in halves]
+    genes = sorted(set(cnt[0].index[cnt[0] >= 20]) & set(cnt[1].index[cnt[1] >= 20]))
+    b = [fit_b1(x, R.ryan_cfg()["b1_C"])[1] for x in halves]
+    t = [m2.fit_additive_cont(x)[0] for x in halves]
+    full_b, full_t = fit_b1(tr, R.ryan_cfg()["b1_C"])[1], m2.fit_additive_cont(tr)[0]
+    res = {"split_seed": data._seed(split_seed), "fold": k, "n_pairs": int(len(tr)), "n_genes": len(genes),
+           "split_half_rho_b1": float(spearmanr(b[0][genes], b[1][genes]).correlation),
+           "split_half_rho_theta": float(spearmanr(t[0][genes], t[1][genes]).correlation),
+           "rho_b1_vs_theta_full": float(spearmanr(full_b[genes], full_t[genes]).correlation)}
+    print(res, flush=True)
+    (out_dir() / "target_noise_real.json").write_text(json.dumps(res, indent=1))
+    return res
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--stages", default="features,run")
@@ -481,6 +538,10 @@ def main() -> int:
         stage_run(args.split_seed, spec, SimStore(names=SimStore().names), vn, args)
     if "compare" in st:
         stage_compare(args.pairs, args)
+    if "perclass" in st:
+        stage_perclass(args.pairs)
+    if "noise" in st:
+        stage_noise(args.split_seed)
     print(f"peak RSS {peak_rss_mb():.0f} MB")
     return 0
 

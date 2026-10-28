@@ -1,0 +1,77 @@
+{
+ "M2c_gp_vs_M2r_huber": {
+  "run_a": "M2c_gp__20261028T215430__d5782a",
+  "run_b": "M2r_huber__20261028T205545__7b5e9e",
+  "model_a": "M2c_gp",
+  "model_b": "M2r_huber",
+  "delta": -5.695714586126388e-05,
+  "ci_lo": -0.0018001706599807515,
+  "ci_hi": 0.0020098274540418593,
+  "delta_all_pairs": 0.00013906315243228384,
+  "ci_all_pairs": [
+   -0.0018447582048403887,
+   0.0024527911612982063
+  ],
+  "delta_equal": 0.00020891491275357166,
+  "ci_equal": [
+   -0.0017446819465916168,
+   0.0025328994968425297
+  ],
+  "sign_flip_veto": false,
+  "clean": true,
+  "alt_delta": null,
+  "adopt": false,
+  "reason": "CI includes/below 0; delta < 0.005",
+  "timestamp": "20261028T222618"
+ },
+ "M2c_nbr_vs_M2r_huber": {
+  "run_a": "M2c_nbr__20261028T221120__f7dd74",
+  "run_b": "M2r_huber__20261028T205545__7b5e9e",
+  "model_a": "M2c_nbr",
+  "model_b": "M2r_huber",
+  "delta": -0.0006733526972441672,
+  "ci_lo": -0.0021279960905897445,
+  "ci_hi": 0.0007462066895850549,
+  "delta_all_pairs": -0.0009754346619258447,
+  "ci_all_pairs": [
+   -0.0026506242737701314,
+   0.0006339962931842252
+  ],
+  "delta_equal": -0.0005992740930766405,
+  "ci_equal": [
+   -0.00230654563701848,
+   0.0010987054018335425
+  ],
+  "sign_flip_veto": false,
+  "clean": true,
+  "alt_delta": null,
+  "adopt": false,
+  "reason": "CI includes/below 0; delta < 0.005",
+  "timestamp": "20261028T222711"
+ },
+ "M2c_both_vs_M2r_huber": {
+  "run_a": "M2c_both__20261028T222521__304655",
+  "run_b": "M2r_huber__20261028T205545__7b5e9e",
+  "model_a": "M2c_both",
+  "model_b": "M2r_huber",
+  "delta": -0.0001574569730071751,
+  "ci_lo": -0.0019648324428134943,
+  "ci_hi": 0.0017884830409567742,
+  "delta_all_pairs": -0.0001706425910519005,
+  "ci_all_pairs": [
+   -0.0021219281636424524,
+   0.0020105195185802505
+  ],
+  "delta_equal": 0.00023303435033153463,
+  "ci_equal": [
+   -0.001726823637164003,
+   0.0024468431298985847
+  ],
+  "sign_flip_veto": false,
+  "clean": true,
+  "alt_delta": null,
+  "adopt": false,
+  "reason": "CI includes/below 0; delta < 0.005",
+  "timestamp": "20261028T222802"
+ }
+}
