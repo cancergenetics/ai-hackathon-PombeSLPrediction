@@ -1,0 +1,50 @@
+# Rarely-seen analysis (docs/rarely_seen.md). REPORT-ONLY: no model selection, protocol.yaml untouched.
+# Written and committed BEFORE any few-shot run (2026-10-28).
+#
+# Incumbent (PI decision 2026-10-28): M2r_huber__20261028T205545__7b5e9e = M2r variant, Huber stacker,
+# 3 ladder seeds (0,1,2). Extra column in the degree analysis: M2r_bag5_huber (5 seeds). M2, B1, B4 as in registry.
+incumbent:
+  run_id: M2r_huber__20261028T205545__7b5e9e
+  variant: M2r              # scripts/run_m2plus.py VARIANTS key (XSP excluded)
+  objective: huber
+  seeds: [0, 1, 2]
+  extra_run_ids: [M2r_bag5_huber__20261028T202603__f8bde5]
+  reference_run_ids:
+    M2: M2__20261028T183713__024416
+    B1: B1_additive_logit__20261028T183903__da755f
+    B4: B4_logistic_MF__20261028T183958__e1e7b0
+
+# ---- E-FEWSHOT (DESIGN §2/§9: k in {5, 20}; k=100 cut) -------------------------------------------------------
+# For outer fold f (primary split seed), each held-out gene g (the genes of fold f) has candidate pairs = its
+# eval pairs (C2 and C3, eval-eligible) in that fold's eval set. A reveal-order permutation of each gene's
+# candidate pairs is drawn once (rng seeded by reveal_seed, fold, gene); reveal(k) = union over genes of the first
+# k pairs (so reveal(5) subset of reveal(20); a C3 pair drawn by either of its two genes is revealed; a gene with
+# fewer than k candidates reveals all). Revealed pairs (with labels from labels_dev, as ordinary training rows)
+# are ADDED to the outer training set and the whole nested pipeline is re-run from scratch (nested features,
+# GP model, inner splits, stacker) -- no code path change. They are REMOVED from evaluation.
+# Evaluation set E_f = (C2+C3 eval pairs of fold f) minus reveal(20), identical for k = 0, 5, 20.
+# k = 0 predictions = the incumbent's existing OOF per-seed predictions restricted to E_f (same seeds 0-2).
+# C1 pairs are not evaluated (they are not pairs of held-out genes).
+fewshot:
+  ks: [5, 20]
+  reveal_seed: 20261028
+  split_seed: null          # primary
+  seeds: [0, 1, 2]          # stacker seeds = ladder seeds (incumbent M2r_huber)
+  # Compute plan (pre-stated; depends on measured runtime only, never on results). Hard limit 2 threads.
+  # Preferred: all 5 folds x 3 seeds. Folds are run in order 0,1,2,3,4; the analysis uses the folds that finished
+  # within a ~100 min wall budget, and the doc states which. Fallback minimum: 2 folds (0, 1) x 3 seeds.
+  folds_order: [0, 1, 2, 3, 4]
+  min_folds: 2
+  threads: 2
+  # Metrics (all via src/evaluate.py: pooled_metrics / bootstrap_replicates, Poisson(1) gene bootstrap, 1000
+  # replicates, shared seed): per-class AUPRC (C2, C3) and the pooled C2+C3 AUPRC under the protocol class weights
+  # (C1 absent), fold-mean; paired bootstrap of Delta(k) - Delta(0) on identical replicates and identical rows.
+
+# ---- Degree-stratified analysis (no retraining) ---------------------------------------------------------------
+# Seen-gene degree of an eval pair in outer fold f = number of TRAINING pairs of the seen gene (C1: the smaller of
+# the two genes; C2: the seen gene; C3 has none). Also reported for training-positive count. Bins fixed before
+# looking at results: degree by quantile edges of the pooled seen-gene degree distribution (tertiles + top decile
+# split off are NOT used; plain 4 quantile bins), positives by [0], [1-2], [3-9], [10+].
+degree:
+  n_quantile_bins: 4
+  pos_bins: [0, 1, 3, 10]
