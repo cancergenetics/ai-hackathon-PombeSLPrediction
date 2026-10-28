@@ -49,20 +49,25 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [!] NBR is the largest Ryan-derived family (+0.019 [0.013, 0.026]); RYAN+GP +0.007; GP alone +0.003 (n.s.; substitutes for β/MF/NBR); init_score 0 → not used
   - [-] GP toy check failed its pre-stated bar (unseen-gene Spearman 0.563 < 0.6; B1 β itself only 0.55 vs truth) — reported, bar not moved
   - [x] Independent verification of M2 → reviews/verify_m2/REPORT.md: leak canary bit-identical (positive controls detected), label permutation → 0.023 ≈ prevalence 0.021, metric re-derived exactly, lockbox/class/DAmP hygiene 0 mismatches. Note: MF score non-deterministic at >1 torch thread (~1e-6).
-- [~] 10. M2+ rung (agent, branch m2plus): XSP merge + ablation, 5-seed bagging, E-TARGET (binary vs continuous S2), C3-focused blend
+- [x] 10. M2+ rung (docs/m2plus.md; pre-stated rules config/m2plus.yaml; merged 8d5299a)
+  - [!] **E-TARGET adopted: Huber regression on −min(S2,0) (δ=|threshold|) for the stacker + 5-seed bagging → M2r_bag5_huber 0.1814** (C1 .277/C2 .168/C3 .095); vs M2 +0.0114 [0.0069, 0.0153]; seed-7 +0.0076; Huber alone (3 seeds) +0.0091. Train 812 s (25 fits), total 869 s
+  - [-] XSP features: +0.0002 [−0.003, +0.003] (≈1% gain importance) → merged into the store but excluded from models
+  - [-] Seed bagging alone: +0.0028 [0.0011, 0.0045] < 0.005 bar → not adopted on its own (kept inside the Huber incumbent)
+  - [-] C3-focused logistic blend (pre-stated rule): −0.0001 → C3 stuck at ≈0.095 under every idea so far
+  - [ ] Independent verification of the Huber incumbent
 - [x] 11. Deliverable tooling (docs/deliverable.md; merged f8a3fba): predict_all_pairs.py scores 7,693,003 pairs (3,923 genes incl. 144 viability-unknown) with M2 trained on dev genes in 985 s on 3 threads, peak footprint 6.3 GB; out-of-fold scores for measured pairs (in-sample AP 0.307 vs OOF 0.201 → users must read OOF); lockbox_eval.py one-shot with access log + prereg template (toy-tested only); config/models.yaml
   - [!] Linkage: Ryan barely measured pairs < 300 kb apart (coverage ≤6% vs ~77%). Same-chromosome 300–1,000 kb pairs have a small excess hit rate (2.15% vs 1.82% inter-chromosomal, OR 1.18, p 3e-8) that M2 does not predict. → `linked` flag at 300 kb, no score penalty; reported as a limitation
   - [!] Top-ranked universe pairs are almost all C1/C2 (top 10k: 1 C3 pair); C3 scores are compressed, so absolute scores are not comparable across classes
-- [~] 9. XSP cross-species gene/pair transfer (docs/features_xsp.md; staged): cer gene-propensity CV ρ 0.391, transfer ρ 0.246; merge + ablation on M2 pending
+- [-] 9. XSP cross-species gene/pair transfer (docs/features_xsp.md; staged): cer gene-propensity CV ρ 0.391, transfer ρ 0.246; merge + ablation on M2 pending
 - [ ] 6. Feature-based models
 - [ ] 7. Advanced models / cross-species transfer
 - [ ] 8. Final evaluation on held-out test → REPORT.md
 
 ## Idea backlog (ranked; stop rule: 3 consecutive failed rungs and no supported idea left)
 1. [x] Explicit gene-propensity model β̂ (in M2; own increment n.s.)
-2. [ ] Seed bagging (5+ seeds) of best model — cheap, +0.016 seen for M1
-3. [~] Cross-species gene-propensity transfer: learn cerevisiae gene GI degree from cerevisiae ESM/PPI (Costanzo labels), apply to pombe genes (esp. without orthologs) → gene feature (M4-as-feature)
-4. [ ] C3-focused low-capacity model (monotone constraints on sickness/propensity features)
+2. [x] Seed bagging (5+ seeds) of best model (+0.003 alone; inside incumbent) — cheap, +0.016 seen for M1
+3. [-] Cross-species gene-propensity transfer (XSP null): learn cerevisiae gene GI degree from cerevisiae ESM/PPI (Costanzo labels), apply to pombe genes (esp. without orthologs) → gene feature (M4-as-feature)
+4. [-] C3-focused low-capacity model (blend null) (monotone constraints on sickness/propensity features)
 5. [ ] Rank-average ensemble (M5) of M2 + MF + NBR-mean; E-TARGET (Huber on S2)
 6. [ ] M3 neural inductive pair model (one attempt)
 
