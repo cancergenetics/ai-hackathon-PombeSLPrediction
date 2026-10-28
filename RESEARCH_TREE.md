@@ -50,7 +50,9 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [-] GP toy check failed its pre-stated bar (unseen-gene Spearman 0.563 < 0.6; B1 β itself only 0.55 vs truth) — reported, bar not moved
   - [x] Independent verification of M2 → reviews/verify_m2/REPORT.md: leak canary bit-identical (positive controls detected), label permutation → 0.023 ≈ prevalence 0.021, metric re-derived exactly, lockbox/class/DAmP hygiene 0 mismatches. Note: MF score non-deterministic at >1 torch thread (~1e-6).
 - [~] 10. M2+ rung (agent, branch m2plus): XSP merge + ablation, 5-seed bagging, E-TARGET (binary vs continuous S2), C3-focused blend
-- [~] 11. Deliverable tooling (agent, branch deliverable): predict_all_pairs.py (universe scoring, OOF scores for measured pairs, flags), lockbox_eval.py + prereg template (one-shot, access log), linkage diagnostic
+- [x] 11. Deliverable tooling (docs/deliverable.md; merged f8a3fba): predict_all_pairs.py scores 7,693,003 pairs (3,923 genes incl. 144 viability-unknown) with M2 trained on dev genes in 985 s on 3 threads, peak footprint 6.3 GB; out-of-fold scores for measured pairs (in-sample AP 0.307 vs OOF 0.201 → users must read OOF); lockbox_eval.py one-shot with access log + prereg template (toy-tested only); config/models.yaml
+  - [!] Linkage: Ryan barely measured pairs < 300 kb apart (coverage ≤6% vs ~77%). Same-chromosome 300–1,000 kb pairs have a small excess hit rate (2.15% vs 1.82% inter-chromosomal, OR 1.18, p 3e-8) that M2 does not predict. → `linked` flag at 300 kb, no score penalty; reported as a limitation
+  - [!] Top-ranked universe pairs are almost all C1/C2 (top 10k: 1 C3 pair); C3 scores are compressed, so absolute scores are not comparable across classes
 - [~] 9. XSP cross-species gene/pair transfer (docs/features_xsp.md; staged): cer gene-propensity CV ρ 0.391, transfer ρ 0.246; merge + ablation on M2 pending
 - [ ] 6. Feature-based models
 - [ ] 7. Advanced models / cross-species transfer
@@ -65,6 +67,7 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 6. [ ] M3 neural inductive pair model (one attempt)
 
 ## Decision log
+- 2026-10-28: Deliverable decisions: linked window 300 kb, flag only, no penalty (Ryan measured almost no pairs inside it, so model selection is unaffected; the 300–1,500 kb excess is reported, not modelled). Lockbox access log lives at results/lockbox/access_log.tsv, not DESIGN's results/lockbox_access.log (naming deviation only). MF-score torch non-determinism (~1e-6 at >1 thread) is fixed in the deliverable only; dev runs are not re-made for it (effect far below the bootstrap SE). PomBase coordinates registered as `pombase_coords` (universe-only).
 - 2026-10-28: Milestone M2 retrospective adopted: stop adding low-signal feature groups and per-source diagnostics; prefer bagging over tuning; cap reviews to one targeted reviewer per milestone (LESSONS.md pruned to 12).
 - 2026-10-28: B7 decision — the 8 universe genes with only DAmP data in Ryan (pot1, sod1, bud32, rhb1, sep1, hsk1, ten1, cwf20) stay "seen" for class assignment (their Ryan data exist; weight impact ≤0.0016; protocol stays frozen). Their DAmP-only pairs are excluded from eval as designed. DESIGN numbers corrected in-place: 22 unknown-viability genes; 16,557 DAmP-only universe pairs.
 - 2026-10-28: **Protocol FROZEN**: config/protocol.yaml sha256 73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230. Class weights (unmeasured universe) C1/C2/C3 = 0.2365/0.5698/0.1937. B0 primary = 0.0209 (= weighted prevalence). Accepted Phase A deviations: 22 (not 21) unknown-viability genes; C1 hold-outs drawn from eval-eligible pairs only; comparisons logged in results/comparisons.tsv.
