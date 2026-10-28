@@ -50,7 +50,16 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 - [ ] 7. Advanced models / cross-species transfer
 - [ ] 8. Final evaluation on held-out test → REPORT.md
 
+## Idea backlog (ranked; stop rule: 3 consecutive failed rungs and no supported idea left)
+1. [~] Explicit gene-propensity model β̂ (in M2)
+2. [ ] Seed bagging (5+ seeds) of best model — cheap, +0.016 seen for M1
+3. [ ] Cross-species gene-propensity transfer: learn cerevisiae gene GI degree from cerevisiae ESM/PPI (Costanzo labels), apply to pombe genes (esp. without orthologs) → gene feature (M4-as-feature)
+4. [ ] C3-focused low-capacity model (monotone constraints on sickness/propensity features)
+5. [ ] Rank-average ensemble (M5) of M2 + MF + NBR-mean; E-TARGET (Huber on S2)
+6. [ ] M3 neural inductive pair model (one attempt)
+
 ## Decision log
+- 2026-10-28: Milestone M2 retrospective adopted: stop adding low-signal feature groups and per-source diagnostics; prefer bagging over tuning; cap reviews to one targeted reviewer per milestone (LESSONS.md pruned to 12).
 - 2026-10-28: B7 decision — the 8 universe genes with only DAmP data in Ryan (pot1, sod1, bud32, rhb1, sep1, hsk1, ten1, cwf20) stay "seen" for class assignment (their Ryan data exist; weight impact ≤0.0016; protocol stays frozen). Their DAmP-only pairs are excluded from eval as designed. DESIGN numbers corrected in-place: 22 unknown-viability genes; 16,557 DAmP-only universe pairs.
 - 2026-10-28: **Protocol FROZEN**: config/protocol.yaml sha256 73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230. Class weights (unmeasured universe) C1/C2/C3 = 0.2365/0.5698/0.1937. B0 primary = 0.0209 (= weighted prevalence). Accepted Phase A deviations: 22 (not 21) unknown-viability genes; C1 hold-outs drawn from eval-eligible pairs only; comparisons logged in results/comparisons.tsv.
 - 2026-10-28: **Lockbox drawn** (scripts/draw_lockbox.py; 480/2404 S2 genes; seed 20261028; config/lockbox_genes.txt sha256 77fb02e1a5d688884e0a282c49c9f100840ee0f1988b74247abee150228d3457). From now on all analyses use dev genes only. Why now: R2 external PI — prevent further exposure.
