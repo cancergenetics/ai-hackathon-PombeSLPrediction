@@ -22,6 +22,12 @@ Feature families (each one ablation unit; `family_of(name)`):
              beta_hat).
         Nothing about the query pairs except their gene IDs is used (same contract as src/ryanfeat).
 
+Additive option (E-CONT, config/m2cont.yaml; off by default, the incumbent cache name is unchanged):
+gp_cfg["cont"] = True additionally fits the GP model to a CONTINUOUS gene propensity theta (`fit_additive_cont`:
+ridge additive model t_ab = c + theta_a + theta_b on t = -min(S2, 0), empirical-Bayes L2) with the same inputs,
+regressor and cross-fitting -> columns gpc_{hat,beta,best}_{min,max,sum} (family GPC). Continuous NBR columns
+of src/ryanfeat (cfg["cont_nbr"]) are family NBRC.
+
 `M2Builder` = RyanFeatureBuilder + GP features; it plugs into src/stacking.nested_tables/inner_rows/
 outer_rows (builder=...). `make_builder(gene_table, gp_cfg)` binds the label-free gene table.
 `fold_tables_m2(...)` = cached nested tables for one outer fold (training pairs passed through
@@ -60,7 +66,15 @@ GP_DEFAULT = {
 }
 
 
+GPC_COLS = ["gpc_" + c[3:] for c in GP_COLS]
+GP_ADDITIVE_KEYS = ("cont",)       # E-CONT options; absent/off -> cache name unchanged
+
+
 def family_of(name: str) -> str:
+    if name.startswith("gpc_"):
+        return "GPC"
+    if name.startswith("nbrc_"):
+        return "NBRC"
     if name.startswith("gp_"):
         return "GP"
     if name.startswith("nbr_"):
@@ -73,6 +87,9 @@ def family_of(name: str) -> str:
 def resolve_gp(gp: dict | None) -> dict:
     g = {**GP_DEFAULT, **(gp or {})}
     g["params"] = {**GP_DEFAULT["params"], **((gp or {}).get("params") or {})}
+    for k in GP_ADDITIVE_KEYS:
+        if k in g and not g[k]:
+            del g[k]
     return g
 
 
@@ -167,6 +184,35 @@ def fit_gene_propensity(beta: pd.Series, X: pd.DataFrame, gp: dict | None = None
     return out, info
 
 
+def fit_additive_cont(train: pd.DataFrame) -> tuple[pd.Series, dict]:
+    """Continuous additive gene propensity (E-CONT target): ridge fit of t_ab = c + theta_a + theta_b on
+    t = -min(S2, 0) of `train` (intercept unpenalised), L2 alpha by an empirical-Bayes moment rule on the same
+    pairs: tau2 = max(var_g(m_g) - mean_g(var(t)/n_g), 1e-6 var(t)), alpha = var(t)/tau2 (m_g, n_g = gene mean
+    of t and pair count). Solved exactly via the (G+1) x (G+1) normal equations. Returns (theta over the
+    training genes, info)."""
+    import scipy.sparse as sp
+    from src.ryanfeat import cont_target
+    t = cont_target(train.s_score.to_numpy())
+    genes = pd.Index(np.unique(np.r_[train.gene_a.to_numpy(object), train.gene_b.to_numpy(object)]))
+    ia, ib = genes.get_indexer(train.gene_a), genes.get_indexer(train.gene_b)
+    n, G = len(t), len(genes)
+    vt = float(t.var())
+    ng = np.bincount(ia, minlength=G) + np.bincount(ib, minlength=G)
+    mg = (np.bincount(ia, weights=t, minlength=G) + np.bincount(ib, weights=t, minlength=G)) / np.maximum(ng, 1)
+    if vt <= 0:
+        return pd.Series(0.0, index=genes), {"alpha": None, "tau2": 0.0, "var_t": vt, "c": float(t.mean())}
+    tau2 = max(float(mg.var() - np.mean(vt / np.maximum(ng, 1))), 1e-6 * vt)
+    alpha = vt / tau2
+    X = sp.csr_matrix((np.ones(2 * n), (np.r_[np.arange(n), np.arange(n)], np.r_[ia, ib])), shape=(n, G))
+    Xa = sp.hstack([sp.csr_matrix(np.ones((n, 1))), X]).tocsr()
+    A = (Xa.T @ Xa).toarray()
+    A[np.arange(1, G + 1), np.arange(1, G + 1)] += alpha
+    rhs = Xa.T @ t
+    with np.errstate(all="ignore"):              # spurious FP flags from macOS Accelerate BLAS
+        sol = np.linalg.solve(A, rhs)
+    return pd.Series(sol[1:], index=genes), {"alpha": float(alpha), "tau2": tau2, "var_t": vt, "c": float(sol[0])}
+
+
 def loo_nbr_gene_rate(W, Y: np.ndarray, M: np.ndarray) -> np.ndarray:
     """Similarity-weighted mean of neighbours' training hit rates, each neighbour's rate excluding its
     pair with the gene itself: r_g = sum_c W[g,c] (s_c - Y[g,c])/(n_c - M[g,c]) / sum_c W[g,c] over
@@ -241,7 +287,28 @@ class M2Builder(RyanFeatureBuilder):
                "gp_best_sum": best_a + best_b}
         for k, v in out.items():
             F[k] = np.asarray(v, dtype=np.float32)
+        if gp.get("cont"):
+            self._gp_cont(F, X, gp, qa, qb)
         return F
+
+    def _gp_cont(self, F, X, gp, qa, qb):
+        """E-CONT: the same GP regressor / inputs / cross-fitting fitted to the continuous theta."""
+        ct = _clean_train(self.cont_pairs("gpc"))
+        theta, tinfo = fit_additive_cont(ct)
+        that, info = fit_gene_propensity(theta, X, gp)
+        self.info["gpc"] = {"theta": theta, "theta_hat": that, **tinfo, **info}
+        ha, hb = that.reindex(qa).to_numpy(), that.reindex(qb).to_numpy()
+        seen = set(theta.index)
+        sa, sb = np.isin(qa, list(seen)), np.isin(qb, list(seen))
+        ba = np.where(sa, theta.reindex(qa).to_numpy(), np.nan)
+        bb = np.where(sb, theta.reindex(qb).to_numpy(), np.nan)
+        best_a, best_b = np.where(sa, ba, ha), np.where(sb, bb, hb)
+        out = {"gpc_hat_min": np.minimum(ha, hb), "gpc_hat_max": np.maximum(ha, hb), "gpc_hat_sum": ha + hb,
+               "gpc_beta_min": np.minimum(ba, bb), "gpc_beta_max": np.fmax(ba, bb),
+               "gpc_best_min": np.minimum(best_a, best_b), "gpc_best_max": np.maximum(best_a, best_b),
+               "gpc_best_sum": best_a + best_b}
+        for k, v in out.items():
+            F[k] = np.asarray(v, dtype=np.float32)
 
 
 def _in_sample_gp(beta, X, gp):

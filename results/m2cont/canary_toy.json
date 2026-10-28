@@ -1,0 +1,10 @@
+{
+ "outer_fold": 0,
+ "inner_fold": 0,
+ "n_pairs_corrupted": 18691,
+ "n_new_columns": 23,
+ "inner_j_rows_bit_identical": true,
+ "other_inner_rows_changed": true,
+ "outer_eval_rows_changed": true,
+ "pass": true
+}

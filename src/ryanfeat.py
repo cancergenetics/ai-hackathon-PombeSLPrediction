@@ -36,6 +36,13 @@ Features (all rates / scores, never counts; NaN = undefined):
   plus nbr_mean__<f> = nan-mean over sources.
   -S is used for the S features so that, like the hit features, higher = more negative interaction.
 
+Additive option (E-CONT, config/m2cont.yaml; off by default, the default feature set and cache hash are
+unchanged): cfg["cont_nbr"] = True adds continuous NBR columns on t = -min(S2, 0) (`cont_target`) with the
+same neighbour matrices W:  nbrc_<src>__{dmax, dmean, block, gen_min, gen_max} (+ nbrc_mean__*), i.e.
+directional (T W^T + lam p0t)/(M W^T + lam), block W T W^T / W M W^T and the neighbour gene mean of t.
+cfg["cont_perm_seed"] = int: gene-permuted control -- the continuous features are built from training pairs
+whose gene identities are permuted within design role (`permute_genes_within_roles`); binary columns untouched.
+
 The building blocks are methods of `RyanFeatureBuilder`; tests subclass it to plant leaky mutants.
 """
 from __future__ import annotations
@@ -80,8 +87,12 @@ def resolve_cfg(cfg: dict | None = None) -> dict:
     return c
 
 
+ADDITIVE_KEYS = ("cont_nbr", "cont_perm_seed")     # E-CONT options; absent/off -> hash unchanged
+
+
 def cfg_hash(cfg: dict, sims: "SimStore | None" = None) -> str:
     c = resolve_cfg(cfg)
+    c = {k: v for k, v in c.items() if not (k in ADDITIVE_KEYS and v in (None, False))}
     payload = {"v": FEATURE_SET_VERSION, "cfg": {k: v for k, v in c.items() if k != "sims"},
                "sims": sims.hashes(c["sims"]) if sims is not None else None}
     return hashlib.sha256(json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest()[:12]
@@ -210,6 +221,30 @@ def _clean_train(train: pd.DataFrame) -> pd.DataFrame:
     return t.reset_index(drop=True)
 
 
+def cont_target(s) -> np.ndarray:
+    """E-CONT continuous target t = -min(S2, 0) (positive S2 clipped to 0; higher = more negative)."""
+    return -np.minimum(np.asarray(s, dtype=np.float64), 0.0)
+
+
+def permute_genes_within_roles(train: pd.DataFrame, seed: int, roles: pd.Series | None) -> pd.DataFrame:
+    """Gene-permuted copy of `train` (control): gene g is relabelled pi(g), pi a permutation of the training
+    genes within each design role (query/array/both; all genes one group if roles is None). One permutation per
+    training set, derived from `seed` and the sorted gene list (deterministic). Labels are unchanged."""
+    import zlib
+    genes = np.array(sorted(set(train.gene_a) | set(train.gene_b)), dtype=object)
+    r = (roles.reindex(genes).fillna("both").to_numpy(object) if roles is not None
+         else np.full(len(genes), "all", dtype=object))
+    rng = np.random.default_rng([int(seed), zlib.crc32("\n".join(genes).encode())])
+    mapping = {}
+    for role in sorted(set(r)):
+        g = genes[r == role]
+        mapping.update(zip(g, g[rng.permutation(len(g))]))
+    out = train.copy()
+    out["gene_a"] = out.gene_a.map(mapping)
+    out["gene_b"] = out.gene_b.map(mapping)
+    return _clean_train(out)
+
+
 def _dense_pairs(n, ia, ib, vals, dtype=np.float32) -> np.ndarray:
     Mx = np.zeros((n, n), dtype=dtype)
     Mx[ia, ib] = vals
@@ -307,6 +342,13 @@ class RyanFeatureBuilder:
         """Labelled pairs feeding `component` in {b1, mf, profile, nbr, rate}. Always the training pairs."""
         return self.train
 
+    def cont_pairs(self, component: str) -> pd.DataFrame:
+        """Labelled pairs feeding a continuous (E-CONT) component: stat_pairs, gene-permuted if
+        cfg['cont_perm_seed'] is set (control)."""
+        t = self.stat_pairs(component)
+        ps = self.cfg.get("cont_perm_seed")
+        return t if ps is None else permute_genes_within_roles(_clean_train(t), ps, self._roles())
+
     def pool_genes(self, role: str, train_genes: set) -> set:
         """Candidate neighbour genes for role in {query, array}: training genes with that role."""
         roles = self._roles()
@@ -399,6 +441,8 @@ class RyanFeatureBuilder:
                     warnings.simplefilter("ignore", RuntimeWarning)
                     for k_, vs in per.items():
                         out[f"nbr_mean__{k_}"] = np.nanmean(np.vstack(vs), axis=0)
+            if c.get("cont_nbr"):
+                out.update(self._cont_nbr(names, idx, ia_q, ib_q))
             self.info["idx"] = idx
             self.info["pools"] = pools
         F = pd.DataFrame({k_: np.asarray(v, dtype=np.float32) for k_, v in out.items()})
@@ -460,6 +504,48 @@ class RyanFeatureBuilder:
             gr = self.gene_nbr_rate(W, rate, idx)
             out["generate_min"] = np.where(np.isnan(gr[ia]) | np.isnan(gr[ib]), np.nan, np.fmin(gr[ia], gr[ib]))
             out["generate_max"] = np.fmax(gr[ia], gr[ib])
+        return out
+
+    def _cont_nbr(self, names, idx: pd.Index, ia, ib) -> dict:
+        """E-CONT NBR columns on t = -min(S2, 0), same W as the binary NBR (module doc)."""
+        import warnings
+        lam = self.cfg["lam"]
+        ct = _clean_train(self.cont_pairs("nbrc"))
+        n = len(idx)
+        ta, tb = idx.get_indexer(ct.gene_a), idx.get_indexer(ct.gene_b)
+        assert (ta >= 0).all() and (tb >= 0).all()
+        t = cont_target(ct.s_score)
+        T = _dense_pairs(n, ta, tb, t.astype(np.float32))
+        M = _dense_pairs(n, ta, tb, np.float32(1))
+        p0 = float(t.mean())
+        long = pd.concat([pd.DataFrame({"g": ct.gene_a.to_numpy(), "t": t}),
+                          pd.DataFrame({"g": ct.gene_b.to_numpy(), "t": t})])
+        rate_t = long.groupby("g").t.mean().reindex(idx).fillna(0.0).to_numpy()
+        out, per = {}, {}
+        for s in names:
+            W = self.info["W"][s]
+            MWt = np.asarray((W @ M).T)
+            TWt = np.asarray((W @ T).T)
+            with np.errstate(invalid="ignore", divide="ignore"), warnings.catch_warnings():
+                warnings.simplefilter("ignore", RuntimeWarning)
+                D = (TWt + lam * p0) / (MWt + lam)
+                dab, dba = D[ia, ib], D[ib, ia]
+                WMWt = np.asarray(W @ MWt)
+                WTWt = np.asarray(W @ TWt)
+                den = WMWt[ia, ib]
+                gr = self.gene_nbr_rate(W, rate_t, idx)
+                f = {"dmax": np.fmax(dab, dba),
+                     "dmean": np.nanmean(np.vstack([dab, dba]), axis=0),
+                     "block": np.where(den > 0, WTWt[ia, ib] / np.where(den > 0, den, 1), np.nan),
+                     "gen_min": np.where(np.isnan(gr[ia]) | np.isnan(gr[ib]), np.nan, np.fmin(gr[ia], gr[ib])),
+                     "gen_max": np.fmax(gr[ia], gr[ib])}
+            for k_, v in f.items():
+                out[f"nbrc_{s}__{k_}"] = v
+                per.setdefault(k_, []).append(v)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", RuntimeWarning)
+            for k_, vs in per.items():
+                out[f"nbrc_mean__{k_}"] = np.nanmean(np.vstack(vs), axis=0)
         return out
 
     def _profile_corr(self, st: pd.DataFrame, idx: pd.Index, ia, ib) -> np.ndarray:
