@@ -1,0 +1,28 @@
+{
+ "task": "features_ppi",
+ "wall_s": 11.87,
+ "cpu_s": 14.13,
+ "peak_rss_mb": 3156.7,
+ "steps_s": {
+  "pmid_blocklist": 0.05,
+  "pombe_edges": 0.2,
+  "cerevisiae_edges": 1.79,
+  "features_default": 4.12,
+  "features_htp": 3.53,
+  "cerevisiae_features": 2.07,
+  "checks": 0.12
+ },
+ "hardware": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "cpu_count": 10,
+  "python": "3.10.0"
+ },
+ "threads": {
+  "OMP_NUM_THREADS": null,
+  "VECLIB_MAXIMUM_THREADS": null
+ },
+ "finished": "2026-10-28T16:02:15",
+ "restart": 0.5,
+ "sp_cap": 4
+}

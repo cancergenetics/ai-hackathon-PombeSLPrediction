@@ -1,0 +1,11 @@
+input_id	input_name	pombase_id	status
+SPBC1348.14c		SPBC1348.14c	not_protein_coding
+SPBC530.06c		SPBC530.06c	not_protein_coding
+SPBC8E4.02c		SPNCRNA.9001	not_protein_coding
+SPAC110.05		SPAC110.06	synonym
+SPAC823.02		SPAC823.17	synonym
+SPBC713.13		SPBC713.14c	synonym
+SPBC32F12.17			unmapped
+SPBC36.13			unmapped
+SPCC1672.14			unmapped
+wt			unmapped

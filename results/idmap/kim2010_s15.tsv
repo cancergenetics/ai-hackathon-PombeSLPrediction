@@ -1,0 +1,48 @@
+input_id	input_name	pombase_id	status
+SPAC27D7.09c		SPAC27D7.09c	many_to_one
+SPAC27D7.10c		SPAC27D7.09c	many_to_one
+SPAC186.04c		SPAC186.04c	not_protein_coding
+SPAC212.05c		SPAC212.05c	not_protein_coding
+SPAC212.06c		SPAC212.06c	not_protein_coding
+SPAC212.07c		SPAC212.07c	not_protein_coding
+SPAC212.09c		SPAC212.09c	not_protein_coding
+SPAC212.10		SPAC212.10	not_protein_coding
+SPAC23D3.05c		SPAC23D3.05c	not_protein_coding
+SPAC2E12.05		SPAC2E12.05	not_protein_coding
+SPAC977.04		SPAC977.04	not_protein_coding
+SPAC977.13c		SPAC977.13c	not_protein_coding
+SPAPB24D3.05c		SPAPB24D3.05c	not_protein_coding
+SPBC1348.11		SPBC1348.11	not_protein_coding
+SPBC1348.14c		SPBC1348.14c	not_protein_coding
+SPBC1706.02c		SPBC1706.02c	not_protein_coding
+SPBC530.06c		SPBC530.06c	not_protein_coding
+SPBC8E4.02c		SPNCRNA.9001	not_protein_coding
+SPBPB10D8.03		SPBPB10D8.03	not_protein_coding
+SPCC132.05c		SPCC132.05c	not_protein_coding
+SPCC1450.01c		SPCC1450.01c	not_protein_coding
+SPCC188.10c		SPCC188.10c	not_protein_coding
+SPCC18B5.02c		SPCC18B5.02c	not_protein_coding
+SPCC306.10		SPCC306.10	not_protein_coding
+SPCC553.05c		SPCC553.05c	not_protein_coding
+SPCC576.16c		SPCC576.16c	not_protein_coding
+SPCC622.17		SPCC622.17	not_protein_coding
+SPCC663.07c		SPCC663.07c	not_protein_coding
+SPCC830.02		SPCC830.02	not_protein_coding
+SPCP20C8.03		SPCP20C8.03	not_protein_coding
+SPAC27D7.10c		SPAC27D7.09c	synonym
+SPAC1D4.07c			unmapped
+SPAC1F12.03c			unmapped
+SPAC22E12.12			unmapped
+SPAC22E12.15			unmapped
+SPAC4G8.15c			unmapped
+SPBC11C11.12			unmapped
+SPBC1348.13			unmapped
+SPBC14C8.08c			unmapped
+SPBC1685.12c			unmapped
+SPBC354.11c			unmapped
+SPBPB2B2.03c			unmapped
+SPBPB2B2.04			unmapped
+SPCC2H8.03			unmapped
+SPCC417.04			unmapped
+SPCC622.05			unmapped
+SPCC794.05c			unmapped

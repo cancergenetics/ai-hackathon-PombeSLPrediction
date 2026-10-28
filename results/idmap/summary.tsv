@@ -1,0 +1,7 @@
+source	n_input	n_mapped	exact	synonym	gene_name	name_as_id	unmapped	ambiguous	not_protein_coding	many_to_one_inputs
+biogrid_spombe_physical	3700	3660	3660	0	0	0	1	0	39	0
+kim2010_s15	4332	4288	4287	1	0	0	16	0	28	2
+pombase_orthologs	4051	4013	4013	0	0	0	0	0	38	0
+rodriguez_lopez_2023_all_conditions	3510	3503	3500	3	0	0	4	0	3	0
+rodriguez_lopez_2023_discretized	3509	3503	3500	3	0	0	3	0	3	0
+rodriguez_lopez_2023_standard	3510	3503	3500	3	0	0	4	0	3	0

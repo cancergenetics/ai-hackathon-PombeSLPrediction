@@ -1,0 +1,29 @@
+{
+ "task": "features_cer",
+ "wall_s": 49.52,
+ "cpu_s": 53.06,
+ "peak_rss_mb": 11196.9,
+ "steps_s": {
+  "read": 4.99,
+  "collapse": 3.64,
+  "orf_matrices": 0.49,
+  "profiles": 1.1,
+  "gene_level": 0.73,
+  "pair_aggregates": 25.04,
+  "save": 13.52
+ },
+ "hardware": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "cpu_count": 10,
+  "python": "3.10.0"
+ },
+ "threads": {
+  "OMP_NUM_THREADS": null,
+  "VECLIB_MAXIMUM_THREADS": null
+ },
+ "finished": "2026-10-28T16:03:27",
+ "eps_cut": -0.08,
+ "p_cut": 0.05,
+ "n_emb": 20
+}

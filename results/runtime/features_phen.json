@@ -1,0 +1,26 @@
+{
+ "task": "features_phen",
+ "wall_s": 16.18,
+ "cpu_s": 15.9,
+ "peak_rss_mb": 1164.6,
+ "steps_s": {
+  "read_standard": 0.51,
+  "profile_pca": 13.4,
+  "discretized": 1.37,
+  "kim": 0.08,
+  "gene_table": 0.08,
+  "similarity": 0.74
+ },
+ "hardware": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "cpu_count": 10,
+  "python": "3.10.0"
+ },
+ "threads": {
+  "OMP_NUM_THREADS": null,
+  "VECLIB_MAXIMUM_THREADS": null
+ },
+ "finished": "2026-10-28T16:02:34",
+ "n_pc": 10
+}

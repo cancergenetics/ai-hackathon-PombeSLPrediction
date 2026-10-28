@@ -590,6 +590,20 @@ datasets:
         - "pombase_id"
       columns_not_features:
         - "description"
+# Added by PI 2026-10-28 (tier-1 feature build)
+  ygob:
+    use: "feature"
+    status: "confirmed by PI 2026-10-28"
+    name: "YGOB v7 ohnolog pillars (Byrne & Wolfe 2005)"
+    raw_dir: "data/raw/ygob"
+    source: "http://ygob.ucd.ie/ygob/data/v7-Aug2012/Pillars.tab"
+    license: "none stated; academic use, do not redistribute"
+    files:
+      - path: "data/raw/ygob/Pillars.tab"
+        sha256: "162c1919b762f34006d0be8ea00b090531ea6c67be43d63b6bf683c4bc48212b"
+        use: "feature"
+        note: "columns 12 & 22 (S. cerevisiae tracks A/B) -> WGD ohnolog pairs; CER group only"
+
 excluded_sources:
   fypo_phenotype_annotations:
     what: "PomBase FYPO phenotype annotations (phenotype_annotations.pombase.phaf.gz, canto_fypo_annotations_with_comments.*, public_api_genotypes_phenotypes.parquet)"
@@ -631,3 +645,4 @@ excluded_sources:
     what: "Ryan Table S2 modules, Dataset S3 similarity, Dataset S4 (see ryan2012 files)"
     why: "derived from the pombe GI matrix (leakage) or superseded."
     on_disk: false
+
