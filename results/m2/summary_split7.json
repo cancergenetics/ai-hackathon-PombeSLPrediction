@@ -1,0 +1,357 @@
+{
+ "split_seed": 7,
+ "config": "default",
+ "params": {
+  "objective": "binary",
+  "learning_rate": 0.05,
+  "num_leaves": 63,
+  "feature_fraction": 0.7,
+  "bagging_fraction": 0.8,
+  "bagging_freq": 1,
+  "min_data_in_leaf": 200,
+  "lambda_l2": 1.0,
+  "max_bin": 255,
+  "num_threads": 8,
+  "verbosity": -1,
+  "force_col_wise": true,
+  "metric": "average_precision"
+ },
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "runs": {
+  "M2_split7": {
+   "run_id": "M2_split7__20261028T185814__ac04a4",
+   "variant": "M2",
+   "primary": 0.17031693114234586,
+   "se": 0.011707372958555012,
+   "ci": [
+    0.1477072416478224,
+    0.19399623405991193
+   ],
+   "metrics_mean": {
+    "ap_C1": 0.24794778488798835,
+    "ap_C2": 0.16097718175166617,
+    "ap_C3": 0.08833560016153723,
+    "prevalence_primary": 0.020846470299906827,
+    "lift": 8.178175634227626,
+    "auroc": 0.853407752890474,
+    "pooled_all_pairs": 0.18288805289226945,
+    "pooled_equal": 0.170388268744093,
+    "mean_per_class": 0.16747119867834348,
+    "precision_at_k": 0.40235806362192844,
+    "auroc_C1": 0.9020062125750457,
+    "auroc_C2": 0.8523610217359876,
+    "auroc_C3": 0.7832477563738546,
+    "pooled_viable_viable": 0.16205470840853464,
+    "pooled_excl_damp_mixed": 0.17073891696405244,
+    "ap_C1_reciprocal": 0.3912702548406553,
+    "ap_C1_single": 0.2341631379304961
+   },
+   "fold_primary": [
+    0.18245734287724646,
+    0.17908777744713356,
+    0.16113058674030445,
+    0.15800510824394248,
+    0.17090384040310222
+   ],
+   "git_commit": "3a9bf62a50fcbcf8561b9b56187ab1ad303e9f59",
+   "git_dirty": false,
+   "n_features": 475,
+   "importance_by_family": {
+    "LF": 0.4452085714233568,
+    "GP": 0.3815797633026936,
+    "NBR": 0.15407885221454906,
+    "RYAN": 0.019132813059400584
+   },
+   "importance_top30": {
+    "gp_best_sum": 0.23826043979812897,
+    "gp_best_min": 0.09859395636185976,
+    "gp_best_max": 0.03048152181700772,
+    "nbr_mean__hit_dmean": 0.015079715467234404,
+    "nbr_mean__negs_dmean": 0.012234417892553268,
+    "mf_score": 0.009742160744800452,
+    "nbr_mean__hit_dmax": 0.006915899581371476,
+    "gp_hat_min": 0.006783992659386564,
+    "PHEN__pc1__min": 0.005013715862800704,
+    "nbr_mean__negs_dmax": 0.004878737875424476,
+    "CER__emb18__max": 0.004719796407635796,
+    "nbr_phen_corr__hit_dmean": 0.004263252153737912,
+    "EXPR__rnaseq_sd__min": 0.004045284480592406,
+    "nbr_ppi_cer_rwr__generate_max": 0.004014449709325147,
+    "EXPR__rnaseq_mean__min": 0.003605676558040597,
+    "SEQ__esm_pc23__min": 0.0035561938586010254,
+    "CONS__phylo_pc1__max": 0.0031846294709662855,
+    "nbr_ppi_rwr__generate_max": 0.003091291377623603,
+    "nbr_phen_corr__negs_dmean": 0.0030539586574128926,
+    "PHEN__pc8__min": 0.003048723955708601,
+    "gp_hat_sum": 0.0030257985565036883,
+    "PHEN__sim_phen_corr": 0.0030162969066723946,
+    "PHEN__pc1__max": 0.0029949781928555468,
+    "SEQ__esm_pc14__min": 0.0029907276580116043,
+    "KOPROT__ko_pc4__min": 0.002982931630784266,
+    "KOPROT__sim_koprot_corr": 0.0029626155918102692,
+    "nbr_expr_rnaseq__generate_min": 0.0028838405050235633,
+    "CONS__phylo_pc10__min": 0.0028684355345272145,
+    "EXPR__mr_rnaseq": 0.002832465354764989,
+    "SEQ__esm_pc5__max": 0.0028054428177599565
+   },
+   "fits": [
+    {
+     "fold": 0,
+     "seed": 0,
+     "best_iteration": 46,
+     "inner_fold_valid": 0,
+     "valid_ap_weighted": 0.15914743255358133,
+     "n_fit": 312975,
+     "n_valid": 112723,
+     "pos_fit": 6004,
+     "pos_valid": 2056
+    },
+    {
+     "fold": 0,
+     "seed": 1,
+     "best_iteration": 136,
+     "inner_fold_valid": 1,
+     "valid_ap_weighted": 0.14966992445425117,
+     "n_fit": 311357,
+     "n_valid": 114804,
+     "pos_fit": 5808,
+     "pos_valid": 2196
+    },
+    {
+     "fold": 0,
+     "seed": 2,
+     "best_iteration": 222,
+     "inner_fold_valid": 2,
+     "valid_ap_weighted": 0.1446914531558427,
+     "n_fit": 313847,
+     "n_valid": 113102,
+     "pos_fit": 5719,
+     "pos_valid": 2277
+    },
+    {
+     "fold": 1,
+     "seed": 0,
+     "best_iteration": 36,
+     "inner_fold_valid": 0,
+     "valid_ap_weighted": 0.1406799889627388,
+     "n_fit": 317306,
+     "n_valid": 114340,
+     "pos_fit": 5902,
+     "pos_valid": 2156
+    },
+    {
+     "fold": 1,
+     "seed": 1,
+     "best_iteration": 134,
+     "inner_fold_valid": 1,
+     "valid_ap_weighted": 0.15988159059110013,
+     "n_fit": 316565,
+     "n_valid": 114962,
+     "pos_fit": 5866,
+     "pos_valid": 2196
+    },
+    {
+     "fold": 1,
+     "seed": 2,
+     "best_iteration": 86,
+     "inner_fold_valid": 2,
+     "valid_ap_weighted": 0.14200926570744138,
+     "n_fit": 315989,
+     "n_valid": 115922,
+     "pos_fit": 5774,
+     "pos_valid": 2235
+    },
+    {
+     "fold": 2,
+     "seed": 0,
+     "best_iteration": 50,
+     "inner_fold_valid": 0,
+     "valid_ap_weighted": 0.15666677834815834,
+     "n_fit": 317783,
+     "n_valid": 114703,
+     "pos_fit": 5947,
+     "pos_valid": 2214
+    },
+    {
+     "fold": 2,
+     "seed": 1,
+     "best_iteration": 66,
+     "inner_fold_valid": 1,
+     "valid_ap_weighted": 0.1458715973734467,
+     "n_fit": 318439,
+     "n_valid": 114537,
+     "pos_fit": 6142,
+     "pos_valid": 2135
+    },
+    {
+     "fold": 2,
+     "seed": 2,
+     "best_iteration": 259,
+     "inner_fold_valid": 2,
+     "valid_ap_weighted": 0.17011110069972812,
+     "n_fit": 316923,
+     "n_valid": 115262,
+     "pos_fit": 5822,
+     "pos_valid": 2246
+    },
+    {
+     "fold": 3,
+     "seed": 0,
+     "best_iteration": 66,
+     "inner_fold_valid": 0,
+     "valid_ap_weighted": 0.16155267987960992,
+     "n_fit": 317522,
+     "n_valid": 112621,
+     "pos_fit": 5788,
+     "pos_valid": 2190
+    },
+    {
+     "fold": 3,
+     "seed": 1,
+     "best_iteration": 52,
+     "inner_fold_valid": 1,
+     "valid_ap_weighted": 0.16462927243752565,
+     "n_fit": 315696,
+     "n_valid": 114176,
+     "pos_fit": 5912,
+     "pos_valid": 2048
+    },
+    {
+     "fold": 3,
+     "seed": 2,
+     "best_iteration": 24,
+     "inner_fold_valid": 2,
+     "valid_ap_weighted": 0.1507933414602881,
+     "n_fit": 313642,
+     "n_valid": 114807,
+     "pos_fit": 5839,
+     "pos_valid": 2101
+    },
+    {
+     "fold": 4,
+     "seed": 0,
+     "best_iteration": 133,
+     "inner_fold_valid": 0,
+     "valid_ap_weighted": 0.14332541831741738,
+     "n_fit": 314204,
+     "n_valid": 115765,
+     "pos_fit": 5775,
+     "pos_valid": 2108
+    },
+    {
+     "fold": 4,
+     "seed": 1,
+     "best_iteration": 242,
+     "inner_fold_valid": 1,
+     "valid_ap_weighted": 0.14317102365628348,
+     "n_fit": 317937,
+     "n_valid": 113617,
+     "pos_fit": 5797,
+     "pos_valid": 2092
+    },
+    {
+     "fold": 4,
+     "seed": 2,
+     "best_iteration": 57,
+     "inner_fold_valid": 2,
+     "valid_ap_weighted": 0.15384759261330178,
+     "n_fit": 316356,
+     "n_valid": 114673,
+     "pos_fit": 5824,
+     "pos_valid": 2130
+    }
+   ],
+   "runtime_stages_s": {
+    "feature_build": 651.3,
+    "load": 4.3,
+    "assemble": 12.2,
+    "train": 269.5,
+    "predict": 10.0
+   },
+   "runtime_total_s": 947.363,
+   "peak_rss_mb": 14129.3
+  }
+ },
+ "noncoding_dropped": {
+  "0": {
+   "pairs": 6105,
+   "positives": 26,
+   "genes": [
+    "SPAC186.04c",
+    "SPAC2E12.05",
+    "SPAPB24D3.05c",
+    "SPBC530.06c",
+    "SPCC188.10c",
+    "SPCC18B5.02c",
+    "SPCC306.10",
+    "SPCC622.17",
+    "SPCC663.07c",
+    "SPCP20C8.03"
+   ]
+  },
+  "1": {
+   "pairs": 5067,
+   "positives": 27,
+   "genes": [
+    "SPAC186.04c",
+    "SPAC2E12.05",
+    "SPAPB24D3.05c",
+    "SPBC530.06c",
+    "SPCC188.10c",
+    "SPCC622.17",
+    "SPCC663.07c",
+    "SPNCRNA.9001"
+   ]
+  },
+  "2": {
+   "pairs": 4090,
+   "positives": 27,
+   "genes": [
+    "SPAC186.04c",
+    "SPAC2E12.05",
+    "SPAPB24D3.05c",
+    "SPCC188.10c",
+    "SPCC18B5.02c",
+    "SPCC306.10",
+    "SPCP20C8.03",
+    "SPNCRNA.9001"
+   ]
+  },
+  "3": {
+   "pairs": 5586,
+   "positives": 18,
+   "genes": [
+    "SPAC2E12.05",
+    "SPAPB24D3.05c",
+    "SPBC530.06c",
+    "SPCC18B5.02c",
+    "SPCC306.10",
+    "SPCC622.17",
+    "SPCC663.07c",
+    "SPCP20C8.03",
+    "SPNCRNA.9001"
+   ]
+  },
+  "4": {
+   "pairs": 5636,
+   "positives": 26,
+   "genes": [
+    "SPAC186.04c",
+    "SPBC530.06c",
+    "SPCC188.10c",
+    "SPCC18B5.02c",
+    "SPCC306.10",
+    "SPCC622.17",
+    "SPCC663.07c",
+    "SPCP20C8.03",
+    "SPNCRNA.9001"
+   ]
+  }
+ },
+ "total_wall_s": 326.6,
+ "peak_rss_mb": 14129.3125
+}
