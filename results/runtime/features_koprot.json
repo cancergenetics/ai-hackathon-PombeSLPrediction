@@ -1,0 +1,24 @@
+{
+ "task": "features_koprot",
+ "wall_s": 24.31,
+ "cpu_s": 23.32,
+ "peak_rss_mb": 2514.5,
+ "steps_s": {
+  "read": 12.29,
+  "normalise": 4.45,
+  "profile": 3.0,
+  "gene_table": 0.32,
+  "directed": 4.25
+ },
+ "hardware": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "cpu_count": 10,
+  "python": "3.10.0"
+ },
+ "threads": {
+  "OMP_NUM_THREADS": null,
+  "VECLIB_MAXIMUM_THREADS": null
+ },
+ "finished": "2026-10-28T16:25:57"
+}

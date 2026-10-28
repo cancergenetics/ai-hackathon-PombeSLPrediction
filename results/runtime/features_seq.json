@@ -1,0 +1,24 @@
+{
+ "task": "features_seq",
+ "wall_s": 13.53,
+ "cpu_s": 15.26,
+ "peak_rss_mb": 3373.5,
+ "steps_s": {
+  "protein_tables": 0.16,
+  "domain_pairs": 4.96,
+  "paralogs": 4.8,
+  "esm": 3.53,
+  "gene_table": 0.08
+ },
+ "hardware": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "cpu_count": 10,
+  "python": "3.10.0"
+ },
+ "threads": {
+  "OMP_NUM_THREADS": null,
+  "VECLIB_MAXIMUM_THREADS": null
+ },
+ "finished": "2026-10-28T16:27:55"
+}

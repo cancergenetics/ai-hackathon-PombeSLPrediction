@@ -1,0 +1,22 @@
+{
+ "task": "features_loc",
+ "wall_s": 3.07,
+ "cpu_s": 2.92,
+ "peak_rss_mb": 1575.1,
+ "steps_s": {
+  "parse": 0.46,
+  "gene_table": 0.12,
+  "pairs": 2.49
+ },
+ "hardware": {
+  "machine": "arm64",
+  "system": "Darwin",
+  "cpu_count": 10,
+  "python": "3.10.0"
+ },
+ "threads": {
+  "OMP_NUM_THREADS": null,
+  "VECLIB_MAXIMUM_THREADS": null
+ },
+ "finished": "2026-10-28T16:26:01"
+}
