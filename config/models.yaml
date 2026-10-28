@@ -1,0 +1,92 @@
+# Model specifications for full-training-set retrains (src/deliverable.py): the deliverable
+# (scripts/predict_all_pairs.py) and the lockbox evaluation (scripts/lockbox_eval.py, which records this file's
+# sha256 and the git commit in its output). Each entry reproduces the dev-CV procedure of the named run family
+# on an arbitrary training set (tests/test_deliverable.py checks that, given an outer fold's training pairs,
+# the M2 path reproduces scripts/run_m2.py's fold predictions).
+#
+# kinds:
+#   m2_stack   nested-stacked LightGBM (DESIGN §4 rule 2; src/models/m2.py builder, src/stacking.py rows):
+#              stacker rows = inner eval rows of data.inner_splits(T) with RYAN/NBR/GP features from the inner
+#              training pairs; prediction rows get the same features from all of T. Model seed s: early stopping
+#              on inner fold j = s mod n_inner, fitted on the gene-grouped rows for j (as scripts/run_m2.py).
+#   lf_lgbm    M1: LightGBM on label-free features, all training pairs, gene-holdout early stopping
+#              (scripts/run_m1.py; holdout seed [inner.seed, n_folds, s] = "fold index n_folds" = all-data fit).
+#   b1         additive-logit propensity (scripts/run_baselines.py B1).
+#   b4         logistic MF where both genes are seen, else B1 (scripts/run_baselines.py B4).
+# fields:
+#   lf_groups  label-free feature groups (list) or "all" (every group in the store snapshot, incl. HYPO)
+#   sims       similarity sources for NBR / GP inputs (list) or "all" (SimStore default)
+#   seeds      protocol seeds key (ladder | all) or an explicit list
+#   rounds     inner_early_stopping (M2: the dev-CV rule) | gene_holdout_early_stopping (M1) | n/a
+#   toy_overrides  applied when the data root is not the real one (toy feature groups differ)
+# Real-data lists below are the groups / sources of the adopted M2 run M2__20261028T183713__024416
+# (registry feature_hashes; results/m2/feature_build_20261028.json), so that feature groups added to the store
+# later (e.g. XSP) do not silently change the shipped model.
+
+_real_lf_groups: &lf9 [CER, CONS, EXPR, HYPO, KOPROT, LOC, PHEN, PPI, SEQ]
+_real_sims: &sims9 [cer_profile_corr, cons_phylo, esm_cos, expr_array, expr_rnaseq, koprot_corr, phen_corr,
+                    ppi_cer_rwr, ppi_rwr]
+
+models:
+  M2:
+    kind: m2_stack
+    families: [LF, RYAN, NBR, GP]
+    init_score: false
+    lgbm_config: default
+    seeds: ladder
+    rounds: inner_early_stopping
+    lf_groups: *lf9
+    sims: *sims9
+    ryan_cfg: {}
+    gp_cfg: {}
+    drop_noncoding: true
+    dev_run_model: M2
+    toy_overrides: {lf_groups: all, sims: all}
+  M2_init:
+    kind: m2_stack
+    families: [LF, RYAN, NBR, GP]
+    init_score: true
+    lgbm_config: default
+    seeds: ladder
+    rounds: inner_early_stopping
+    lf_groups: *lf9
+    sims: *sims9
+    ryan_cfg: {}
+    gp_cfg: {}
+    drop_noncoding: true
+    dev_run_model: M2_init
+    toy_overrides: {lf_groups: all, sims: all}
+  M1N:
+    kind: m2_stack
+    families: [LF, NBR]
+    init_score: false
+    lgbm_config: default
+    seeds: ladder
+    rounds: inner_early_stopping
+    lf_groups: *lf9
+    sims: *sims9
+    ryan_cfg: {}
+    gp_cfg: {}
+    drop_noncoding: true
+    dev_run_model: M1N
+    toy_overrides: {lf_groups: all, sims: all}
+  M1:
+    kind: lf_lgbm
+    lgbm_config: ff0.4
+    seeds: ladder
+    rounds: gene_holdout_early_stopping
+    lf_groups: *lf9
+    drop_noncoding: true
+    dev_run_model: M1
+    toy_overrides: {lf_groups: all}
+  B1_additive_logit:
+    kind: b1
+    ryan_cfg: {}
+    drop_noncoding: false        # run_baselines.py trains B1/B4 on all fold training pairs (docs/m2.md note 3)
+    dev_run_model: B1_additive_logit
+  B4_logistic_MF:
+    kind: b4
+    ryan_cfg: {}
+    seeds: ladder
+    drop_noncoding: false
+    dev_run_model: B4_logistic_MF

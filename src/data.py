@@ -135,6 +135,18 @@ def drop_noncoding(pairs: pd.DataFrame, genes=None) -> pd.DataFrame:
     return out
 
 
+def dev_pairs(include_train_drop: bool = False) -> pd.DataFrame:
+    """All dev S2 pairs with TRAIN_COLUMNS (DESIGN §2: "final models are retrained on all dev pairs").
+    Lockbox genes and lockbox-C1 pairs are absent by construction of the dev label file. By default pairs
+    involving drop-from-training genes are removed (the training-pairs rule, DESIGN §1); pass
+    include_train_drop=True for report-only diagnostics over every measured dev pair. Used by the
+    deliverable (scripts/predict_all_pairs.py --train-set dev), scripts/lockbox_eval.py (all-dev retrain)
+    and scripts/linkage_diagnostic.py. Additive helper (2026-10-28); the fold APIs are unchanged."""
+    dev = labels_dev()
+    keep = np.ones(len(dev), bool) if include_train_drop else ~dev.train_drop.to_numpy(bool)
+    return dev.loc[keep, TRAIN_COLUMNS].reset_index(drop=True)
+
+
 def all_eval_pairs(split_seed=None) -> pd.DataFrame:
     n = protocol.load()["dev_cv"]["n_folds"]
     return pd.concat([fold_split(split_seed, k)[1] for k in range(n)], ignore_index=True)
