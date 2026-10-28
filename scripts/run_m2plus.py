@@ -201,43 +201,26 @@ class FoldDataP(R.FoldData):
 
 def etarget(s: np.ndarray) -> np.ndarray:
     """E-TARGET regression target t = -min(S2, 0) (config etarget.target = neg_min_s2_0)."""
-    assert CFG["etarget"]["target"] == "neg_min_s2_0"
-    return -np.minimum(s, 0.0)
+    from src.models import stacker
+    return stacker.etarget(s, CFG["etarget"]["target"])
 
 
 def huber_delta() -> float:
-    assert CFG["etarget"]["delta"] == "label_threshold_abs"
-    return abs(float(protocol.threshold()))
+    from src.models import stacker
+    return stacker.huber_delta(CFG["etarget"]["delta"])
 
 
 def fit_stacker_huber(D: FoldDataP, cols, params, seed, j: int):
     """Huber regression stacker on t = -min(S2, 0); early stopping on the class-weighted binary AP of the
-    protocol label on inner fold j's validation rows (same rows / weights as run_m2.fit_stacker)."""
-    import lightgbm as lgb
-    from sklearn.metrics import average_precision_score
-    from src.models import lgbm
+    protocol label on inner fold j's validation rows (same rows / weights as run_m2.fit_stacker).
+    Thin wrapper of src.models.stacker.fit_huber (shared with src/deliverable.py)."""
+    from src.models import lgbm, stacker
     fm, vm = D.groups[j]
-    t = etarget(D.s)
-    p = {**params, "objective": "huber", "alpha": huber_delta(), "metric": "None", "seed": seed,
-         "bagging_seed": seed + 1, "feature_fraction_seed": seed + 2, "data_random_seed": seed + 3}
     names = lgbm.safe_names(np.array(D.names)[cols])
-    Xf = D.Xtr[np.ix_(fm, cols)]
-    Xv = D.Xtr[np.ix_(vm, cols)]
-    yv, wv = D.y[vm], D.w[vm]
-    dtr = lgb.Dataset(Xf, label=t[fm], weight=D.w[fm], feature_name=names, free_raw_data=True)
-    dva = lgb.Dataset(Xv, label=t[vm], weight=wv, reference=dtr, free_raw_data=True)
-
-    def wap(preds, _ds):
-        return "weighted_ap", float(average_precision_score(yv, preds, sample_weight=wv)), True
-
-    b = lgb.train(p, dtr, num_boost_round=lgbm.MAX_ROUNDS, valid_sets=[dva], valid_names=["valid"], feval=wap,
-                  callbacks=[lgb.early_stopping(lgbm.EARLY_STOP, verbose=False)])
-    pv = b.predict(Xv, num_iteration=b.best_iteration)
-    info = {"best_iteration": int(b.best_iteration), "inner_fold_valid": int(j),
-            "valid_ap_weighted": float(average_precision_score(yv, pv, sample_weight=wv)),
-            "n_fit": int(fm.sum()), "n_valid": int(vm.sum()), "pos_fit": int(D.y[fm].sum()),
-            "pos_valid": int(yv.sum()), "huber_delta": huber_delta()}
-    return b, info
+    b, inf = stacker.fit_huber(D.Xtr[np.ix_(fm, cols)], D.s[fm], D.w[fm], D.Xtr[np.ix_(vm, cols)], D.s[vm], D.y[vm],
+                               D.w[vm], params, seed, names, target=CFG["etarget"]["target"],
+                               delta=CFG["etarget"]["delta"], y_fit=D.y[fm])
+    return b, {"inner_fold_valid": int(j), **inf}
 
 
 # ============================================================================================ run
@@ -455,7 +438,14 @@ def main() -> int:
     ap.add_argument("--pairs", default="")
     ap.add_argument("--base-model", default="", help="c3blend: registered model name (or run id) to blend")
     ap.add_argument("--no-register", action="store_true")
+    ap.add_argument("--threads", type=int, default=None,
+                    help="LightGBM / torch threads (default config/m2plus.yaml compute.stacker_threads); results "
+                         "are thread-count invariant (force_col_wise, deterministic)")
     args = ap.parse_args()
+    global THREADS
+    if args.threads:
+        THREADS = int(args.threads)
+        R.N_JOBS = THREADS
     set_threads(THREADS)
     from src.ryanfeat import SimStore
     st = args.stages.split(",")

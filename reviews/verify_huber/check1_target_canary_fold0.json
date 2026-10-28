@@ -1,0 +1,230 @@
+{
+ "fold": 0,
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "corrupted_pairs": 325360,
+ "corrupted_label_changes": 109805,
+ "code_level": {
+  "stacker_rows_touching_fold_genes": 0,
+  "stacker_pairs_in_eval_pairs": 0,
+  "stacker_pairs_in_corrupt_mask": 0,
+  "stacker_pairs_not_in_outer_train": 0,
+  "D.s_equals_labels_dev_S2_of_same_pair": true,
+  "D.y_equals_S2_lt_thr": true,
+  "target_is_neg_min_s2_0": true,
+  "huber_delta": 2.3,
+  "n_features_used": 475,
+  "n_XSP_features": 0,
+  "s_column_in_features": false,
+  "label_like_feature_names": [],
+  "inner0": {
+   "vm_all_inner_fold_j": true,
+   "fm_vm_disjoint": true,
+   "n_fm": 316522,
+   "n_vm": 112913
+  },
+  "inner1": {
+   "vm_all_inner_fold_j": true,
+   "fm_vm_disjoint": true,
+   "n_fm": 315392,
+   "n_vm": 114566
+  },
+  "inner2": {
+   "vm_all_inner_fold_j": true,
+   "fm_vm_disjoint": true,
+   "n_fm": 314488,
+   "n_vm": 115220
+  },
+  "inner3": {
+   "vm_all_inner_fold_j": true,
+   "fm_vm_disjoint": true,
+   "n_fm": 317189,
+   "n_vm": 113330
+  },
+  "inner4": {
+   "vm_all_inner_fold_j": true,
+   "fm_vm_disjoint": true,
+   "n_fm": 314196,
+   "n_vm": 115437
+  }
+ },
+ "clean_vs_registered_perseed": {
+  "0": {
+   "n": 261962,
+   "max_abs": 0.8113537026900324,
+   "pearson": 0.9816090612593231,
+   "bit_identical": false
+  },
+  "1": {
+   "n": 261962,
+   "max_abs": 0.5999067816421799,
+   "pearson": 0.9724509996516724,
+   "bit_identical": false
+  },
+  "2": {
+   "n": 261962,
+   "max_abs": 0.7340412963536953,
+   "pearson": 0.9657658248691104,
+   "bit_identical": false
+  },
+  "3": {
+   "n": 261962,
+   "max_abs": 0.11250233195326809,
+   "pearson": 0.9992714100295115,
+   "bit_identical": false
+  },
+  "4": {
+   "n": 261962,
+   "max_abs": 1.6163790723809415,
+   "pearson": 0.9733720106148596,
+   "bit_identical": false
+  }
+ },
+ "positive_controls": {
+  "P_es": {
+   "best_iter_A": 233,
+   "best_iter_B": 9,
+   "preds_identical": false,
+   "max_abs_diff": 2.9935699164770093,
+   "detected": true
+  },
+  "P_target": {
+   "best_iter_A": 424,
+   "best_iter_B": 188,
+   "preds_identical": false,
+   "max_abs_diff": 4.537265090477938,
+   "detected": true
+  }
+ },
+ "world_meta": {
+  "A_clean": {
+   "train_pairs_hash": "f84f896441848202",
+   "train_S2_hash": "7ef4c35d3b26914c",
+   "Xtr": "7114d63c4fa45337",
+   "Xev": "69571c1bb53a6cb4",
+   "y": "252cbade0371b810",
+   "s": "b9aaa5009a4b634e",
+   "w": "ea2f40f1ebe19f6b",
+   "groups": "bbd565f3443bbeff",
+   "ev_pairs": "7cb3831b2d8cc22e",
+   "n_stacker_rows": 571466,
+   "n_eval_rows": 261962,
+   "names": "bdb35fb6abbd5698",
+   "fits": [
+    {
+     "seed": 0,
+     "best_iter": 80,
+     "inner_wAP": 0.16094
+    },
+    {
+     "seed": 1,
+     "best_iter": 245,
+     "inner_wAP": 0.17777
+    },
+    {
+     "seed": 2,
+     "best_iter": 468,
+     "inner_wAP": 0.15302
+    },
+    {
+     "seed": 3,
+     "best_iter": 259,
+     "inner_wAP": 0.16006
+    },
+    {
+     "seed": 4,
+     "best_iter": 156,
+     "inner_wAP": 0.16565
+    }
+   ],
+   "pred_hashes": [
+    "c6d6a7f8e7f24242",
+    "a7dfc045ef2e984c",
+    "e3afe5804b127b93",
+    "f45ee991605694fc",
+    "c40444d4a1195788"
+   ]
+  },
+  "B_corrupt": {
+   "train_pairs_hash": "f84f896441848202",
+   "train_S2_hash": "7ef4c35d3b26914c",
+   "Xtr": "7114d63c4fa45337",
+   "Xev": "69571c1bb53a6cb4",
+   "y": "252cbade0371b810",
+   "s": "b9aaa5009a4b634e",
+   "w": "ea2f40f1ebe19f6b",
+   "groups": "bbd565f3443bbeff",
+   "ev_pairs": "7cb3831b2d8cc22e",
+   "n_stacker_rows": 571466,
+   "n_eval_rows": 261962,
+   "names": "bdb35fb6abbd5698",
+   "fits": [
+    {
+     "seed": 0,
+     "best_iter": 80,
+     "inner_wAP": 0.16094
+    },
+    {
+     "seed": 1,
+     "best_iter": 245,
+     "inner_wAP": 0.17777
+    },
+    {
+     "seed": 2,
+     "best_iter": 468,
+     "inner_wAP": 0.15302
+    },
+    {
+     "seed": 3,
+     "best_iter": 259,
+     "inner_wAP": 0.16006
+    },
+    {
+     "seed": 4,
+     "best_iter": 156,
+     "inner_wAP": 0.16565
+    }
+   ],
+   "pred_hashes": [
+    "c6d6a7f8e7f24242",
+    "a7dfc045ef2e984c",
+    "e3afe5804b127b93",
+    "f45ee991605694fc",
+    "c40444d4a1195788"
+   ]
+  }
+ },
+ "inputs_identical": {
+  "train_pairs_hash": true,
+  "train_S2_hash": true,
+  "Xtr": true,
+  "Xev": true,
+  "y": true,
+  "s": true,
+  "w": true,
+  "groups": true,
+  "ev_pairs": true,
+  "names": true
+ },
+ "preds_bit_identical_per_seed": [
+  true,
+  true,
+  true,
+  true,
+  true
+ ],
+ "preds_max_abs_diff_per_seed": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "PASS": true,
+ "wall_s": 1704
+}

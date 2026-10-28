@@ -16,19 +16,29 @@ code_commit: TODO            # full git hash; HEAD may differ from it only outsi
 # Shortlist (DESIGN §3): one headline model, <= 4 others, all baselines. Ids are keys of models_file; each is
 # retrained on ALL dev training pairs (src.data.dev_pairs; lockbox genes and lockbox-C1 pairs never seen) with
 # the configuration recorded there, then scored once on the eligible lockbox C1/C2/C3 pairs.
+# Available ids (config/models.yaml): M2r_huber (incumbent, Huber stacker, seeds 0-2), M2r_bag5_huber (Huber, 0-4),
+# M2 (binary stacker), M2_init, M1N, M1, B1_additive_logit, B4_logistic_MF. The stacker objective of each id is
+# part of its spec (`objective`, `etarget`), so the models_sha256 below pins it.
 shortlist:
-  - TODO                     # e.g. M2
+  - TODO                     # e.g. M2r_huber
 headline_model: TODO         # reported and SHIPPED (scripts/predict_all_pairs.py --train-set all) whatever the
                              # lockbox ranking shows
 baselines: [B1_additive_logit, B4_logistic_MF]
 
-# Model seeds for every seeded model (DESIGN §3: the shortlist uses all 5 seeds); scores are averaged over seeds.
-seeds: all                   # protocol seeds key (all = [0, 1, 2, 3, 4]) or an explicit list
+# Model seeds for every seeded model; scores are averaged over seeds. Options (scripts/lockbox_eval.resolve_seeds):
+#   all | ladder  protocol seeds key applied to EVERY seeded model (DESIGN §3 says the shortlist uses all 5 seeds;
+#                 note: with `all`, M2r_huber is retrained with seeds 0-4, i.e. as M2r_bag5_huber);
+#   model         each model keeps its own config/models.yaml seeds (M2r_huber 0-2 = the adopted incumbent);
+#   [list]        explicit seeds for every seeded model.
+seeds: all                   # TODO-PI: keep `all` (DESIGN §3) or switch to `model` (ship M2r_huber exactly as adopted)
 
 # Boosting rounds for the all-dev retrain, fixed from the dev-CV procedure (no lockbox information):
 #   m2_stack: per seed s, early stopping (patience 100, max 2000 rounds) on inner fold j = s mod 5 of the
 #             all-dev training set's own nested inner split, fitted on the gene-grouped rows for j — exactly the
-#             per-outer-fold rule used in dev CV (scripts/run_m2.py), applied to the all-dev training set.
+#             per-outer-fold rule used in dev CV (scripts/run_m2.py; Huber: scripts/run_m2plus.py), applied to the
+#             all-dev training set. Early-stopping metric: class-weighted AP of the protocol label on the inner
+#             validation rows for both objectives (binary: LightGBM average_precision; huber: custom feval on the
+#             predicted -min(S2, 0); src/models/stacker.py).
 #   lf_lgbm:  per seed s, early stopping on a 15% gene hold-out of the training pairs (scripts/run_m1.py rule).
 boosting_rounds: dev_cv_inner_early_stopping
 

@@ -1,0 +1,366 @@
+M2 {"rows": 1320074, "lockbox_genes_in_preds": 0, "primary_mine": 0.17000853496687576, "registry_primary": 0.170008534966877, "fold_primary": [0.166, 0.1804, 0.1618, 0.1661, 0.1758], "class_mine": {"C1": 0.2514, "C2": 0.1592, "C3": 0.0948}, "class_registry": {"C1": 0.2514, "C2": 0.1592, "C3": 0.0948}, "all_pairs_mine": 0.18311297347280375, "registry_all_pairs": 0.18311297347280583, "registry_seeds": "[0, 1, 2]", "registry_protocol_sha": "73edd56db38e", "registry_splits_sha": "dd69b6e7f326", "git_dirty": "False", "data_root": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/frozen_m2"}
+M2r {"rows": 1320074, "lockbox_genes_in_preds": 0, "primary_mine": 0.17000853496687576, "registry_primary": 0.170008534966877, "fold_primary": [0.166, 0.1804, 0.1618, 0.1661, 0.1758], "class_mine": {"C1": 0.2514, "C2": 0.1592, "C3": 0.0948}, "class_registry": {"C1": 0.2514, "C2": 0.1592, "C3": 0.0948}, "all_pairs_mine": 0.18311297347280375, "registry_all_pairs": 0.18311297347280583, "registry_seeds": "[0, 1, 2]", "registry_protocol_sha": "73edd56db38e", "registry_splits_sha": "dd69b6e7f326", "git_dirty": "False", "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed", "perseed_seeds": [0, 1, 2], "perseed_seeds_equal_config": true, "perseed_rows_per_seed": [1320074], "perseed_mean_matches_registered_maxabs": 0.0, "per_seed_primary": [0.1574, 0.1594, 0.1566]}
+M2r_bag5_huber {"rows": 1320074, "lockbox_genes_in_preds": 0, "primary_mine": 0.18137552686330255, "registry_primary": 0.18137552686330372, "fold_primary": [0.1783, 0.1914, 0.1695, 0.1777, 0.1899], "class_mine": {"C1": 0.2773, "C2": 0.1681, "C3": 0.0947}, "class_registry": {"C1": 0.2773, "C2": 0.1681, "C3": 0.0947}, "all_pairs_mine": 0.19666163841921713, "registry_all_pairs": 0.19666163841921863, "registry_seeds": "[0, 1, 2, 3, 4]", "registry_protocol_sha": "73edd56db38e", "registry_splits_sha": "dd69b6e7f326", "git_dirty": "False", "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed", "perseed_seeds": [0, 1, 2, 3, 4], "perseed_seeds_equal_config": true, "perseed_rows_per_seed": [1320074], "perseed_mean_matches_registered_maxabs": 0.0, "per_seed_primary": [0.1696, 0.1726, 0.1697, 0.1722, 0.1717]}
+M2r_huber {"rows": 1320074, "lockbox_genes_in_preds": 0, "primary_mine": 0.179146436574329, "registry_primary": 0.1791464365743302, "fold_primary": [0.1762, 0.1909, 0.1685, 0.176, 0.184], "class_mine": {"C1": 0.2721, "C2": 0.1668, "C3": 0.0936}, "class_registry": {"C1": 0.2721, "C2": 0.1668, "C3": 0.0936}, "all_pairs_mine": 0.19396608534072618, "registry_all_pairs": 0.19396608534072787, "registry_seeds": "[0, 1, 2]", "registry_protocol_sha": "73edd56db38e", "registry_splits_sha": "dd69b6e7f326", "git_dirty": "False", "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed", "perseed_seeds": [0, 1, 2], "perseed_seeds_equal_config": true, "perseed_rows_per_seed": [1320074], "perseed_mean_matches_registered_maxabs": 0.0, "per_seed_primary": [0.1696, 0.1726, 0.1697]}
+M2r_bag5 {"rows": 1320074, "lockbox_genes_in_preds": 0, "primary_mine": 0.1727707089572542, "registry_primary": 0.17277070895725538, "fold_primary": [0.1672, 0.1842, 0.1631, 0.1697, 0.1797], "class_mine": {"C1": 0.2581, "C2": 0.1604, "C3": 0.096}, "class_registry": {"C1": 0.2581, "C2": 0.1604, "C3": 0.096}, "all_pairs_mine": 0.18655809683425523, "registry_all_pairs": 0.18655809683425723, "registry_seeds": "[0, 1, 2, 3, 4]", "registry_protocol_sha": "73edd56db38e", "registry_splits_sha": "dd69b6e7f326", "git_dirty": "False", "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed", "perseed_seeds": [0, 1, 2, 3, 4], "perseed_seeds_equal_config": true, "perseed_rows_per_seed": [1320074], "perseed_mean_matches_registered_maxabs": 0.0, "per_seed_primary": [0.1574, 0.1594, 0.1566, 0.1587, 0.1582]}
+M2_split7 {"rows": 1320102, "lockbox_genes_in_preds": 0, "primary_mine": 0.1703169311423452, "registry_primary": 0.17031693114234586, "fold_primary": [0.1825, 0.1791, 0.1611, 0.158, 0.1709], "class_mine": {"C1": 0.2479, "C2": 0.161, "C3": 0.0883}, "class_registry": {"C1": 0.2479, "C2": 0.161, "C3": 0.0883}, "all_pairs_mine": 0.18288805289226956, "registry_all_pairs": 0.18288805289226945, "registry_seeds": "[0, 1, 2]", "registry_protocol_sha": "73edd56db38e", "registry_splits_sha": "b350b22e85c3", "git_dirty": "False", "data_root": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/frozen_m2"}
+M2r_bag5_huber_split7 {"rows": 1320102, "lockbox_genes_in_preds": 0, "primary_mine": 0.1778763069702644, "registry_primary": 0.17787630697026502, "fold_primary": [0.1858, 0.1919, 0.1692, 0.1671, 0.1754], "class_mine": {"C1": 0.2626, "C2": 0.1693, "C3": 0.0877}, "class_registry": {"C1": 0.2626, "C2": 0.1693, "C3": 0.0877}, "all_pairs_mine": 0.19141739041739023, "registry_all_pairs": 0.19141739041739028, "registry_seeds": "[0, 1, 2, 3, 4]", "registry_protocol_sha": "73edd56db38e", "registry_splits_sha": "b350b22e85c3", "git_dirty": "False", "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed", "perseed_seeds": [0, 1, 2, 3, 4], "perseed_seeds_equal_config": true, "perseed_rows_per_seed": [1320102], "perseed_mean_matches_registered_maxabs": 0.0, "per_seed_primary": [0.168, 0.1674, 0.1685, 0.1687, 0.1687]}
+M2r_bag5_huber-M2 {'delta': 0.01137, 'n_boot': 300, 'ci95': [0.0069, 0.0154], 'frac_le_0': 0.0, 'frac_lt_0.005': 0.0033333333333333335}
+M2r_huber-M2r {'delta': 0.00914, 'n_boot': 300, 'ci95': [0.0047, 0.0131], 'frac_le_0': 0.0, 'frac_lt_0.005': 0.03666666666666667}
+M2r_bag5_huber-M2r_huber {'delta': 0.00223, 'n_boot': 300, 'ci95': [0.0011, 0.0035], 'frac_le_0': 0.0, 'frac_lt_0.005': 1.0}
+{
+ "threshold": -2.3,
+ "label_column": "s_score",
+ "labels_dev_y_equals_S2_lt_thr": true,
+ "M2": {
+  "rows": 1320074,
+  "lockbox_genes_in_preds": 0,
+  "primary_mine": 0.17000853496687576,
+  "registry_primary": 0.170008534966877,
+  "fold_primary": [
+   0.166,
+   0.1804,
+   0.1618,
+   0.1661,
+   0.1758
+  ],
+  "class_mine": {
+   "C1": 0.2514,
+   "C2": 0.1592,
+   "C3": 0.0948
+  },
+  "class_registry": {
+   "C1": 0.2514,
+   "C2": 0.1592,
+   "C3": 0.0948
+  },
+  "all_pairs_mine": 0.18311297347280375,
+  "registry_all_pairs": 0.18311297347280583,
+  "registry_seeds": "[0, 1, 2]",
+  "registry_protocol_sha": "73edd56db38e",
+  "registry_splits_sha": "dd69b6e7f326",
+  "git_dirty": "False",
+  "data_root": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/frozen_m2"
+ },
+ "M2r": {
+  "rows": 1320074,
+  "lockbox_genes_in_preds": 0,
+  "primary_mine": 0.17000853496687576,
+  "registry_primary": 0.170008534966877,
+  "fold_primary": [
+   0.166,
+   0.1804,
+   0.1618,
+   0.1661,
+   0.1758
+  ],
+  "class_mine": {
+   "C1": 0.2514,
+   "C2": 0.1592,
+   "C3": 0.0948
+  },
+  "class_registry": {
+   "C1": 0.2514,
+   "C2": 0.1592,
+   "C3": 0.0948
+  },
+  "all_pairs_mine": 0.18311297347280375,
+  "registry_all_pairs": 0.18311297347280583,
+  "registry_seeds": "[0, 1, 2]",
+  "registry_protocol_sha": "73edd56db38e",
+  "registry_splits_sha": "dd69b6e7f326",
+  "git_dirty": "False",
+  "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed",
+  "perseed_seeds": [
+   0,
+   1,
+   2
+  ],
+  "perseed_seeds_equal_config": true,
+  "perseed_rows_per_seed": [
+   1320074
+  ],
+  "perseed_mean_matches_registered_maxabs": 0.0,
+  "per_seed_primary": [
+   0.1574,
+   0.1594,
+   0.1566
+  ]
+ },
+ "M2r_bag5_huber": {
+  "rows": 1320074,
+  "lockbox_genes_in_preds": 0,
+  "primary_mine": 0.18137552686330255,
+  "registry_primary": 0.18137552686330372,
+  "fold_primary": [
+   0.1783,
+   0.1914,
+   0.1695,
+   0.1777,
+   0.1899
+  ],
+  "class_mine": {
+   "C1": 0.2773,
+   "C2": 0.1681,
+   "C3": 0.0947
+  },
+  "class_registry": {
+   "C1": 0.2773,
+   "C2": 0.1681,
+   "C3": 0.0947
+  },
+  "all_pairs_mine": 0.19666163841921713,
+  "registry_all_pairs": 0.19666163841921863,
+  "registry_seeds": "[0, 1, 2, 3, 4]",
+  "registry_protocol_sha": "73edd56db38e",
+  "registry_splits_sha": "dd69b6e7f326",
+  "git_dirty": "False",
+  "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed",
+  "perseed_seeds": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "perseed_seeds_equal_config": true,
+  "perseed_rows_per_seed": [
+   1320074
+  ],
+  "perseed_mean_matches_registered_maxabs": 0.0,
+  "per_seed_primary": [
+   0.1696,
+   0.1726,
+   0.1697,
+   0.1722,
+   0.1717
+  ]
+ },
+ "M2r_huber": {
+  "rows": 1320074,
+  "lockbox_genes_in_preds": 0,
+  "primary_mine": 0.179146436574329,
+  "registry_primary": 0.1791464365743302,
+  "fold_primary": [
+   0.1762,
+   0.1909,
+   0.1685,
+   0.176,
+   0.184
+  ],
+  "class_mine": {
+   "C1": 0.2721,
+   "C2": 0.1668,
+   "C3": 0.0936
+  },
+  "class_registry": {
+   "C1": 0.2721,
+   "C2": 0.1668,
+   "C3": 0.0936
+  },
+  "all_pairs_mine": 0.19396608534072618,
+  "registry_all_pairs": 0.19396608534072787,
+  "registry_seeds": "[0, 1, 2]",
+  "registry_protocol_sha": "73edd56db38e",
+  "registry_splits_sha": "dd69b6e7f326",
+  "git_dirty": "False",
+  "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed",
+  "perseed_seeds": [
+   0,
+   1,
+   2
+  ],
+  "perseed_seeds_equal_config": true,
+  "perseed_rows_per_seed": [
+   1320074
+  ],
+  "perseed_mean_matches_registered_maxabs": 0.0,
+  "per_seed_primary": [
+   0.1696,
+   0.1726,
+   0.1697
+  ]
+ },
+ "M2r_bag5": {
+  "rows": 1320074,
+  "lockbox_genes_in_preds": 0,
+  "primary_mine": 0.1727707089572542,
+  "registry_primary": 0.17277070895725538,
+  "fold_primary": [
+   0.1672,
+   0.1842,
+   0.1631,
+   0.1697,
+   0.1797
+  ],
+  "class_mine": {
+   "C1": 0.2581,
+   "C2": 0.1604,
+   "C3": 0.096
+  },
+  "class_registry": {
+   "C1": 0.2581,
+   "C2": 0.1604,
+   "C3": 0.096
+  },
+  "all_pairs_mine": 0.18655809683425523,
+  "registry_all_pairs": 0.18655809683425723,
+  "registry_seeds": "[0, 1, 2, 3, 4]",
+  "registry_protocol_sha": "73edd56db38e",
+  "registry_splits_sha": "dd69b6e7f326",
+  "git_dirty": "False",
+  "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed",
+  "perseed_seeds": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "perseed_seeds_equal_config": true,
+  "perseed_rows_per_seed": [
+   1320074
+  ],
+  "perseed_mean_matches_registered_maxabs": 0.0,
+  "per_seed_primary": [
+   0.1574,
+   0.1594,
+   0.1566,
+   0.1587,
+   0.1582
+  ]
+ },
+ "M2_split7": {
+  "rows": 1320102,
+  "lockbox_genes_in_preds": 0,
+  "primary_mine": 0.1703169311423452,
+  "registry_primary": 0.17031693114234586,
+  "fold_primary": [
+   0.1825,
+   0.1791,
+   0.1611,
+   0.158,
+   0.1709
+  ],
+  "class_mine": {
+   "C1": 0.2479,
+   "C2": 0.161,
+   "C3": 0.0883
+  },
+  "class_registry": {
+   "C1": 0.2479,
+   "C2": 0.161,
+   "C3": 0.0883
+  },
+  "all_pairs_mine": 0.18288805289226956,
+  "registry_all_pairs": 0.18288805289226945,
+  "registry_seeds": "[0, 1, 2]",
+  "registry_protocol_sha": "73edd56db38e",
+  "registry_splits_sha": "b350b22e85c3",
+  "git_dirty": "False",
+  "data_root": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/frozen_m2"
+ },
+ "M2r_bag5_huber_split7": {
+  "rows": 1320102,
+  "lockbox_genes_in_preds": 0,
+  "primary_mine": 0.1778763069702644,
+  "registry_primary": 0.17787630697026502,
+  "fold_primary": [
+   0.1858,
+   0.1919,
+   0.1692,
+   0.1671,
+   0.1754
+  ],
+  "class_mine": {
+   "C1": 0.2626,
+   "C2": 0.1693,
+   "C3": 0.0877
+  },
+  "class_registry": {
+   "C1": 0.2626,
+   "C2": 0.1693,
+   "C3": 0.0877
+  },
+  "all_pairs_mine": 0.19141739041739023,
+  "registry_all_pairs": 0.19141739041739028,
+  "registry_seeds": "[0, 1, 2, 3, 4]",
+  "registry_protocol_sha": "73edd56db38e",
+  "registry_splits_sha": "b350b22e85c3",
+  "git_dirty": "False",
+  "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed",
+  "perseed_seeds": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "perseed_seeds_equal_config": true,
+  "perseed_rows_per_seed": [
+   1320102
+  ],
+  "perseed_mean_matches_registered_maxabs": 0.0,
+  "per_seed_primary": [
+   0.168,
+   0.1674,
+   0.1685,
+   0.1687,
+   0.1687
+  ]
+ },
+ "eval_rows_M2_vs_bag5_huber": {
+  "n_a": 1320074,
+  "n_b": 1320074,
+  "only_one_side": 0,
+  "part_mismatch": 0,
+  "y_mismatch": 0
+ },
+ "eval_rows_M2_vs_huber": {
+  "n_a": 1320074,
+  "n_b": 1320074,
+  "only_one_side": 0,
+  "part_mismatch": 0,
+  "y_mismatch": 0
+ },
+ "eval_rows_M2split7_vs_bag5huber_split7": {
+  "n_a": 1320102,
+  "n_b": 1320102,
+  "only_one_side": 0,
+  "part_mismatch": 0,
+  "y_mismatch": 0
+ },
+ "paired": {
+  "M2r_bag5_huber-M2": {
+   "delta": 0.01137,
+   "n_boot": 300,
+   "ci95": [
+    0.0069,
+    0.0154
+   ],
+   "frac_le_0": 0.0,
+   "frac_lt_0.005": 0.0033333333333333335
+  },
+  "M2r_huber-M2r": {
+   "delta": 0.00914,
+   "n_boot": 300,
+   "ci95": [
+    0.0047,
+    0.0131
+   ],
+   "frac_le_0": 0.0,
+   "frac_lt_0.005": 0.03666666666666667
+  },
+  "M2r_bag5_huber-M2r_huber": {
+   "delta": 0.00223,
+   "n_boot": 300,
+   "ci95": [
+    0.0011,
+    0.0035
+   ],
+   "frac_le_0": 0.0,
+   "frac_lt_0.005": 1.0
+  }
+ },
+ "seed7_delta_bag5huber_minus_M2": 0.0075593758279192125
+}
