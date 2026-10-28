@@ -1,0 +1,120 @@
+{
+ "n_lockbox": 480,
+ "lockbox_in_dev_folds": 0,
+ "dev_pairs_touching_lockbox": 0,
+ "main_allele_classes": {
+  "unlabelled": 1231932,
+  "DAmP": 226212,
+  "deletion_variant": 1733
+ },
+ "dev_pairs_without_measurements": 0,
+ "damp_only_flag_disagreements": 0,
+ "my_damp_only_universe_pairs_dev": 10374,
+ "fold0": {
+  "lockbox_genes_in_train": 0,
+  "lockbox_genes_in_inner_rows": 0,
+  "lockbox_genes_in_eval": 0,
+  "part_mismatch": 0,
+  "n_parts": {
+   "C2": 197612,
+   "C1": 40061,
+   "C3": 24289
+  },
+  "C1_gene_unseen_in_train": 0,
+  "fold_genes_in_train": 0,
+  "eval_pairs_in_train": 0,
+  "eval_damp_only_mine": 0,
+  "eval_merged_id": 0,
+  "eval_not_both_universe": 0,
+  "eval_not_flagged_eligible": 0,
+  "eligible_fold_pairs_not_evaluated": 0,
+  "train_drop_genes_in_train": 0
+ },
+ "fold1": {
+  "lockbox_genes_in_train": 0,
+  "lockbox_genes_in_inner_rows": 0,
+  "lockbox_genes_in_eval": 0,
+  "part_mismatch": 0,
+  "n_parts": {
+   "C2": 195489,
+   "C1": 40348,
+   "C3": 23542
+  },
+  "C1_gene_unseen_in_train": 0,
+  "fold_genes_in_train": 0,
+  "eval_pairs_in_train": 0,
+  "eval_damp_only_mine": 0,
+  "eval_merged_id": 0,
+  "eval_not_both_universe": 0,
+  "eval_not_flagged_eligible": 0,
+  "eligible_fold_pairs_not_evaluated": 0,
+  "train_drop_genes_in_train": 0
+ },
+ "fold2": {
+  "lockbox_genes_in_train": 0,
+  "lockbox_genes_in_inner_rows": 0,
+  "lockbox_genes_in_eval": 0,
+  "part_mismatch": 0,
+  "n_parts": {
+   "C2": 199005,
+   "C1": 39877,
+   "C3": 24737
+  },
+  "C1_gene_unseen_in_train": 0,
+  "fold_genes_in_train": 0,
+  "eval_pairs_in_train": 0,
+  "eval_damp_only_mine": 0,
+  "eval_merged_id": 0,
+  "eval_not_both_universe": 0,
+  "eval_not_flagged_eligible": 0,
+  "eligible_fold_pairs_not_evaluated": 0,
+  "train_drop_genes_in_train": 0
+ },
+ "fold3": {
+  "lockbox_genes_in_train": 0,
+  "lockbox_genes_in_inner_rows": 0,
+  "lockbox_genes_in_eval": 0,
+  "part_mismatch": 0,
+  "n_parts": {
+   "C2": 204294,
+   "C1": 39180,
+   "C3": 26423
+  },
+  "C1_gene_unseen_in_train": 0,
+  "fold_genes_in_train": 0,
+  "eval_pairs_in_train": 0,
+  "eval_damp_only_mine": 0,
+  "eval_merged_id": 0,
+  "eval_not_both_universe": 0,
+  "eval_not_flagged_eligible": 0,
+  "eligible_fold_pairs_not_evaluated": 0,
+  "train_drop_genes_in_train": 0
+ },
+ "fold4": {
+  "lockbox_genes_in_train": 0,
+  "lockbox_genes_in_inner_rows": 0,
+  "lockbox_genes_in_eval": 0,
+  "part_mismatch": 0,
+  "n_parts": {
+   "C2": 200386,
+   "C1": 39700,
+   "C3": 25131
+  },
+  "C1_gene_unseen_in_train": 0,
+  "fold_genes_in_train": 0,
+  "eval_pairs_in_train": 0,
+  "eval_damp_only_mine": 0,
+  "eval_merged_id": 0,
+  "eval_not_both_universe": 0,
+  "eval_not_flagged_eligible": 0,
+  "eligible_fold_pairs_not_evaluated": 0,
+  "train_drop_genes_in_train": 0
+ },
+ "preds_vs_eval_rows": {
+  "both": 1320074,
+  "left_only": 0,
+  "right_only": 0
+ },
+ "preds_part_mismatch": 0,
+ "preds_lockbox_genes": 0
+}

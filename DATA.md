@@ -56,6 +56,7 @@ redistribution or adaptation) is treated the same way. PomBase's CC BY 4.0 is kn
 | `ensembl_fungi_compara` | Ensembl Fungi Compara 116 homologies | **feature** | Compara 116 (Ensembl Genomes release 63) | 2026-10-28 | Ensembl Genomes data free of restrictions (clear) | **yes** |
 | `alphafold_spombe` | AlphaFold DB S. pombe reference proteome UP000002485 | **feature** | AFDB v6 (in file name); remote Last-Modified 2025-08-24, size unchange | 2026-10-28 | CC BY 4.0 (clear) | **yes** |
 | `uniprot_idmapping_pombe` | UniProt ID mapping for S. pombe | **universe-only** | UniProt release 2026_03 (02-Sep-2026); file Last-Modified 2026-09-03 | 2026-10-28 | CC BY 4.0 (clear) | **yes** |
+| `pombase_coords` | PomBase gene coordinates (misc/chromosome_{1,2,3}.gene.coords.tsv) | **universe-only** (linkage flag + report; never a feature) | pombase-2026-10-01 (pinned release URL) | 2026-10-28 | CC BY 4.0 per secondary sources (secondary-source only) | no |
 | `ncbi_gene_pombe` | NCBI Datasets gene report, S. pombe | **universe-only** | API snapshot 2026-10-28 (unversioned) | 2026-10-28 | Public domain (clear) | **yes** |
 | `fypo_phenotype_annotations` | PomBase FYPO phenotype annotations (phenotype_annotations.pombase.phaf.gz, canto_fypo_anno | **excluded** | not retrieved | - | - | - |
 | `biogrid_genetic` | BioGRID genetic interaction rows (S. pombe and others) | **excluded** | not retrieved | - | - | - |
@@ -540,3 +541,12 @@ then a unique gene name. Per-ID logs are in `results/idmap/<source>.tsv`; the pe
 The PomBase ortholog losses are non-coding pombe entries. Curated ortholog ORFs that are absent from
 Costanzo, and from the filtered cerevisiae BioGRID, are listed in `results/idmap/costanzo2016_ortholog_orfs_absent.tsv`
 and `results/idmap/biogrid_scerevisiae_physical_ortholog_orfs_absent.tsv`.
+
+## Addendum 2026-10-28: `pombase_coords`
+
+- **Source:** `https://www.pombase.org/data/releases/pombase-2026-10-01/misc/chromosome_{1,2,3}.gene.coords.tsv`.
+- **Fetched by:** `scripts/linkage_diagnostic.py --download` (`src/universe.download_coords`) into `data/raw/pombase_coords/`, with `SHA256SUMS`. The pins are also in `config/deliverable.yaml`:
+  - chromosome_1: `d810e421d41e9f94ffd5ec81521d358f6c35f6121181f31a641a5b535ebe2efc`
+  - chromosome_2: `1f0aa7e2d778dc6167c08882f55650e4200ba1fb00fdfa9b9fe3f884da549a39`
+  - chromosome_3: `4ad52f9b07f350a3c28d95f30d361c6c6671228f5fc55e0dc697c3d43a3a8720`
+- **Use:** label-free. Only for the `linked` flag in the deliverable and the report-only linkage diagnostic (`results/linkage/`). Distance is never a model feature.

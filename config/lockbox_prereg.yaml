@@ -1,0 +1,57 @@
+# Lockbox pre-registration (DESIGN.md §3 "Lockbox"). TEMPLATE — the PI fills every TODO, commits this file,
+# and only then runs scripts/lockbox_eval.py (which refuses while any TODO remains, while this file is
+# uncommitted or modified, or if results/lockbox/access_log.tsv already records a completed run for this
+# file's sha256). Changing ANY byte after the run changes the sha256: the run is tied to these exact bytes.
+prereg_version: 1
+
+# ---- frozen inputs (checked at run time) -------------------------------------------------------------------
+protocol_sha256: 73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230   # config/protocol.yaml
+lockbox_genes_sha256: 77fb02e1a5d688884e0a282c49c9f100840ee0f1988b74247abee150228d3457   # config/lockbox_genes.txt
+models_file: config/models.yaml
+models_sha256: TODO          # sha256 of config/models.yaml at code_commit (exact model configs)
+code_commit: TODO            # full git hash; HEAD may differ from it only outside src/, scripts/, config/models.yaml,
+                             # config/protocol.yaml, config/deliverable.yaml (checked with git diff)
+
+# ---- models ------------------------------------------------------------------------------------------------
+# Shortlist (DESIGN §3): one headline model, <= 4 others, all baselines. Ids are keys of models_file; each is
+# retrained on ALL dev training pairs (src.data.dev_pairs; lockbox genes and lockbox-C1 pairs never seen) with
+# the configuration recorded there, then scored once on the eligible lockbox C1/C2/C3 pairs.
+shortlist:
+  - TODO                     # e.g. M2
+headline_model: TODO         # reported and SHIPPED (scripts/predict_all_pairs.py --train-set all) whatever the
+                             # lockbox ranking shows
+baselines: [B1_additive_logit, B4_logistic_MF]
+
+# Model seeds for every seeded model (DESIGN §3: the shortlist uses all 5 seeds); scores are averaged over seeds.
+seeds: all                   # protocol seeds key (all = [0, 1, 2, 3, 4]) or an explicit list
+
+# Boosting rounds for the all-dev retrain, fixed from the dev-CV procedure (no lockbox information):
+#   m2_stack: per seed s, early stopping (patience 100, max 2000 rounds) on inner fold j = s mod 5 of the
+#             all-dev training set's own nested inner split, fitted on the gene-grouped rows for j — exactly the
+#             per-outer-fold rule used in dev CV (scripts/run_m2.py), applied to the all-dev training set.
+#   lf_lgbm:  per seed s, early stopping on a 15% gene hold-out of the training pairs (scripts/run_m1.py rule).
+boosting_rounds: dev_cv_inner_early_stopping
+
+# ---- metric ------------------------------------------------------------------------------------------------
+metric:
+  primary: >-
+    pooled universe-weighted AUPRC: one ranking of all eligible lockbox C1/C2/C3 pairs (labels_lockbox `part`;
+    C1 = the lockbox-C1 pair set, C2 = one lockbox gene, C3 = two), average_precision with sample weights that
+    scale each class to protocol class_weights.primary (src/evaluate.pooled_metrics, a single "fold").
+  secondary: [per-class AUPRC (unweighted within class), pooled under all_pairs and equal weights, AUROC,
+              precision@1000, pooled on the raw-mean label (report-only sensitivity), dev-minus-lockbox gap]
+  label: protocol label (S2 < threshold), eligible pairs only (protocol eval masks)
+  bootstrap: >-
+    protocol bootstrap (Poisson(1) count per gene, shared across classes and models; n_replicates and seed from
+    protocol.yaml) over the genes of the lockbox eval pairs; replicate statistic = the point statistic with pair
+    weight count_a * count_b; percentile CI at protocol bootstrap.ci_level. Per-class CIs use the same replicates.
+  p_value: >-
+    paired, two-sided: for contrast (a, b), D* = replicate(a) - replicate(b) on the shared replicates;
+    p = min(1, 2 * min(mean(D* <= 0), mean(D* >= 0))).
+  multiplicity: Holm step-down over the contrasts listed in holm_family, family-wise alpha below.
+
+holm_family:
+  alpha: 0.05
+  contrasts:                 # [a, b] pairs tested as Delta = primary(a) - primary(b)
+    - [TODO, B1_additive_logit]
+    - [TODO, B4_logistic_MF]

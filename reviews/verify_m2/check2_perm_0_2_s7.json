@@ -1,0 +1,58 @@
+{
+ "mode": "perm",
+ "folds": {
+  "0": {
+   "stacker_pos_rate": 0.01861528069911421,
+   "primary": 0.0199,
+   "primary_of_negated_score": 0.0237,
+   "weighted_auroc": 0.4755,
+   "weighted_prevalence": 0.0211,
+   "class_AP": {
+    "C1": 0.0211,
+    "C2": 0.0198,
+    "C3": 0.0188
+   },
+   "fits": [
+    {
+     "best_iter": 140,
+     "valid_wAP": 0.0201
+    },
+    {
+     "best_iter": 1,
+     "valid_wAP": 0.0188
+    },
+    {
+     "best_iter": 212,
+     "valid_wAP": 0.0201
+    }
+   ]
+  },
+  "2": {
+   "stacker_pos_rate": 0.018383094923457882,
+   "primary": 0.0252,
+   "primary_of_negated_score": 0.0193,
+   "weighted_auroc": 0.5462,
+   "weighted_prevalence": 0.0208,
+   "class_AP": {
+    "C1": 0.0243,
+    "C2": 0.0258,
+    "C3": 0.0254
+   },
+   "fits": [
+    {
+     "best_iter": 31,
+     "valid_wAP": 0.0187
+    },
+    {
+     "best_iter": 20,
+     "valid_wAP": 0.0188
+    },
+    {
+     "best_iter": 2,
+     "valid_wAP": 0.0189
+    }
+   ]
+  }
+ },
+ "wall_s": 458
+}

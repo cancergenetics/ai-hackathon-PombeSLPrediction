@@ -1,0 +1,106 @@
+{
+ "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_deliv/data/processed",
+ "n_dev_pairs": 790237,
+ "n_dev_genes": 1924,
+ "dev_genes_with_coords": 1924,
+ "n_same_chrom_pairs": 255740,
+ "window_kb": 300.0,
+ "within_window": {
+  "n": 1105,
+  "hits": 29,
+  "hit_rate": 0.026244343891402715
+ },
+ "same_chrom_outside_window": {
+  "n": 254635,
+  "hit_rate": 0.01912934199933238
+ },
+ "different_chrom": {
+  "n": 534497,
+  "hit_rate": 0.018224611176489297
+ },
+ "fisher_window_vs_outside": {
+  "odds_ratio": 1.3819662535039712,
+  "p": 0.09732306742106109
+ },
+ "min_gap_kb_measured": 0.299,
+ "oof_run": "M2__20261028T183713__024416",
+ "coords_sha256": {
+  "chromosome_1.gene.coords.tsv": "d810e421d41e9f94ffd5ec81521d358f6c35f6121181f31a641a5b535ebe2efc",
+  "chromosome_2.gene.coords.tsv": "1f0aa7e2d778dc6167c08882f55650e4200ba1fb00fdfa9b9fe3f884da549a39",
+  "chromosome_3.gene.coords.tsv": "4ad52f9b07f350a3c28d95f30d361c6c6671228f5fc55e0dc697c3d43a3a8720"
+ },
+ "bands": [
+  {
+   "band_kb": [
+    0,
+    300
+   ],
+   "n": 1105,
+   "hits": 29,
+   "hit_rate": 0.026244343891402715,
+   "hit_rate_ci": [
+    0.018334269378452943,
+    0.037436966794198376
+   ],
+   "odds_ratio_vs_diff_chrom": 1.4519096647787357,
+   "fisher_p_vs_diff_chrom": 0.0546090314020445,
+   "n_oof": 783,
+   "hit_rate_oof_pairs": 0.016602809706257982,
+   "oof_top_q_rate": 0.001277139208173691
+  },
+  {
+   "band_kb": [
+    300,
+    1000
+   ],
+   "n": 62076,
+   "hits": 1332,
+   "hit_rate": 0.021457568142277207,
+   "hit_rate_ci": [
+    0.020346931879589476,
+    0.02262742817331668
+   ],
+   "odds_ratio_vs_diff_chrom": 1.1812850496771965,
+   "fisher_p_vs_diff_chrom": 3.1616674731441656e-08,
+   "n_oof": 47439,
+   "hit_rate_oof_pairs": 0.02434705621956618,
+   "oof_top_q_rate": 0.01791774700141234
+  },
+  {
+   "band_kb": [
+    1000,
+    1500
+   ],
+   "n": 47484,
+   "hits": 1000,
+   "hit_rate": 0.02105972538118103,
+   "hit_rate_ci": [
+    0.019806485886142706,
+    0.022390451210195506
+   ],
+   "odds_ratio_vs_diff_chrom": 1.1589117792862502,
+   "fisher_p_vs_diff_chrom": 1.5318893798275584e-05,
+   "n_oof": 37362,
+   "hit_rate_oof_pairs": 0.023820994593437183,
+   "oof_top_q_rate": 0.020796531234944595
+  },
+  {
+   "band_kb": [
+    1500,
+    null
+   ],
+   "n": 145075,
+   "hits": 2539,
+   "hit_rate": 0.01750129243494744,
+   "hit_rate_ci": [
+    0.01683919075120701,
+    0.018188945728099017
+   ],
+   "odds_ratio_vs_diff_chrom": 0.9596038981144447,
+   "fisher_p_vs_diff_chrom": 0.06673103899928526,
+   "n_oof": 116810,
+   "hit_rate_oof_pairs": 0.019835630511086378,
+   "oof_top_q_rate": 0.020220871500727676
+  }
+ ]
+}

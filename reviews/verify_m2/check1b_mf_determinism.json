@@ -1,0 +1,27 @@
+{
+ "threads1": {
+  "clean_vs_clean_identical": true,
+  "clean_vs_clean_maxabs": 0.0,
+  "clean_vs_corrupt_identical": true,
+  "clean_vs_corrupt_maxabs": 0.0,
+  "vs_registered_cache_identical": false,
+  "vs_registered_cache_maxabs": 0.00012254714965820312
+ },
+ "threads2": {
+  "clean_vs_clean_identical": false,
+  "clean_vs_clean_maxabs": 9.5367431640625e-07,
+  "clean_vs_corrupt_identical": false,
+  "clean_vs_corrupt_maxabs": 1.430511474609375e-06,
+  "vs_registered_cache_identical": false,
+  "vs_registered_cache_maxabs": 1.430511474609375e-06
+ },
+ "threads3": {
+  "clean_vs_clean_identical": false,
+  "clean_vs_clean_maxabs": 1.430511474609375e-06,
+  "clean_vs_corrupt_identical": false,
+  "clean_vs_corrupt_maxabs": 1.430511474609375e-06,
+  "vs_registered_cache_identical": false,
+  "vs_registered_cache_maxabs": 0.0001220703125
+ },
+ "mf_score_sd": 0.5151381492614746
+}

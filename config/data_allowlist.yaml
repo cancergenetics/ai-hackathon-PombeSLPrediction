@@ -604,6 +604,23 @@ datasets:
         use: "feature"
         note: "columns 12 & 22 (S. cerevisiae tracks A/B) -> WGD ohnolog pairs; CER group only"
 
+  pombase_coords:
+    use: "universe-only"
+    status: "confirmed by PI 2026-10-28 (linkage flag/report only; never a feature)"
+    name: "PomBase gene coordinates, release 2026-10-01"
+    raw_dir: "data/raw/pombase_coords"
+    source: "https://www.pombase.org/data/releases/pombase-2026-10-01/misc/chromosome_{1,2,3}.gene.coords.tsv"
+    license: "CC BY 4.0 per secondary sources (secondary-source only)"
+    files:
+      - path: "data/raw/pombase_coords/chromosome_1.gene.coords.tsv"
+        sha256: "d810e421d41e9f94ffd5ec81521d358f6c35f6121181f31a641a5b535ebe2efc"
+        use: "universe-only"
+      - path: "data/raw/pombase_coords/chromosome_2.gene.coords.tsv"
+        sha256: "1f0aa7e2d778dc6167c08882f55650e4200ba1fb00fdfa9b9fe3f884da549a39"
+        use: "universe-only"
+      - path: "data/raw/pombase_coords/chromosome_3.gene.coords.tsv"
+        sha256: "4ad52f9b07f350a3c28d95f30d361c6c6671228f5fc55e0dc697c3d43a3a8720"
+        use: "universe-only"
 excluded_sources:
   fypo_phenotype_annotations:
     what: "PomBase FYPO phenotype annotations (phenotype_annotations.pombase.phaf.gz, canto_fypo_annotations_with_comments.*, public_api_genotypes_phenotypes.parquet)"

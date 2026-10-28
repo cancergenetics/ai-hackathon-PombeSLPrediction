@@ -1,0 +1,222 @@
+{
+ "model": "M2",
+ "spec": {
+  "kind": "m2_stack",
+  "families": [
+   "LF",
+   "RYAN",
+   "NBR",
+   "GP"
+  ],
+  "init_score": false,
+  "lgbm_config": "default",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "rounds": "inner_early_stopping",
+  "lf_groups": [
+   "CER",
+   "CONS",
+   "EXPR",
+   "HYPO",
+   "KOPROT",
+   "LOC",
+   "PHEN",
+   "PPI",
+   "SEQ"
+  ],
+  "sims": [
+   "cer_profile_corr",
+   "cons_phylo",
+   "esm_cos",
+   "expr_array",
+   "expr_rnaseq",
+   "koprot_corr",
+   "phen_corr",
+   "ppi_cer_rwr",
+   "ppi_rwr"
+  ],
+  "ryan_cfg": {},
+  "gp_cfg": {},
+  "drop_noncoding": true,
+  "dev_run_model": "M2",
+  "id": "M2"
+ },
+ "models_sha256": "a2b2e6b27455249faed85e88716f572873dac31ccfbc074204705d892bd0329b",
+ "train_set": "dev",
+ "data_root": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/frozen_m2",
+ "real_data": true,
+ "output": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/frozen_m2/universe/predictions_M2_dev.parquet",
+ "protocol_sha256": "73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230",
+ "git": {
+  "git_commit": "a269a5fb2e40de885c53852210a660734cea5566",
+  "git_dirty": false,
+  "git_diff_sha256": ""
+ },
+ "checks": {
+  "n_genes": 3923,
+  "n_rows": 7693003,
+  "expected_rows": 7693003,
+  "row_count_ok": true,
+  "no_nan_scores": true,
+  "pairs_unique_sorted": true,
+  "cover_rows_identical_across_blocks": true,
+  "cover_max_abs_diff": 0.0
+ },
+ "fit_info": {
+  "model": "M2",
+  "kind": "m2_stack",
+  "n_train_pairs": 775918,
+  "n_train_positives": 14464,
+  "n_train_genes": 1904,
+  "noncoding_dropped": {
+   "pairs": 8276,
+   "positives": 39,
+   "genes": [
+    "SPAC186.04c",
+    "SPAC2E12.05",
+    "SPAPB24D3.05c",
+    "SPBC530.06c",
+    "SPCC188.10c",
+    "SPCC18B5.02c",
+    "SPCC306.10",
+    "SPCC622.17",
+    "SPCC663.07c",
+    "SPCP20C8.03",
+    "SPNCRNA.9001"
+   ]
+  },
+  "train_hash": "bc25d3c322ae52af91622ecd7810666a71b02993775dfb0efc2a85f54f3f3512",
+  "fits": [
+   {
+    "seed": 0,
+    "best_iteration": 110,
+    "inner_fold_valid": 0,
+    "valid_ap_weighted": 0.14499511356834302,
+    "n_fit": 538915,
+    "n_valid": 195367
+   },
+   {
+    "seed": 1,
+    "best_iteration": 53,
+    "inner_fold_valid": 1,
+    "valid_ap_weighted": 0.16228408443731854,
+    "n_fit": 539987,
+    "n_valid": 194088
+   },
+   {
+    "seed": 2,
+    "best_iteration": 27,
+    "inner_fold_valid": 2,
+    "valid_ap_weighted": 0.1848303079942392,
+    "n_fit": 534240,
+    "n_valid": 195761
+   }
+  ],
+  "stacker_cache": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/frozen_m2/cache/deliverable/45978c2ef800a2bb",
+  "n_stacker_rows": 975121,
+  "n_features": 475
+ },
+ "model_timings_s": {
+  "stacker_features": 124.04,
+  "stacker_rows": 124.43,
+  "stacker_assemble": 10.34,
+  "stacker_train": 151.7,
+  "fit_total": 288.81,
+  "ryan_features": 598.04,
+  "lf_assemble": 48.85,
+  "predict": 40.37
+ },
+ "runtime": {
+  "total_wall_s": 984.8,
+  "stages_wall_s": {
+   "load_training_pairs": 0.088,
+   "fit": 288.975,
+   "score_universe": 690.016,
+   "flags_and_write": 4.374
+  },
+  "cpu_s": 1448.822,
+  "peak_rss_mb": 12404.7,
+  "threads": 3,
+  "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0",
+  "ryan_chunk": 2000000,
+  "lf_chunk": 500000
+ },
+ "counts": {
+  "class": {
+   "C2": 3821722,
+   "C3": 2250381,
+   "C1": 1620900
+  },
+  "viability_unknown_pairs": 554472,
+  "linked_pairs": 353615,
+  "linked_window_kb": 300.0,
+  "genes_with_coords": 3905,
+  "in_training": 637564,
+  "measured_true": 637564,
+  "measured_unknown": 1892561,
+  "with_oof": 622515
+ },
+ "score_quantiles": {
+  "0.5": -4.758838402408945,
+  "0.9": -3.022762604052049,
+  "0.99": -1.6331197390484755,
+  "0.999": -0.5625509336145923
+ },
+ "score_mean_by_class": {
+  "C1": -4.779970169067383,
+  "C2": -4.588290214538574,
+  "C3": -4.34197473526001
+ },
+ "top_k_composition": {
+  "1000": {
+   "class": {
+    "C1": 822,
+    "C2": 178,
+    "C3": 0
+   },
+   "linked": 34,
+   "viability_unknown": 0,
+   "in_training": 522
+  },
+  "10000": {
+   "class": {
+    "C1": 6304,
+    "C2": 3695,
+    "C3": 1
+   },
+   "linked": 516,
+   "viability_unknown": 7,
+   "in_training": 3486
+  },
+  "100000": {
+   "class": {
+    "C2": 53858,
+    "C1": 32354,
+    "C3": 13788
+   },
+   "linked": 5000,
+   "viability_unknown": 515,
+   "in_training": 15853
+  }
+ },
+ "oof_run": "M2__20261028T183713__024416",
+ "lockbox_oof": null,
+ "in_sample_vs_oof": {
+  "n_pairs": 622515,
+  "positives": 12992,
+  "ap_in_sample": 0.30729976649151347,
+  "ap_out_of_fold": 0.20141447674899812,
+  "spearman_in_sample_vs_oof": 0.8704847589749024,
+  "note": "in-sample scores are optimistic on training pairs; use oof_score for measured pairs",
+  "by_class_of_pair_in_universe": {
+   "C1": {
+    "n": 622515,
+    "ap_in_sample": 0.30729976649151347,
+    "ap_out_of_fold": 0.20141447674899812
+   }
+  }
+ }
+}
