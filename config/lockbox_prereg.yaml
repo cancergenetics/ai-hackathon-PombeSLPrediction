@@ -9,7 +9,7 @@ protocol_sha256: 73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc23
 lockbox_genes_sha256: 77fb02e1a5d688884e0a282c49c9f100840ee0f1988b74247abee150228d3457   # config/lockbox_genes.txt
 models_file: config/models.yaml
 models_sha256: 8d2e29f528bae4d4d633482bcd6db382b81655c7477e59beab1c0924c01a87ed   # sha256 of config/models.yaml at code_commit (exact model configs)
-code_commit: be18596db2f437a60951d4b0f008a0a1a5adac49   # full git hash; HEAD may differ from it only outside src/, scripts/, config/models.yaml,
+code_commit: 698083111f8826a432aa0f7e858b5769edec377d   # full git hash; HEAD may differ from it only outside src/, scripts/, config/models.yaml,
                              # config/protocol.yaml, config/deliverable.yaml (checked with git diff)
 
 # ---- models ------------------------------------------------------------------------------------------------
