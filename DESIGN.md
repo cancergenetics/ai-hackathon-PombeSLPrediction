@@ -16,12 +16,12 @@ Change log vs v1 and the disposition of every reviewer proposal: Appendix A.
 ## 1. Labels, universe, evaluation set
 - **Label:** Ryan Dataset S2 (authors' per-pair averaged S; 1,337,033 pairs). `y = 1[S2 < −2.3]`. Rationale: the brief speaks of one quantitative value per pair, and S2 is the authors' canonical per-pair matrix. **Sensitivity (report-only):** the final shortlist is also scored against `raw_mean < −2.3`.
 - **Training targets (experiment E-TARGET, evaluation always on the fixed label):** S2 binary (default); S2 continuous (Huber, clipped); raw-mean binary; soft/multi-threshold.
-- **Prediction universe (deliverable):** protein-coding genes that are not essential, i.e. PomBase deletion viability ∈ {`viable`, `condition-dependent`} (3,757 genes), plus the 21 unknown-viability genes that have a main (deletion) strain in Ryan (sap10 excluded: DAmP-only).
+- **Prediction universe (deliverable):** protein-coding genes that are not essential, i.e. PomBase deletion viability ∈ {`viable`, `condition-dependent`} (3,757 genes), plus the 22 unknown-viability genes that have a main (deletion) strain in Ryan (sap10 excluded: DAmP-only).
   - The other ≈143 unknown-viability genes are scored in the deliverable but flagged `viability_unknown`; they are not part of the core universe.
   - The 12 PomBase-inviable genes with a Ryan "deletion" array strain are dropped from training by default (likely wrong or suppressed strains).
   - FYPO viability (`FYPOviability.tsv`) is a single-mutant phenotype. It is used **only** to define the universe and the evaluation masks and for stratification, **never as a feature**.
 - **Primary evaluation pairs:** S2 pairs where both genes are in the universe. Exclusions, determined per pair and orientation by script:
-  - **pairs** (not genes) whose S2 derives only from measurements involving a DAmP/hypomorph allele of either gene (≈18.3k universe pairs);
+  - **pairs** (not genes) whose S2 derives only from measurements involving a DAmP/hypomorph allele of either gene (16,557 universe pairs; verified independently);
   - pairs involving merged Ryan IDs (train-only).
 
   Mixed DAmP+deletion pairs (≈17k) are kept, with a report-only sensitivity check that excludes them. **Secondary:** viable×viable only.
