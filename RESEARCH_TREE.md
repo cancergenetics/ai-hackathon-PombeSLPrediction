@@ -33,7 +33,12 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [x] 4b. LITERATURE.md fixes, DATA.md complete register + config/data_allowlist.yaml
   - [x] 4c. Independent review of Phase A → reviews/verify_phaseA/REPORT.md: all numbers re-derived exactly; 4/11 planted mutants uncaught → test hardening
 - [x] 5a. Tier-1 label-free features: idmap, PPI (PMID blocklist removes 40% of pombe physical rows), SMF/PHEN, CER (+YGOB ohnologs)
-- [~] 5b. Tier-2 features: EXPR, KOPROT, LOC, SEQ (+ESM), CONS
+- [x] 5b. Tier-2 features: EXPR, KOPROT, LOC, SEQ (+ESM 650M PCs/cosine), CONS
+- [x] 6. Baselines (docs/baselines.md; dirty-tree runs, to be re-run clean)
+  - [x] B0 random 0.0209 · B1 additive logit 0.103 (C1 .207/C2 .080/C3 .022) · B4 logistic MF 0.108 (C1 .232) · B2 Costanzo ε 0.026 · B3 Costanzo profile 0.025
+  - [!] DIAG oracle propensity (true held-out hit rates) = 0.220 (C3 .235) → predicting gene propensity for unseen genes is the dominant lever
+  - [x] DIAG NBR cross-source mean = 0.125 (C2 .117 > B1 .080); C3 still ≈ chance for all single scores
+- [~] 7. M1 LightGBM on label-free features (pair assembler src/pairs.py)
 - [ ] 6. Feature-based models
 - [ ] 7. Advanced models / cross-species transfer
 - [ ] 8. Final evaluation on held-out test → REPORT.md
