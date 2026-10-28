@@ -139,3 +139,35 @@ names; all ortholog ORFs used are matched directly.
 ## Auxiliary datasets
 
 (Added separately by the auxiliary-data acquisition; see `scripts/download_aux_data.py`.)
+
+### Protein sequences and ESM-2 embeddings (added by the embedding task)
+
+**S. pombe proteins** — `data/raw/pombase_protein/peptide.fa.gz` (PomBase release 2026-10-01 /data/ files, retrieved
+2026-10-28; checksum in that dir's `SHA256SUMS`: `803b4146…bd3b`; CC BY 4.0, see PomBase entry above). FASTA headers
+are `>SPAC1002.01.1:pep name|product`; the gene systematic ID is obtained by dropping `:pep` and the trailing transcript
+suffix `.<n>` (5,126 records → 5,126 unique genes, no multi-transcript genes; if one occurred the longest protein is kept).
+
+**S. cerevisiae proteins (SGD)** — `data/raw/sgd_protein/orf_trans_all.fasta.gz`
+- Source: https://downloads.yeastgenome.org/sequence/S288C_reference/orf_protein/orf_trans_all.fasta.gz
+  (S288C reference, SGD genome release R64-5-1 as stated in FASTA headers; server Last-Modified 2024-06-13;
+  retrieved 2026-10-28; HTTP headers in `headers.txt`).
+- sha256: `17e8b47e1ae23178c6000fbc4ab548f102d1b250ef9dff5d811feb3f03dd2c5b` (also `data/raw/sgd_protein/SHA256SUMS`).
+- Content: 6,722 ORF translations (Verified, Uncharacterized and Dubious ORFs); ID = first header token = systematic
+  ORF name (e.g. YAL001C); terminal `*` stripped by the embedding script.
+- Licence: SGD data are freely available; SGD states its data may be used without restriction with attribution
+  (CC BY 4.0 per SGD's terms page — not independently re-verified here; cite Engel et al., Genetics 2022 / SGD).
+
+**ESM-2 model weights** — `data/raw/esm2_weights/` (git-ignored)
+- Source: Meta AI FAIR `fair-esm` release, https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t33_650M_UR50D.pt
+  (primary model, 33 layers, 650M params, 1280-d) and `esm2_t30_150M_UR50D.pt` (backup, not used); plus the
+  `…-contact-regression.pt` files from `/fair-esm/regression/` (needed by the loader, unused for embeddings).
+  Retrieved 2026-10-28. Paper: Lin et al., Science 379:1123 (2023). Code: `fair-esm==2.0.0` (PyPI).
+- sha256: `esm2_t33_650M_UR50D.pt` `ea9d0522b335a8778dea6535a65301f10208dece28cd5865482b0b1fc446168c`;
+  `esm2_t30_150M_UR50D.pt` `881c7176cf198ef8dec26a3c375d40eb58d0c33df95c22562ca6cc6d3f812c62` (all in `SHA256SUMS`).
+- Licence: MIT (weights and code, github.com/facebookresearch/esm).
+- Derived (processed, not committed): `data/processed/esm2_650M_{pombe,cerevisiae}.parquet` (mean-pooled final-layer
+  residue embeddings, float32, 1280 cols, index = gene systematic ID), produced by `scripts/compute_esm_embeddings.py`;
+  run logs `results/runtime/esm_{pombe,cerevisiae}.json`; checks by `scripts/verify_esm_embeddings.py`
+  (`results/verify_esm_embeddings.json`). Proteins >1022 aa use 1022-aa windows with 256 overlap; overlapping residue
+  embeddings are averaged before mean pooling. Pretrained-model use is not circular with the GI data (ESM-2 is trained on
+  UniRef50 sequences only).
