@@ -1,6 +1,10 @@
 # Deliverable tooling: universe predictions, lockbox evaluation, linkage diagnostic
 
-Status 2026-10-28. Owner: deliverable engineering agent (branch `deliverable`).
+Status 2026-10-28. Owner: deliverable engineering agent (branches `deliverable`, then `ship`).
+
+**Shipped model: `M2r_huber`** (PI decision 2026-10-28: M2 features with XSP excluded, Huber stacker on −min(S2, 0),
+stacker seeds 0–2; dev run `M2r_huber__20261028T205545__7b5e9e`, primary 0.1791). It is `default_model` in
+`config/models.yaml`. `M2r_bag5_huber` (5 seeds) and the previous binary `M2` stay selectable with `--model`.
 
 | file | role |
 |---|---|
@@ -8,17 +12,20 @@ Status 2026-10-28. Owner: deliverable engineering agent (branch `deliverable`).
 | `scripts/lockbox_eval.py` + `config/lockbox_prereg.yaml` (template) | one-shot lockbox evaluation of the pre-registered shortlist |
 | `scripts/linkage_diagnostic.py` | report-only: hit rate / coverage vs chromosomal distance (dev genes only) |
 | `src/deliverable.py` | shared retrain + scoring code (`TrainedModel`) used by both scripts |
+| `src/models/stacker.py` | the stacker fits (`fit_binary`, `fit_huber`, `fit_stacker`), shared with dev CV (`run_m2.fit_stacker`, `run_m2plus.fit_stacker_huber` are thin wrappers) |
+| `src/model_inputs.py` | pinned default inputs (`config/models.yaml` `default_inputs`): label-free groups and similarity sources |
 | `src/universe.py` | universe genes, pair enumeration, PomBase coordinates, `linked` flag, OOF-score lookup |
-| `config/models.yaml` | model specs (M2, M2_init, M1N, M1, B1, B4) for full-training-set retrains |
+| `config/models.yaml` | `default_model`, `default_inputs`, and model specs (M2r_huber, M2r_bag5_huber, M2, M2_init, M1N, M1, B1, B4) for full-training-set retrains |
 | `config/deliverable.yaml` | linkage window, coordinate files (sha256-pinned), chunk sizes, threads |
 | `src/data.py: dev_pairs()` | additive helper: all dev training pairs (lockbox excluded by construction) |
-| `tests/test_deliverable.py` | 21 tests (unit + toy end-to-end) |
+| `tests/test_deliverable.py`, `tests/test_stacker.py`, `tests/test_model_inputs.py` | 24 + 6 + 7 tests (unit + toy end-to-end + live-store input pinning) |
 
 ## 1. `predict_all_pairs.py`
 
 ```bash
 # interim deliverable (dev genes only; the lockbox stays closed)
-PSL_DATA_ROOT=$PWD/data/frozen_m2 .venv/bin/python scripts/predict_all_pairs.py --model M2 --train-set dev
+.venv/bin/python scripts/predict_all_pairs.py --train-set dev            # default model M2r_huber
+.venv/bin/python scripts/predict_all_pairs.py --model M2 --train-set dev # previous incumbent, for comparison
 # FINAL deliverable, only after scripts/lockbox_eval.py has completed (refused before)
 .venv/bin/python scripts/predict_all_pairs.py --model <headline> --train-set all
 # toy
@@ -36,7 +43,7 @@ PSL_DATA_ROOT=data/toy PSL_RESULTS_ROOT=/tmp/r .venv/bin/python scripts/predict_
 which are flagged. That gives 3,923 genes and 7,693,003 pairs, all n(n−1)/2 of them. On toy data, every
 feature-store gene is scored.
 
-### M2 at universe scale (nested stacking)
+### M2 / M2r_huber at universe scale (nested stacking)
 
 `src/deliverable.TrainedModel` runs **exactly one dev-CV outer fold of `scripts/run_m2.py`**, with the outer
 training set replaced by the full training set T:
@@ -45,8 +52,12 @@ training set replaced by the full training set T:
 2. **Stacker training rows.** These are the inner eval rows. Their RYAN, NBR and GP features come from inner
    fold j's training pairs only (`stacking.inner_rows`, M2 builder). They are cached under
    `<data root>/cache/deliverable/<key>/`.
-3. **Seeds.** For seed s, early stopping runs on inner fold j = s mod 5, and the model is fitted on the
-   gene-grouped rows for j. The score is the mean raw score over seeds 0–2, which is the M2 configuration.
+3. **Seeds and objective.** For seed s, early stopping runs on inner fold j = s mod 5, and the model is fitted on
+   the gene-grouped rows for j (`src/models/stacker.fit_stacker`). The spec's `objective` selects the stacker:
+   - `binary` (M2): LightGBM binary on the protocol label, early stopping on class-weighted AP.
+   - `huber` (M2r_huber): Huber regression on t = −min(S2, 0), δ = |protocol threshold|, early stopping on the
+     class-weighted binary AP of the protocol label (custom metric) — `scripts/run_m2plus.py --objective huber`.
+   The score is the mean raw score over the spec's seeds (0–2 for M2r_huber and M2).
 4. **Universe rows.** These get RYAN, NBR and GP features from all of T: the B1, MF, profile, NBR and GP fits
    on T. Label-free features come from `pairs.assemble_arrays`, with HYPO = 0 (deletion × deletion).
 
@@ -77,7 +88,7 @@ about 115 MB for M2, and sorted by rank. Columns:
 | column | meaning |
 |---|---|
 | `gene_a < gene_b` | PomBase systematic IDs (categorical) |
-| `score` | Mean raw LightGBM score over seeds: log-odds scale, trained with class weights, **uncalibrated**. Higher means more likely S2 < −2.3. |
+| `score` | Mean raw LightGBM score over seeds, **uncalibrated**, higher = more likely S2 below the protocol threshold. For M2r_huber it is the predicted −min(S2, 0) (class-weighted Huber fit: a ranking score on the S-score scale, not an S-score estimate and not a probability); for M2 it is a log-odds margin. |
 | `rank` | 1 = highest score |
 | `class` | C1 / C2 / C3: both, one or neither gene in the training pairs |
 | `viability_unknown` | Either gene is outside the protocol universe because its deletion viability is unknown |
