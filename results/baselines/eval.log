@@ -1,0 +1,15 @@
+B1_additive_logit                        0.1033 ± 0.0078  C1 0.2070 C2 0.0799 C3 0.0215  run B1_additive_logit__20261028T164725__cf37d4
+B4_logistic_MF                           0.1079 ± 0.0081  C1 0.2322 C2 0.0799 C3 0.0215  run B4_logistic_MF__20261028T164925__a70f52
+B2_costanzo_eps_min                      0.0256 ± 0.0021  C1 0.0270 C2 0.0250 C3 0.0277  run B2_costanzo_eps_min__20261028T164959__206ce3
+B3_costanzo_profile_sim                  0.0249 ± 0.0022  C1 0.0249 C2 0.0248 C3 0.0275  run B3_costanzo_profile_sim__20261028T165031__b2afa1
+DIAG_oracle_propensity                   0.2198 ± 0.0157  C1 0.2231 C2 0.2145 C3 0.2346  run DIAG_oracle_propensity__20261028T165115__021a9c
+DIAG_NBR_cer_profile_corr__hit_dmean     0.0718 ± 0.0064  C1 0.1214 C2 0.0674 C3 0.0215  run DIAG_NBR_cer_profile_corr__hit_dmean__20261028T165212__f197bd
+DIAG_NBR_cons_phylo__hit_dmean           0.0582 ± 0.0051  C1 0.0895 C2 0.0557 C3 0.0215  run DIAG_NBR_cons_phylo__hit_dmean__20261028T165259__759eb2
+DIAG_NBR_esm_cos__hit_dmean              0.0660 ± 0.0056  C1 0.1020 C2 0.0639 C3 0.0215  run DIAG_NBR_esm_cos__hit_dmean__20261028T165334__ec3165
+DIAG_NBR_expr_array__hit_dmean           0.0644 ± 0.0054  C1 0.0970 C2 0.0634 C3 0.0215  run DIAG_NBR_expr_array__hit_dmean__20261028T165406__c9d09e
+DIAG_NBR_expr_rnaseq__hit_dmean          0.0628 ± 0.0052  C1 0.0954 C2 0.0612 C3 0.0215  run DIAG_NBR_expr_rnaseq__hit_dmean__20261028T165446__25c9fa
+DIAG_NBR_koprot_corr__hit_dmean          0.0760 ± 0.0067  C1 0.1232 C2 0.0729 C3 0.0215  run DIAG_NBR_koprot_corr__hit_dmean__20261028T165530__82a4e0
+DIAG_NBR_mean__hit_dmean                 0.1253 ± 0.0087  C1 0.2217 C2 0.1166 C3 0.0215  run DIAG_NBR_mean__hit_dmean__20261028T165615__d590e1
+DIAG_NBR_phen_corr__hit_dmean            0.0948 ± 0.0077  C1 0.1490 C2 0.0960 C3 0.0215  run DIAG_NBR_phen_corr__hit_dmean__20261028T165702__d7ba64
+DIAG_NBR_ppi_cer_rwr__hit_dmean          0.0749 ± 0.0072  C1 0.1257 C2 0.0709 C3 0.0215  run DIAG_NBR_ppi_cer_rwr__hit_dmean__20261028T165740__4ad216
+DIAG_NBR_ppi_rwr__hit_dmean              0.0654 ± 0.0061  C1 0.1095 C2 0.0619 C3 0.0215  run DIAG_NBR_ppi_rwr__hit_dmean__20261028T165812__e4cc9f

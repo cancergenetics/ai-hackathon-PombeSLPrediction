@@ -1,0 +1,460 @@
+{
+ "runs": {
+  "B1_additive_logit": {
+   "run_id": "B1_additive_logit__20261028T164725__cf37d4",
+   "kind": "baseline",
+   "primary": 0.10331822661451136,
+   "se": 0.007795565184045189,
+   "ci": [
+    0.0893682375795488,
+    0.11969270246141425
+   ],
+   "ap_C1": 0.20695252174974516,
+   "ap_C2": 0.0798613162683677,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.7722895904855663,
+   "wall_s": 8.47,
+   "seeds": [
+    0
+   ],
+   "notes": "B1 c+beta_a+beta_b, L2 C=1.0 (tuned fold0/inner0); unseen beta=0"
+  },
+  "B4_logistic_MF": {
+   "run_id": "B4_logistic_MF__20261028T164925__a70f52",
+   "kind": "baseline",
+   "primary": 0.10785025425158727,
+   "se": 0.008127287815655951,
+   "ci": [
+    0.0933022467686016,
+    0.12417334853353969
+   ],
+   "ap_C1": 0.23218849195268448,
+   "ap_C2": 0.0798613162683677,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.7402903141990395,
+   "wall_s": 355.14,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "notes": "symmetric logistic MF k=32 wd=0.01 epochs=50 lr=0.05 (tuned fold0/inner0); pairs with an unseen gene -> B1 logit; runtime = sum over fold x seed fits run in 5 parallel workers"
+  },
+  "B2_costanzo_eps_min": {
+   "run_id": "B2_costanzo_eps_min__20261028T164959__206ce3",
+   "kind": "baseline",
+   "primary": 0.02561667778792896,
+   "se": 0.002143060668737619,
+   "ci": [
+    0.022292334163287457,
+    0.030690493615316165
+   ],
+   "ap_C1": 0.026990831285237084,
+   "ap_C2": 0.025033418813499953,
+   "ap_C3": 0.027667345563965835,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.5134903258513921,
+   "wall_s": 0.78,
+   "seeds": [
+    0
+   ],
+   "notes": "-(Costanzo ortholog eps min); missing -> median (median -0.00910 over all finite G x G)"
+  },
+  "B3_costanzo_profile_sim": {
+   "run_id": "B3_costanzo_profile_sim__20261028T165031__b2afa1",
+   "kind": "baseline",
+   "primary": 0.024945101137620346,
+   "se": 0.0021819747685354767,
+   "ci": [
+    0.021412535863773362,
+    0.029660474984510365
+   ],
+   "ap_C1": 0.024946911846643667,
+   "ap_C2": 0.024820515279313938,
+   "ap_C3": 0.027492723961843414,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.5126270184488239,
+   "wall_s": 0.752,
+   "seeds": [
+    0
+   ],
+   "notes": "Costanzo ortholog GI-profile similarity; missing -> median (median 0.00319 over all finite G x G)"
+  },
+  "DIAG_oracle_propensity": {
+   "run_id": "DIAG_oracle_propensity__20261028T165115__021a9c",
+   "kind": "diagnostic",
+   "primary": 0.219782435433269,
+   "se": 0.01565628222330743,
+   "ci": [
+    0.18819800120455674,
+    0.2476511534788037
+   ],
+   "ap_C1": 0.22311868954801142,
+   "ap_C2": 0.21448791143997772,
+   "ap_C3": 0.23459721233244957,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.9047264830118363,
+   "wall_s": 0.736,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC (not a model): logit of true gene hit rates computed from ALL dev labels incl. the held-out genes' pairs (union of the 5 folds' training labels), (pos+0.5)/(n+1)"
+  },
+  "DIAG_NBR_cer_profile_corr__hit_dmean": {
+   "run_id": "DIAG_NBR_cer_profile_corr__hit_dmean__20261028T165212__f197bd",
+   "kind": "diagnostic",
+   "primary": 0.07181891356445566,
+   "se": 0.006412682950513443,
+   "ci": [
+    0.06002589055321377,
+    0.08501059403184205
+   ],
+   "ap_C1": 0.1214297397765646,
+   "ap_C2": 0.06740708261793747,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.6875645927219457,
+   "wall_s": 891.591,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_cer_profile_corr__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_cons_phylo__hit_dmean": {
+   "run_id": "DIAG_NBR_cons_phylo__hit_dmean__20261028T165259__759eb2",
+   "kind": "diagnostic",
+   "primary": 0.05818609689024092,
+   "se": 0.005137504538966766,
+   "ci": [
+    0.04902698746710956,
+    0.06867739924933658
+   ],
+   "ap_C1": 0.08953870020021266,
+   "ap_C2": 0.055710005883480816,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.684114597508257,
+   "wall_s": 891.609,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_cons_phylo__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_esm_cos__hit_dmean": {
+   "run_id": "DIAG_NBR_esm_cos__hit_dmean__20261028T165334__ec3165",
+   "kind": "diagnostic",
+   "primary": 0.0659569967633502,
+   "se": 0.005648783075694266,
+   "ci": [
+    0.055455643727831065,
+    0.07828769029043112
+   ],
+   "ap_C1": 0.10200562113592863,
+   "ap_C2": 0.06392340997679997,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.7012704824040847,
+   "wall_s": 891.612,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_esm_cos__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_expr_array__hit_dmean": {
+   "run_id": "DIAG_NBR_expr_array__hit_dmean__20261028T165406__c9d09e",
+   "kind": "diagnostic",
+   "primary": 0.06440036201597518,
+   "se": 0.005402562447738513,
+   "ci": [
+    0.054597969647244005,
+    0.07539994833049328
+   ],
+   "ap_C1": 0.09698483784143466,
+   "ap_C2": 0.0634334084326891,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.6996776027910189,
+   "wall_s": 892.307,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_expr_array__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_expr_rnaseq__hit_dmean": {
+   "run_id": "DIAG_NBR_expr_rnaseq__hit_dmean__20261028T165446__25c9fa",
+   "kind": "diagnostic",
+   "primary": 0.06278976517899015,
+   "se": 0.005234673974300427,
+   "ci": [
+    0.05318800740466652,
+    0.07344434342887088
+   ],
+   "ap_C1": 0.09544496413232097,
+   "ap_C2": 0.06116770541543863,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.6938292895372172,
+   "wall_s": 891.645,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_expr_rnaseq__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_koprot_corr__hit_dmean": {
+   "run_id": "DIAG_NBR_koprot_corr__hit_dmean__20261028T165530__82a4e0",
+   "kind": "diagnostic",
+   "primary": 0.07604261648992286,
+   "se": 0.006704119474223486,
+   "ci": [
+    0.06393513993449337,
+    0.09023675846771743
+   ],
+   "ap_C1": 0.1232329725581451,
+   "ap_C2": 0.07288708158146863,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.7130278998866804,
+   "wall_s": 891.644,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_koprot_corr__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_mean__hit_dmean": {
+   "run_id": "DIAG_NBR_mean__hit_dmean__20261028T165615__d590e1",
+   "kind": "diagnostic",
+   "primary": 0.12525629114617237,
+   "se": 0.008737578489977887,
+   "ci": [
+    0.10960725942710871,
+    0.14357015964303896
+   ],
+   "ap_C1": 0.22169203525580294,
+   "ap_C2": 0.11655631154123118,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.7880537765181466,
+   "wall_s": 891.622,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_mean__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_phen_corr__hit_dmean": {
+   "run_id": "DIAG_NBR_phen_corr__hit_dmean__20261028T165702__d7ba64",
+   "kind": "diagnostic",
+   "primary": 0.0948340738597745,
+   "se": 0.007745161420504378,
+   "ci": [
+    0.08062865328881737,
+    0.11100373787139009
+   ],
+   "ap_C1": 0.14899785068375387,
+   "ap_C2": 0.09596975379580067,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.7407716189366914,
+   "wall_s": 891.641,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_phen_corr__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_ppi_cer_rwr__hit_dmean": {
+   "run_id": "DIAG_NBR_ppi_cer_rwr__hit_dmean__20261028T165740__4ad216",
+   "kind": "diagnostic",
+   "primary": 0.07490760273559709,
+   "se": 0.00721326144502552,
+   "ci": [
+    0.06177535244107881,
+    0.09002757844570043
+   ],
+   "ap_C1": 0.12568706922338013,
+   "ap_C2": 0.0708790007176075,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.6929951722159029,
+   "wall_s": 891.603,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_ppi_cer_rwr__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  },
+  "DIAG_NBR_ppi_rwr__hit_dmean": {
+   "run_id": "DIAG_NBR_ppi_rwr__hit_dmean__20261028T165812__e4cc9f",
+   "kind": "diagnostic",
+   "primary": 0.06540240113898832,
+   "se": 0.006100770512511217,
+   "ci": [
+    0.0545120941761832,
+    0.07828687692987386
+   ],
+   "ap_C1": 0.10950142082965142,
+   "ap_C2": 0.06185550004760434,
+   "ap_C3": 0.021505487879427798,
+   "prevalence": 0.020915592091347086,
+   "auroc": 0.6606615339814141,
+   "wall_s": 891.841,
+   "seeds": [
+    0
+   ],
+   "notes": "DIAGNOSTIC single feature nbr_ppi_rwr__hit_dmean (NaN -> bottom); chosen on fold-0 stacker training rows; wall_s includes the full nested feature build (all features, all folds)"
+  }
+ },
+ "oracle_coverage": {
+  "n_genes": 1915,
+  "n_pairs": 783699
+ },
+ "nbr_selection": {
+  "cer_profile_corr": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.058724571475688735,
+    "hit_dmean": 0.06590915194359594,
+    "hit_block": 0.02980480062657904,
+    "negs_dmax": 0.05658447144269088,
+    "negs_dmean": 0.0624780278945243,
+    "negs_block": 0.028160249042850853,
+    "generate_max": 0.02933067671766524,
+    "generate_min": 0.028077361320948145
+   }
+  },
+  "cons_phylo": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.05125881018230842,
+    "hit_dmean": 0.056936446187255754,
+    "hit_block": 0.020097285557746956,
+    "negs_dmax": 0.04743221566468712,
+    "negs_dmean": 0.05099097477450177,
+    "negs_block": 0.019438014217478317,
+    "generate_max": 0.02004458870321675,
+    "generate_min": 0.021130410783639652
+   }
+  },
+  "esm_cos": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.05554099016425845,
+    "hit_dmean": 0.06327269630766824,
+    "hit_block": 0.024042911549810024,
+    "negs_dmax": 0.05263441482798141,
+    "negs_dmean": 0.05849919320672629,
+    "negs_block": 0.024149446407635666,
+    "generate_max": 0.023869075185346728,
+    "generate_min": 0.024301089262419757
+   }
+  },
+  "expr_array": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.05541265499854216,
+    "hit_dmean": 0.06218081246932837,
+    "hit_block": 0.023517283375555274,
+    "negs_dmax": 0.05364103721858443,
+    "negs_dmean": 0.05778655340329323,
+    "negs_block": 0.022987818721181722,
+    "generate_max": 0.023785317965994042,
+    "generate_min": 0.02421729270632477
+   }
+  },
+  "expr_rnaseq": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.05615461654426936,
+    "hit_dmean": 0.06180894108144738,
+    "hit_block": 0.022467627614628265,
+    "negs_dmax": 0.05191500625851015,
+    "negs_dmean": 0.05553146556031071,
+    "negs_block": 0.023065859996017287,
+    "generate_max": 0.021561297095914683,
+    "generate_min": 0.02342321535955384
+   }
+  },
+  "koprot_corr": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.061091425969684296,
+    "hit_dmean": 0.06923349636988095,
+    "hit_block": 0.0356144353371331,
+    "negs_dmax": 0.06001293285942269,
+    "negs_dmean": 0.06627026025915643,
+    "negs_block": 0.03418363090353023,
+    "generate_max": 0.03388119905389705,
+    "generate_min": 0.034289751983101295
+   }
+  },
+  "mean": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.10583519618578696,
+    "hit_dmean": 0.11820176873089187,
+    "hit_block": 0.057739585649978456,
+    "negs_dmax": 0.10666946298101512,
+    "negs_dmean": 0.11663291133035854,
+    "negs_block": 0.05236759999901772,
+    "generate_max": 0.04981557339459019,
+    "generate_min": 0.04831871423291457
+   }
+  },
+  "phen_corr": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.08529275715611759,
+    "hit_dmean": 0.09152419759782512,
+    "hit_block": 0.053060994324318586,
+    "negs_dmax": 0.08405797350361517,
+    "negs_dmean": 0.08844270466297274,
+    "negs_block": 0.05078249717497554,
+    "generate_max": 0.04269472430389875,
+    "generate_min": 0.05071623746240757
+   }
+  },
+  "ppi_cer_rwr": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.05978966969158217,
+    "hit_dmean": 0.06930113248679642,
+    "hit_block": 0.028285568844067348,
+    "negs_dmax": 0.05876793740290402,
+    "negs_dmean": 0.06630377551759736,
+    "negs_block": 0.028247422444099234,
+    "generate_max": 0.027905818576806674,
+    "generate_min": 0.026064419777686403
+   }
+  },
+  "ppi_rwr": {
+   "feature": "hit_dmean",
+   "inner_pooled_ap": {
+    "hit_dmax": 0.052166571727368105,
+    "hit_dmean": 0.05808005283864297,
+    "hit_block": 0.02520637733522751,
+    "negs_dmax": 0.05294245385941592,
+    "negs_dmean": 0.057664951051018994,
+    "negs_block": 0.02519127676123431,
+    "generate_max": 0.025048869512581968,
+    "generate_min": 0.024751928304154003
+   }
+  }
+ },
+ "cfg": {
+  "b1_C": 1.0,
+  "mf_k": 32,
+  "mf_wd": 0.01,
+  "mf_epochs": 50,
+  "mf_lr": 0.05
+ },
+ "sims": [
+  "cer_profile_corr",
+  "cons_phylo",
+  "esm_cos",
+  "expr_array",
+  "expr_rnaseq",
+  "koprot_corr",
+  "phen_corr",
+  "ppi_cer_rwr",
+  "ppi_rwr"
+ ]
+}
