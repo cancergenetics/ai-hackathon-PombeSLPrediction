@@ -1,0 +1,18 @@
+data root /Users/colmclaude/ClaudeExperiments/psl_wt_m5m3/data/processed; split seed 7; threads 4
+  [M2r_huber_split7] fold 0 seed 0: best_iter 72 inner-valid wAP 0.1613
+  [M2r_huber_split7] fold 0 seed 1: best_iter 326 inner-valid wAP 0.1568
+  [M2r_huber_split7] fold 0 seed 2: best_iter 443 inner-valid wAP 0.1529
+  [M2r_huber_split7] fold 1 seed 0: best_iter 273 inner-valid wAP 0.1485
+  [M2r_huber_split7] fold 1 seed 1: best_iter 155 inner-valid wAP 0.1744
+  [M2r_huber_split7] fold 1 seed 2: best_iter 76 inner-valid wAP 0.1486
+  [M2r_huber_split7] fold 2 seed 0: best_iter 267 inner-valid wAP 0.1687
+  [M2r_huber_split7] fold 2 seed 1: best_iter 358 inner-valid wAP 0.1580
+  [M2r_huber_split7] fold 2 seed 2: best_iter 449 inner-valid wAP 0.1798
+  [M2r_huber_split7] fold 3 seed 0: best_iter 211 inner-valid wAP 0.1672
+  [M2r_huber_split7] fold 3 seed 1: best_iter 232 inner-valid wAP 0.1668
+  [M2r_huber_split7] fold 3 seed 2: best_iter 393 inner-valid wAP 0.1598
+  [M2r_huber_split7] fold 4 seed 0: best_iter 213 inner-valid wAP 0.1533
+  [M2r_huber_split7] fold 4 seed 1: best_iter 179 inner-valid wAP 0.1530
+  [M2r_huber_split7] fold 4 seed 2: best_iter 256 inner-valid wAP 0.1687
+== M2r_huber_split7: run_id M2r_huber_split7__20261028T224729__4f8881 primary 0.1763 (SE 0.0122) C1 0.2591 C2 0.1679 C3 0.0870; XSP importance 0.000; stages {'load': 4.8, 'assemble': 14.2, 'train': 700.8, 'predict': 29.7}
+peak RSS 13739 MB
