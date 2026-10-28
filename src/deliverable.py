@@ -7,15 +7,18 @@
     s = m.predict(pairs_df)                          # scores for any pairs (chunked)
     for ia, ib, s in m.score_universe(genes): ...    # all i<j pairs of the sorted gene list, streamed
 
-M2 (kind m2_stack) is trained exactly as one outer fold of scripts/run_m2.py, with the outer training set
+M2 / M2r_huber (kind m2_stack) is trained exactly as one outer fold of scripts/run_m2.py (Huber stacker:
+scripts/run_m2plus.py), with the outer training set
 replaced by `train_pairs` (nested stacking, DESIGN §4 rule 2):
   * T = train_pairs -> data.drop_noncoding;  inner = data.inner_splits(T)  (5 inner gene folds + C1 hold-out);
   * stacker TRAINING rows = inner eval rows; their RYAN/NBR/GP features come from inner fold j's training
     pairs only (src.stacking.inner_rows with the M2 builder);
   * PREDICTION rows (universe / lockbox pairs) get the same features computed from ALL of T
     (the builder's fit on T: B1, MF, profiles, NBR neighbour matrices, GP regressor);
-  * seed s: LightGBM with early stopping on inner fold j = s mod 5, fitted on the gene-grouped rows for j;
-    the score is the mean raw score over seeds (as src/evaluate averages seeds).
+  * seed s: LightGBM stacker (src/models/stacker.py; spec `objective` binary = M2, huber = E-TARGET M2r_huber)
+    with early stopping on inner fold j = s mod 5, fitted on the gene-grouped rows for j; the score is the mean
+    raw score over seeds (as src/evaluate averages seeds): log-odds margin (binary) or predicted -min(S2, 0)
+    (huber).
 Universe scale: the Ryan builder is a function of (T, query genes) whose per-pair output does not depend on
 which other pairs are queried. Every query block is padded with `covering_pairs(cover genes)` so that all
 blocks share one gene index (hence one identical fit, bit-identical features across blocks; checked at run
@@ -65,6 +68,17 @@ def deterministic_torch(threads: int):
 # ============================================================================================ specs
 def models_sha256(path: Path | None = None) -> str:
     return protocol.sha256_file(Path(path or MODELS_PATH))
+
+
+def default_model(path: Path | None = None) -> str:
+    """config/models.yaml `default_model` (the model predict_all_pairs.py ships when --model is not given)."""
+    return yaml.safe_load(Path(path or MODELS_PATH).read_text())["default_model"]
+
+
+def dev_run_id(spec: dict) -> str | None:
+    """Registered dev-CV run whose out-of-fold predictions belong to this spec: the pinned `dev_run` if given,
+    else the latest clean run of `dev_run_model` (src.universe.latest_run_id)."""
+    return spec.get("dev_run") or U.latest_run_id(spec.get("dev_run_model", spec["id"]))
 
 
 def model_spec(model_id: str, path: Path | None = None, real: bool | None = None) -> dict:
@@ -229,11 +243,15 @@ class TrainedModel:
         return pd.concat(parts, ignore_index=True), inner
 
     def _fit_m2_stack(self):
-        import lightgbm as lgb
-        from sklearn.metrics import average_precision_score
         from src.models import lgbm
         from src.models import m2
+        from src.models import stacker
         from src.stacking import stacker_folds
+        objective = self.spec.get("objective", "binary")
+        if objective not in stacker.OBJECTIVES:
+            raise ValueError(f"model {self.spec['id']}: unknown stacker objective {objective!r}")
+        if objective != "binary" and self.spec.get("init_score"):
+            raise ValueError(f"model {self.spec['id']}: init_score is only defined for the binary stacker")
         t0 = time.perf_counter()
         tr, inner = self.stacker_rows()
         self._t("stacker_rows", t0)
@@ -248,6 +266,7 @@ class TrainedModel:
         X = np.hstack([Ltr, tr[self.rcols].to_numpy(np.float32)])[:, self.cols]
         del Ltr
         y = tr.y.to_numpy(np.int8)
+        s = tr[protocol.label_column()].to_numpy(float) if objective == "huber" else None
         w = tr.w.to_numpy(float) / tr.w.mean()
         init = tr.b1_logit.to_numpy(float) if self.spec.get("init_score") else None
         groups = {}
@@ -264,26 +283,18 @@ class TrainedModel:
         self.boosters = []
         safe = lgbm.safe_names(self.names)
         t0 = time.perf_counter()
-        for s in self.spec["seeds"]:
-            j = int(s) % len(inner)
+        for sd in self.spec["seeds"]:
+            j = int(sd) % len(inner)
             fm, vm = groups[j]
-            p = {**params, "seed": int(s), "bagging_seed": int(s) + 1, "feature_fraction_seed": int(s) + 2,
-                 "data_random_seed": int(s) + 3}
-            dtr = lgb.Dataset(X[fm], label=y[fm], weight=w[fm], init_score=None if init is None else init[fm],
-                              feature_name=safe, free_raw_data=True)
-            dva = lgb.Dataset(X[vm], label=y[vm], weight=w[vm], init_score=None if init is None else init[vm],
-                              reference=dtr, free_raw_data=True)
-            b = lgb.train(p, dtr, num_boost_round=lgbm.MAX_ROUNDS, valid_sets=[dva], valid_names=["valid"],
-                          callbacks=[lgb.early_stopping(lgbm.EARLY_STOP, verbose=False)])
-            pv = b.predict(X[vm], num_iteration=b.best_iteration, raw_score=True) + (0.0 if init is None else init[vm])
-            inf = {"seed": int(s), "best_iteration": int(b.best_iteration), "inner_fold_valid": j,
-                   "valid_ap_weighted": float(average_precision_score(y[vm], pv, sample_weight=w[vm])),
-                   "n_fit": int(fm.sum()), "n_valid": int(vm.sum())}
+            b, inf = stacker.fit_stacker(objective, X, y, s, w, fm, vm, params, int(sd), safe, init=init,
+                                         etarget_cfg=self.spec.get("etarget"))
+            inf = {"seed": int(sd), "inner_fold_valid": j, **inf}
             self.boosters.append(b)
             self.info["fits"].append(inf)
-            self.log(f"  [{self.spec['id']}] seed {s}: best_iter {inf['best_iteration']} inner-valid wAP "
-                     f"{inf['valid_ap_weighted']:.4f} ({inf['n_fit']} fit / {inf['n_valid']} valid)")
+            self.log(f"  [{self.spec['id']}] seed {sd} ({objective}): best_iter {inf['best_iteration']} inner-valid "
+                     f"wAP {inf['valid_ap_weighted']:.4f} ({inf['n_fit']} fit / {inf['n_valid']} valid)")
         self._t("stacker_train", t0)
+        self.info["objective"] = objective
         self.info["n_stacker_rows"] = int(len(tr))
         self.info["n_features"] = int(len(self.cols))
         del X
@@ -321,8 +332,9 @@ class TrainedModel:
             del L
             self._t("lf_assemble", t0)
             t0 = time.perf_counter()
-            s = np.mean([b.predict(X, num_iteration=b.best_iteration, raw_score=True, num_threads=self.threads)
-                         for b in self.boosters], axis=0)
+            from src.models import stacker
+            obj = self.spec.get("objective", "binary")
+            s = np.mean([stacker.predict(b, X, obj, self.threads) for b in self.boosters], axis=0)
             if self.spec.get("init_score"):
                 s = s + init
             self._t("predict", t0)

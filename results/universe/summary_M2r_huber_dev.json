@@ -1,0 +1,244 @@
+{
+ "model": "M2r_huber",
+ "spec": {
+  "kind": "m2_stack",
+  "families": [
+   "LF",
+   "RYAN",
+   "NBR",
+   "GP"
+  ],
+  "objective": "huber",
+  "etarget": {
+   "target": "neg_min_s2_0",
+   "delta": "label_threshold_abs"
+  },
+  "init_score": false,
+  "lgbm_config": "default",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "rounds": "inner_early_stopping",
+  "lf_groups": [
+   "CER",
+   "CONS",
+   "EXPR",
+   "HYPO",
+   "KOPROT",
+   "LOC",
+   "PHEN",
+   "PPI",
+   "SEQ"
+  ],
+  "sims": [
+   "cer_profile_corr",
+   "cons_phylo",
+   "esm_cos",
+   "expr_array",
+   "expr_rnaseq",
+   "koprot_corr",
+   "phen_corr",
+   "ppi_cer_rwr",
+   "ppi_rwr"
+  ],
+  "ryan_cfg": {},
+  "gp_cfg": {},
+  "drop_noncoding": true,
+  "dev_run_model": "M2r_huber",
+  "dev_run": "M2r_huber__20261028T205545__7b5e9e",
+  "id": "M2r_huber"
+ },
+ "models_sha256": "8d2e29f528bae4d4d633482bcd6db382b81655c7477e59beab1c0924c01a87ed",
+ "train_set": "dev",
+ "data_root": "/Users/colmclaude/ClaudeExperiments/psl_wt_ship/data/processed",
+ "real_data": true,
+ "output": "/Users/colmclaude/ClaudeExperiments/psl_wt_ship/data/processed/universe/predictions_M2r_huber_dev.parquet",
+ "protocol_sha256": "73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230",
+ "git": {
+  "git_commit": "dbedfb643fa184327da2dc8fd84c1ba084823602",
+  "git_dirty": false,
+  "git_diff_sha256": ""
+ },
+ "checks": {
+  "n_genes": 3923,
+  "n_rows": 7693003,
+  "expected_rows": 7693003,
+  "row_count_ok": true,
+  "no_nan_scores": true,
+  "pairs_unique_sorted": true,
+  "cover_rows_identical_across_blocks": true,
+  "cover_max_abs_diff": 0.0
+ },
+ "fit_info": {
+  "model": "M2r_huber",
+  "kind": "m2_stack",
+  "n_train_pairs": 775918,
+  "n_train_positives": 14464,
+  "n_train_genes": 1904,
+  "noncoding_dropped": {
+   "pairs": 8276,
+   "positives": 39,
+   "genes": [
+    "SPAC186.04c",
+    "SPAC2E12.05",
+    "SPAPB24D3.05c",
+    "SPBC530.06c",
+    "SPCC188.10c",
+    "SPCC18B5.02c",
+    "SPCC306.10",
+    "SPCC622.17",
+    "SPCC663.07c",
+    "SPCP20C8.03",
+    "SPNCRNA.9001"
+   ]
+  },
+  "train_hash": "bc25d3c322ae52af91622ecd7810666a71b02993775dfb0efc2a85f54f3f3512",
+  "fits": [
+   {
+    "seed": 0,
+    "inner_fold_valid": 0,
+    "objective": "huber",
+    "best_iteration": 463,
+    "valid_ap_weighted": 0.15373150235942418,
+    "n_fit": 538915,
+    "n_valid": 195367,
+    "pos_fit": 10323,
+    "pos_valid": 3657,
+    "huber_delta": 2.3,
+    "target": "neg_min_s2_0"
+   },
+   {
+    "seed": 1,
+    "inner_fold_valid": 1,
+    "objective": "huber",
+    "best_iteration": 284,
+    "valid_ap_weighted": 0.17315402462934926,
+    "n_fit": 539987,
+    "n_valid": 194088,
+    "pos_fit": 10213,
+    "pos_valid": 3643,
+    "huber_delta": 2.3,
+    "target": "neg_min_s2_0"
+   },
+   {
+    "seed": 2,
+    "inner_fold_valid": 2,
+    "objective": "huber",
+    "best_iteration": 322,
+    "valid_ap_weighted": 0.20055390747978227,
+    "n_fit": 534240,
+    "n_valid": 195761,
+    "pos_fit": 10035,
+    "pos_valid": 3759,
+    "huber_delta": 2.3,
+    "target": "neg_min_s2_0"
+   }
+  ],
+  "stacker_cache": "/Users/colmclaude/ClaudeExperiments/psl_wt_ship/data/processed/cache/deliverable/45978c2ef800a2bb",
+  "objective": "huber",
+  "n_stacker_rows": 975121,
+  "n_features": 475
+ },
+ "model_timings_s": {
+  "stacker_features": 188.3,
+  "stacker_rows": 189.11,
+  "stacker_assemble": 12.72,
+  "stacker_train": 566.28,
+  "fit_total": 772.31,
+  "ryan_features": 655.86,
+  "lf_assemble": 61.64,
+  "predict": 373.41
+ },
+ "runtime": {
+  "total_wall_s": 1872.6,
+  "stages_wall_s": {
+   "load_training_pairs": 0.155,
+   "fit": 772.572,
+   "score_universe": 1094.706,
+   "flags_and_write": 3.85
+  },
+  "cpu_s": 2675.415,
+  "peak_rss_mb": 10350.0,
+  "threads": 2,
+  "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0",
+  "ryan_chunk": 2000000,
+  "lf_chunk": 500000
+ },
+ "counts": {
+  "class": {
+   "C2": 3821722,
+   "C3": 2250381,
+   "C1": 1620900
+  },
+  "viability_unknown_pairs": 554472,
+  "linked_pairs": 353615,
+  "linked_window_kb": 300.0,
+  "genes_with_coords": 3905,
+  "in_training": 637564,
+  "measured_true": 637564,
+  "measured_unknown": 1892561,
+  "with_oof": 622515
+ },
+ "score_quantiles": {
+  "0.5": 0.2306471625779792,
+  "0.9": 0.49306632133154815,
+  "0.99": 1.105748680376845,
+  "0.999": 2.2387590207689105
+ },
+ "score_mean_by_class": {
+  "C1": 0.2834601402282715,
+  "C2": 0.2899304926395416,
+  "C3": 0.30839478969573975
+ },
+ "top_k_composition": {
+  "1000": {
+   "class": {
+    "C1": 746,
+    "C2": 254,
+    "C3": 0
+   },
+   "linked": 40,
+   "viability_unknown": 0,
+   "in_training": 492
+  },
+  "10000": {
+   "class": {
+    "C1": 6659,
+    "C2": 3341,
+    "C3": 0
+   },
+   "linked": 501,
+   "viability_unknown": 7,
+   "in_training": 3666
+  },
+  "100000": {
+   "class": {
+    "C2": 48992,
+    "C1": 34037,
+    "C3": 16971
+   },
+   "linked": 4962,
+   "viability_unknown": 473,
+   "in_training": 16753
+  }
+ },
+ "oof_run": "M2r_huber__20261028T205545__7b5e9e",
+ "lockbox_oof": null,
+ "in_sample_vs_oof": {
+  "n_pairs": 622515,
+  "positives": 12992,
+  "ap_in_sample": 0.3369705353708843,
+  "ap_out_of_fold": 0.2105899547637013,
+  "spearman_in_sample_vs_oof": 0.8375385419287952,
+  "note": "in-sample scores are optimistic on training pairs; use oof_score for measured pairs",
+  "by_class_of_pair_in_universe": {
+   "C1": {
+    "n": 622515,
+    "ap_in_sample": 0.3369705353708843,
+    "ap_out_of_fold": 0.2105899547637013
+   }
+  }
+ }
+}

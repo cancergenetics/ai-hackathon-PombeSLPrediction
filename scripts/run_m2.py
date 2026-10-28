@@ -44,6 +44,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src import data, protocol  # noqa: E402
 from src import pairs as PA  # noqa: E402
+from src import model_inputs as MI  # noqa: E402
 from src.timing import Timer, Timings, peak_rss_mb, set_threads  # noqa: E402
 
 N_JOBS = 8
@@ -71,6 +72,17 @@ def seed_tag(split_seed) -> str:
     return "" if s == protocol.load()["dev_cv"]["split_seed"] else f"_split{s}"
 
 
+def gt_exclude() -> tuple:
+    """Gene tables outside config/models.yaml default_inputs.lf_groups (left out of the GP inputs), so a group
+    merged into the store later (e.g. XSP) does not change M2 (src/model_inputs.py)."""
+    return MI.default_gene_table_exclude()
+
+
+def cache_name(sims) -> str:
+    from src.models import m2
+    return m2.m2_cache_name(m2.resolve_cfg(ryan_cfg()), sims, None, gt_exclude())
+
+
 def ryan_cfg() -> dict:
     """RYAN/NBR settings = the values tuned once for the baselines (results/baselines/tuning.json)."""
     from src.ryanfeat import DEFAULT_CFG
@@ -93,7 +105,8 @@ def _fold_features(args):
     tim = {}
     with Timer(f"features_fold{k}") as t:
         sims = SimStore(names=names)
-        tr, ev, inner, drop = m2.fold_tables_m2(split_seed, k, sims, ryan_cfg(), use_cache=not rebuild, timings=tim)
+        tr, ev, inner, drop = m2.fold_tables_m2(split_seed, k, sims, ryan_cfg(), use_cache=not rebuild, timings=tim,
+                                            exclude_groups=gt_exclude())
     return k, t.result, tim, len(tr), len(ev), drop
 
 
@@ -101,12 +114,12 @@ def stage_features(split_seed, workers, rebuild=False) -> dict:
     from src.models import m2
     from src.ryanfeat import SimStore
     n = protocol.load()["dev_cv"]["n_folds"]
-    names = SimStore().names
+    names = MI.default_sim_store().names
     thr = max(1, 10 // workers)
     with ProcessPoolExecutor(workers) as ex:
         res = list(ex.map(_fold_features, [(split_seed, k, thr, names, rebuild) for k in range(n)]))
     sims = SimStore(names=names)
-    out = {"split_seed": data._seed(split_seed), "cache_name": m2.m2_cache_name(m2.resolve_cfg(ryan_cfg()), sims, None),
+    out = {"split_seed": data._seed(split_seed), "cache_name": cache_name(sims), "gt_exclude": list(gt_exclude()),
            "sims": names, "gp_cfg": m2.resolve_gp(None), "ryan_cfg": ryan_cfg(), "workers": workers,
            "threads_per_worker": thr, "rebuilt_ignoring_cache": bool(rebuild),
            "folds": {k: {"timing": t, "builds_s": tim, "n_stacker_rows": a, "n_eval_rows": b, "noncoding_dropped": d}
@@ -124,7 +137,7 @@ class FoldData:
         from src.models import m2
         from src.stacking import stacker_folds
         with T.stage(f"load_features_f{k}"):
-            tr, ev, inner, drop = m2.fold_tables_m2(split_seed, k, sims, ryan_cfg())
+            tr, ev, inner, drop = m2.fold_tables_m2(split_seed, k, sims, ryan_cfg(), exclude_groups=gt_exclude())
         self.drop = drop
         rcols = [c for c in tr.columns if m2.family_of(c) != "LF" and c in ev.columns and c not in
                  ("gene_a", "gene_b", "y", "s_score", "part", "inner_fold", "hypomorph_a", "hypomorph_b", "w",
@@ -158,27 +171,16 @@ class FoldData:
 
 
 def fit_stacker(D: FoldData, cols, params, seed, init: bool, j: int):
-    import lightgbm as lgb
-    from sklearn.metrics import average_precision_score
-    from src.models import lgbm
+    """Binary stacker for seed `seed` on inner fold j (src.models.stacker.fit_binary, shared with
+    src/deliverable.py)."""
+    from src.models import lgbm, stacker
     fm, vm = D.groups[j]
-    p = {**params, "seed": seed, "bagging_seed": seed + 1, "feature_fraction_seed": seed + 2,
-         "data_random_seed": seed + 3}
     names = lgbm.safe_names(np.array(D.names)[cols])
-    Xf = D.Xtr[np.ix_(fm, cols)]
-    Xv = D.Xtr[np.ix_(vm, cols)]
-    dtr = lgb.Dataset(Xf, label=D.y[fm], weight=D.w[fm], init_score=D.init_tr[fm] if init else None,
-                      feature_name=names, free_raw_data=True)
-    dva = lgb.Dataset(Xv, label=D.y[vm], weight=D.w[vm], init_score=D.init_tr[vm] if init else None,
-                      reference=dtr, free_raw_data=True)
-    b = lgb.train(p, dtr, num_boost_round=lgbm.MAX_ROUNDS, valid_sets=[dva], valid_names=["valid"],
-                  callbacks=[lgb.early_stopping(lgbm.EARLY_STOP, verbose=False)])
-    pv = b.predict(Xv, num_iteration=b.best_iteration, raw_score=True) + (D.init_tr[vm] if init else 0.0)
-    info = {"best_iteration": int(b.best_iteration), "inner_fold_valid": int(j),
-            "valid_ap_weighted": float(average_precision_score(D.y[vm], pv, sample_weight=D.w[vm])),
-            "n_fit": int(fm.sum()), "n_valid": int(vm.sum()), "pos_fit": int(D.y[fm].sum()),
-            "pos_valid": int(D.y[vm].sum())}
-    return b, info
+    b, inf = stacker.fit_binary(D.Xtr[np.ix_(fm, cols)], D.y[fm], D.w[fm], D.Xtr[np.ix_(vm, cols)], D.y[vm], D.w[vm],
+                                params, seed, names, init_fit=D.init_tr[fm] if init else None,
+                                init_valid=D.init_tr[vm] if init else None)
+    inf.pop("objective")
+    return b, {"best_iteration": inf.pop("best_iteration"), "inner_fold_valid": int(j), **inf}
 
 
 def predict(b, D: FoldData, cols, init: bool, rows=None, X=None) -> np.ndarray:
@@ -291,7 +293,7 @@ def stage_run(split_seed, spec, sims, cfg, variants, seeds, args) -> dict:
                        "peak_rss_mb": max(f["timing"]["peak_rss_mb"] for f in fbj["folds"].values()),
                        "threads": fbj["threads_per_worker"], "hardware": shared[0]["hardware"]}]
     fh = {**spec.hashes(), **{f"sim/{k}": v for k, v in sims.hashes().items()},
-          "m2feat_cache": m2.m2_cache_name(m2.resolve_cfg(ryan_cfg()), sims, None)}
+          "m2feat_cache": cache_name(sims)}
     summary = {"split_seed": data._seed(split_seed), "config": cfg, "params": params, "seeds": seeds,
                "runs": {}, "noncoding_dropped": drops}
     sp = out_dir() / f"summary{seed_tag(split_seed)}.json"
@@ -344,7 +346,7 @@ def stage_shift(split_seed, sims) -> dict:
     out = {"split_seed": data._seed(split_seed), "folds": {}}
     feats = None
     for k in range(n):
-        tr, ev, inner, drop = m2.fold_tables_m2(split_seed, k, sims, ryan_cfg())
+        tr, ev, inner, drop = m2.fold_tables_m2(split_seed, k, sims, ryan_cfg(), exclude_groups=gt_exclude())
         feats = [f for f in SHIFT_FEATURES if f in tr.columns]
         out["features"] = feats
         fk = {}
@@ -440,7 +442,7 @@ def main() -> int:
     st = args.stages.split(",")
     variants = args.variants.split(",")
     assert all(v in VARIANTS for v in variants), variants
-    spec = PA.load_spec()
+    spec = MI.default_spec()       # config/models.yaml default_inputs.lf_groups (not every group in the store)
     viol = PA.source_violations(spec)
     real = protocol.data_root().resolve() == (ROOT / "data" / "processed").resolve()
     if viol and real:
@@ -448,7 +450,7 @@ def main() -> int:
     print(f"data root {protocol.data_root()}; split seed {data._seed(args.split_seed)}; {len(spec.feature_names())} LF features")
     if "features" in st:
         stage_features(args.split_seed, args.workers, args.rebuild)
-    sims = SimStore(names=SimStore().names)
+    sims = MI.default_sim_store()
     if "tune" in st:
         stage_tune(args.split_seed, spec, sims)
     if "check" in st:

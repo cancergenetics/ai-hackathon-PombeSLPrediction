@@ -28,6 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src import data, protocol  # noqa: E402
 from src import pairs as PA  # noqa: E402
+from src import model_inputs as MI  # noqa: E402
 from src.evaluate import compare, evaluate  # noqa: E402
 from src.models import lgbm  # noqa: E402
 from src.timing import Timer, Timings, peak_rss_mb, set_threads  # noqa: E402
@@ -176,7 +177,7 @@ def main() -> int:
     args = ap.parse_args()
     set_threads(N_JOBS)
     P = protocol.load()
-    spec = PA.load_spec()
+    spec = MI.default_spec()       # config/models.yaml default_inputs.lf_groups (not every group in the store)
     viol = PA.source_violations(spec)
     if viol and is_real_root():
         raise SystemExit("feature sources not on the use=feature allowlist:\n" + "\n".join(viol))

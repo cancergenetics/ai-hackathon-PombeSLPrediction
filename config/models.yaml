@@ -4,6 +4,7 @@
 # on an arbitrary training set (tests/test_deliverable.py checks that, given an outer fold's training pairs,
 # the M2 path reproduces scripts/run_m2.py's fold predictions).
 #
+# default_model: the model of scripts/predict_all_pairs.py when --model is not given.
 # kinds:
 #   m2_stack   nested-stacked LightGBM (DESIGN §4 rule 2; src/models/m2.py builder, src/stacking.py rows):
 #              stacker rows = inner eval rows of data.inner_splits(T) with RYAN/NBR/GP features from the inner
@@ -18,17 +19,61 @@
 #   sims       similarity sources for NBR / GP inputs (list) or "all" (SimStore default)
 #   seeds      protocol seeds key (ladder | all) or an explicit list
 #   rounds     inner_early_stopping (M2: the dev-CV rule) | gene_holdout_early_stopping (M1) | n/a
+#   objective  stacker objective (m2_stack): binary (default; M2) | huber (E-TARGET, docs/m2plus.md step 4:
+#              LightGBM Huber regression on etarget.target = -min(S2, 0), delta = |protocol label threshold|,
+#              early stopping on the class-weighted binary AP of the protocol label; src/models/stacker.py)
+#   etarget    {target: neg_min_s2_0, delta: label_threshold_abs} (huber only; = config/m2plus.yaml etarget)
+#   dev_run_model / dev_run  registered dev-CV model name / pinned run id whose out-of-fold predictions are
+#              the oof_score of measured pairs (predict_all_pairs.py) and the dev side of the lockbox gap
 #   toy_overrides  applied when the data root is not the real one (toy feature groups differ)
-# Real-data lists below are the groups / sources of the adopted M2 run M2__20261028T183713__024416
-# (registry feature_hashes; results/m2/feature_build_20261028.json), so that feature groups added to the store
-# later (e.g. XSP) do not silently change the shipped model.
+# default_inputs: THE default label-free inputs of every model script (src/model_inputs.py; scripts/run_m1.py,
+# scripts/run_m2.py, and the specs below via YAML anchors). These are the groups / sources of the adopted M2 run
+# M2__20261028T183713__024416 (registry feature_hashes; results/m2/feature_build_20261028.json); groups merged
+# into the store later (e.g. XSP) are NOT model inputs unless added here (tests/test_model_inputs.py).
+# On toy / synthetic stores the default is every group of that store (toy_overrides below, src/model_inputs.py).
+default_model: M2r_huber
 
-_real_lf_groups: &lf9 [CER, CONS, EXPR, HYPO, KOPROT, LOC, PHEN, PPI, SEQ]
-_real_sims: &sims9 [cer_profile_corr, cons_phylo, esm_cos, expr_array, expr_rnaseq, koprot_corr, phen_corr,
-                    ppi_cer_rwr, ppi_rwr]
+default_inputs:
+  lf_groups: &lf9 [CER, CONS, EXPR, HYPO, KOPROT, LOC, PHEN, PPI, SEQ]
+  sims: &sims9 [cer_profile_corr, cons_phylo, esm_cos, expr_array, expr_rnaseq, koprot_corr, phen_corr,
+                ppi_cer_rwr, ppi_rwr]
 
 models:
-  M2:
+  M2r_huber:                     # INCUMBENT (PI 2026-10-28; dev run M2r_huber__20261028T205545__7b5e9e, 0.1791)
+    kind: m2_stack
+    families: [LF, RYAN, NBR, GP]
+    objective: huber
+    etarget: {target: neg_min_s2_0, delta: label_threshold_abs}
+    init_score: false
+    lgbm_config: default
+    seeds: ladder
+    rounds: inner_early_stopping
+    lf_groups: *lf9
+    sims: *sims9
+    ryan_cfg: {}
+    gp_cfg: {}
+    drop_noncoding: true
+    dev_run_model: M2r_huber
+    dev_run: M2r_huber__20261028T205545__7b5e9e
+    toy_overrides: {lf_groups: all, sims: all, dev_run: null}
+  M2r_bag5_huber:                # M2r_huber with 5 stacker seeds (bagging alone below the adoption bar)
+    kind: m2_stack
+    families: [LF, RYAN, NBR, GP]
+    objective: huber
+    etarget: {target: neg_min_s2_0, delta: label_threshold_abs}
+    init_score: false
+    lgbm_config: default
+    seeds: all
+    rounds: inner_early_stopping
+    lf_groups: *lf9
+    sims: *sims9
+    ryan_cfg: {}
+    gp_cfg: {}
+    drop_noncoding: true
+    dev_run_model: M2r_bag5_huber
+    dev_run: M2r_bag5_huber__20261028T202603__f8bde5
+    toy_overrides: {lf_groups: all, sims: all, dev_run: null}
+  M2:                            # previous incumbent (binary stacker)
     kind: m2_stack
     families: [LF, RYAN, NBR, GP]
     init_score: false
@@ -41,7 +86,8 @@ models:
     gp_cfg: {}
     drop_noncoding: true
     dev_run_model: M2
-    toy_overrides: {lf_groups: all, sims: all}
+    dev_run: M2__20261028T183713__024416
+    toy_overrides: {lf_groups: all, sims: all, dev_run: null}
   M2_init:
     kind: m2_stack
     families: [LF, RYAN, NBR, GP]
