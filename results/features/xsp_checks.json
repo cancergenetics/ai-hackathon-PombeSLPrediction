@@ -1,0 +1,560 @@
+{
+ "variant": "full",
+ "pair_esm_pcs": 16,
+ "quick": false,
+ "n_pairs_sampled": 2500000,
+ "seed": 0,
+ "pair_params": {
+  "objective": "binary",
+  "learning_rate": 0.05,
+  "num_leaves": 63,
+  "min_data_in_leaf": 200,
+  "feature_fraction": 0.7,
+  "bagging_fraction": 0.8,
+  "bagging_freq": 1,
+  "lambda_l2": 1.0,
+  "metric": "average_precision",
+  "verbose": -1,
+  "seed": 0,
+  "deterministic": true,
+  "force_row_wise": true,
+  "num_threads": 6
+ },
+ "gene_params": {
+  "learning_rate": 0.03,
+  "num_leaves": 15,
+  "min_data_in_leaf": 20,
+  "feature_fraction": 0.7,
+  "bagging_fraction": 0.8,
+  "bagging_freq": 1,
+  "lambda_l2": 1.0,
+  "verbose": -1,
+  "seed": 0,
+  "deterministic": true,
+  "force_row_wise": true,
+  "num_threads": 6
+ },
+ "gene_rounds": 400,
+ "networks": {
+  "pombe_edges": 8230,
+  "pombe_mean_degree": 3.21108078956604,
+  "pombe_frac_isolated": 0.44420600858369097,
+  "cer": {
+   "rows": 283038,
+   "rows_after_system_filter": 248577,
+   "rows_both_in_universe_non_self": 243243,
+   "edges": 162497
+  },
+  "cer_mean_degree_full": 54.805057525634766,
+  "cer_frac_isolated_full": 0.06795952782462057
+ },
+ "n_genes": {
+  "pombe": 5126,
+  "cerevisiae_universe": 5930,
+  "pombe_with_seq": 5126,
+  "cer_with_seq": 5930
+ },
+ "esm_joint_pca_evr_cum": 0.7947454859072216,
+ "raw_feature_medians": {
+  "log_len": {
+   "pombe": 2.5774917998372255,
+   "cerevisiae": 2.5943925503754266
+  },
+  "para_top1": {
+   "pombe": 0.8129703998565674,
+   "cerevisiae": 0.8377589583396912
+  },
+  "ppi_degree": {
+   "pombe": 1.0,
+   "cerevisiae": 25.0
+  },
+  "ppi_clustering": {
+   "pombe": 0.0,
+   "cerevisiae": 0.24836601307189543
+  }
+ },
+ "labels": {
+  "n_measured_universe_pairs": 10197249,
+  "frac_neg_costanzo": 0.03352757199515281,
+  "eps_threshold_T": -0.08969999849796295,
+  "prevalence": 0.019995098678084647,
+  "n_costanzo_orf_pairs_dropped_not_in_universe": 1232956,
+  "n_costanzo_genes_in_universe": 5203,
+  "n_essential": 954
+ },
+ "gene_cv": {
+  "prop_hat": {
+   "spearman_vs_rate": 0.39136902704520027,
+   "n": 5203,
+   "spearman_nonessential_genes": 0.3213732146431645,
+   "per_fold": [
+    0.36543959355971894,
+    0.3587899397076238,
+    0.41800839605779816,
+    0.3906277504465733,
+    0.4223820893689923
+   ]
+  },
+  "prop_nn_hat": {
+   "spearman_vs_rate": 0.380894080241362,
+   "n": 5203,
+   "spearman_nonessential_genes": 0.3168171968791821,
+   "per_fold": [
+    0.3495569942196353,
+    0.34660273895717114,
+    0.4049830027238577,
+    0.4047940188441375,
+    0.3997398563527663
+   ]
+  },
+  "ess_hat": {
+   "n": 5203,
+   "n_pos": 954,
+   "prevalence": 0.1833557562944455,
+   "auprc": 0.6045131158309522,
+   "auroc": 0.8564281742454632,
+   "lift": 3.2969410290025625
+  },
+  "single_feature_spearman_vs_rate": {
+   "ppi_degree": 0.30042898110897454,
+   "ppi_pagerank": 0.3013344774564877,
+   "log_len": 0.0444403192206391,
+   "para_top1": -0.15884850810196138,
+   "esm_pc1": 0.025547165692277517
+  },
+  "corr_prop_vs_prop_nn_target": 0.9361612729342712
+ },
+ "orthologs_1to1_costanzo": 2395,
+ "pair_sample": {
+  "n": 2500000,
+  "prevalence": 0.0200856
+ },
+ "pair_gain_importance_fold0_top25": {
+  "prop_nn_hat__min": 0.0325,
+  "prop_hat__min": 0.032,
+  "pair_rwr": 0.0262,
+  "ess_hat__max": 0.0219,
+  "prop_nn_hat__max": 0.0212,
+  "ess_hat__min": 0.0204,
+  "esm_pc9__max": 0.0185,
+  "esm_pc12__min": 0.0177,
+  "esm_pc13__max": 0.0174,
+  "log_len__max": 0.0173,
+  "esm_pc15__max": 0.017,
+  "esm_pc7__min": 0.0163,
+  "esm_pc10__max": 0.0162,
+  "esm_pc16__min": 0.0162,
+  "net_charge__max": 0.0161,
+  "esm_pc4__max": 0.0154,
+  "esm_pc15__min": 0.0154,
+  "esm_pc10__min": 0.0153,
+  "disorder_prom__min": 0.015,
+  "esm_pc3__min": 0.015,
+  "esm_pc8__min": 0.015,
+  "prop_hat__max": 0.0149,
+  "esm_pc7__max": 0.0148,
+  "para_top1__max": 0.0148,
+  "hydrophobic__min": 0.0148
+ },
+ "gene_ortholog_proxy": {
+  "n": 2395,
+  "spearman_pombe_features_vs_ortholog_rate": 0.24561617607604552,
+  "spearman_cer_features_vs_rate_same_genes": 0.28951207053943845,
+  "spearman_pombe_hat_vs_cer_hat": 0.5906096462534804
+ },
+ "pair_cv": [
+  {
+   "fold": 0,
+   "best_iter": 797,
+   "n_train": 1134326,
+   "n_valid": 465154,
+   "C3_both_heldout": {
+    "n": 100317,
+    "n_pos": 1886,
+    "prevalence": 0.018800402723366926,
+    "auprc": 0.038188520088913706,
+    "auroc": 0.620597455088364,
+    "lift": 2.031260747486509
+   },
+   "C3_both_heldout_baseline_prop_sum": {
+    "n": 100317,
+    "n_pos": 1886,
+    "prevalence": 0.018800402723366926,
+    "auprc": 0.02841244307568151,
+    "auroc": 0.6179166552692121,
+    "lift": 1.5112677900440838
+   },
+   "C3_nxn_only": {
+    "n": 70164,
+    "n_pos": 998,
+    "prevalence": 0.014223818482412633,
+    "auprc": 0.02012772896149146,
+    "auroc": 0.5936363372437846,
+    "lift": 1.4150721190922713
+   },
+   "C2_one_heldout": {
+    "n": 800203,
+    "n_pos": 15684,
+    "prevalence": 0.019600026493277332,
+    "auprc": 0.056972035827596405,
+    "auroc": 0.6897763070010998,
+    "lift": 2.906732592792025
+   },
+   "C2_one_heldout_baseline_prop_sum": {
+    "n": 800203,
+    "n_pos": 15684,
+    "prevalence": 0.019600026493277332,
+    "auprc": 0.03164398682696933,
+    "auroc": 0.6174894664451596,
+    "lift": 1.6144869415264818
+   },
+   "ortholog_proxy_pombe_features": {
+    "n": 86123,
+    "n_pos": 2519,
+    "prevalence": 0.029248864995413536,
+    "auprc": 0.043132116681518624,
+    "auroc": 0.5698348263450872,
+    "lift": 1.474659501771508
+   },
+   "ortholog_proxy_cer_features_same_pairs": {
+    "n": 86123,
+    "n_pos": 2519,
+    "prevalence": 0.029248864995413536,
+    "auprc": 0.05800906716058054,
+    "auroc": 0.5968901218449463,
+    "lift": 1.9832929301590623
+   },
+   "ortholog_proxy_spearman_pombe_vs_cer_score": 0.4484728985554007,
+   "wall_s": 96.0
+  },
+  {
+   "fold": 1,
+   "best_iter": 693,
+   "n_train": 1151365,
+   "n_valid": 433276,
+   "C3_both_heldout": {
+    "n": 104410,
+    "n_pos": 1937,
+    "prevalence": 0.01855186284838617,
+    "auprc": 0.036694454147105184,
+    "auroc": 0.6118846290049351,
+    "lift": 1.977939059111643
+   },
+   "C3_both_heldout_baseline_prop_sum": {
+    "n": 104410,
+    "n_pos": 1937,
+    "prevalence": 0.01855186284838617,
+    "auprc": 0.030844552101786965,
+    "auroc": 0.632820199018288,
+    "lift": 1.662612124392141
+   },
+   "C3_nxn_only": {
+    "n": 79704,
+    "n_pos": 1173,
+    "prevalence": 0.014716952725082806,
+    "auprc": 0.022630380938750968,
+    "auroc": 0.5962716077294121,
+    "lift": 1.5377083395926745
+   },
+   "C2_one_heldout": {
+    "n": 810949,
+    "n_pos": 15891,
+    "prevalence": 0.019595560263345784,
+    "auprc": 0.061696451389419815,
+    "auroc": 0.6970669869851231,
+    "lift": 3.1484913194763458
+   },
+   "C2_one_heldout_baseline_prop_sum": {
+    "n": 810949,
+    "n_pos": 15891,
+    "prevalence": 0.019595560263345784,
+    "auprc": 0.034102080391354934,
+    "auroc": 0.6327408140687973,
+    "lift": 1.7402962677798057
+   },
+   "ortholog_proxy_pombe_features": {
+    "n": 80778,
+    "n_pos": 2517,
+    "prevalence": 0.031159474114239024,
+    "auprc": 0.04397443850232822,
+    "auroc": 0.57148660546167,
+    "lift": 1.4112702397064238
+   },
+   "ortholog_proxy_cer_features_same_pairs": {
+    "n": 80778,
+    "n_pos": 2517,
+    "prevalence": 0.031159474114239024,
+    "auprc": 0.06133479562510741,
+    "auroc": 0.6043590364377601,
+    "lift": 1.9684156221712064
+   },
+   "ortholog_proxy_spearman_pombe_vs_cer_score": 0.384208887094193,
+   "wall_s": 75.6
+  },
+  {
+   "fold": 2,
+   "best_iter": 552,
+   "n_train": 1155661,
+   "n_valid": 441701,
+   "C3_both_heldout": {
+    "n": 100306,
+    "n_pos": 2076,
+    "prevalence": 0.020696668195322315,
+    "auprc": 0.04544526733916569,
+    "auroc": 0.6457732942445447,
+    "lift": 2.1957769680743513
+   },
+   "C3_both_heldout_baseline_prop_sum": {
+    "n": 100306,
+    "n_pos": 2076,
+    "prevalence": 0.020696668195322315,
+    "auprc": 0.0381758296954166,
+    "auroc": 0.6415425404417339,
+    "lift": 1.8445398715936692
+   },
+   "C3_nxn_only": {
+    "n": 73101,
+    "n_pos": 1154,
+    "prevalence": 0.015786377751330353,
+    "auprc": 0.028978218506451693,
+    "auroc": 0.6246641477542478,
+    "lift": 1.8356470979550477
+   },
+   "C2_one_heldout": {
+    "n": 802332,
+    "n_pos": 16193,
+    "prevalence": 0.02018241825079892,
+    "auprc": 0.06294225288366914,
+    "auroc": 0.699565423948267,
+    "lift": 3.1186675502167622
+   },
+   "C2_one_heldout_baseline_prop_sum": {
+    "n": 802332,
+    "n_pos": 16193,
+    "prevalence": 0.02018241825079892,
+    "auprc": 0.03456703487276614,
+    "auroc": 0.6321837777093838,
+    "lift": 1.7127300823526341
+   },
+   "ortholog_proxy_pombe_features": {
+    "n": 80562,
+    "n_pos": 2851,
+    "prevalence": 0.03538889302648891,
+    "auprc": 0.055009300581554184,
+    "auroc": 0.5709690873145403,
+    "lift": 1.5544227546303642
+   },
+   "ortholog_proxy_cer_features_same_pairs": {
+    "n": 80562,
+    "n_pos": 2851,
+    "prevalence": 0.03538889302648891,
+    "auprc": 0.07594897284307933,
+    "auroc": 0.628776355401583,
+    "lift": 2.1461245703907954
+   },
+   "ortholog_proxy_spearman_pombe_vs_cer_score": 0.4203339508057598,
+   "wall_s": 55.1
+  },
+  {
+   "fold": 3,
+   "best_iter": 711,
+   "n_train": 1163537,
+   "n_valid": 461461,
+   "C3_both_heldout": {
+    "n": 94004,
+    "n_pos": 1991,
+    "prevalence": 0.021179949789370666,
+    "auprc": 0.04437605567390337,
+    "auroc": 0.6249298306574864,
+    "lift": 2.095191731576902
+   },
+   "C3_both_heldout_baseline_prop_sum": {
+    "n": 94004,
+    "n_pos": 1991,
+    "prevalence": 0.021179949789370666,
+    "auprc": 0.03580459082179634,
+    "auroc": 0.6202037634899962,
+    "lift": 1.69049460352192
+   },
+   "C3_nxn_only": {
+    "n": 67163,
+    "n_pos": 1087,
+    "prevalence": 0.016184506350222592,
+    "auprc": 0.026467429277242927,
+    "auroc": 0.5984124773274098,
+    "lift": 1.6353559821043853
+   },
+   "C2_one_heldout": {
+    "n": 780998,
+    "n_pos": 16099,
+    "prevalence": 0.020613369048320226,
+    "auprc": 0.06219775789976663,
+    "auroc": 0.7015162208892648,
+    "lift": 3.017350426995586
+   },
+   "C2_one_heldout_baseline_prop_sum": {
+    "n": 780998,
+    "n_pos": 16099,
+    "prevalence": 0.020613369048320226,
+    "auprc": 0.034436955479099494,
+    "auroc": 0.6262301247190333,
+    "lift": 1.6706126688158114
+   },
+   "ortholog_proxy_pombe_features": {
+    "n": 81621,
+    "n_pos": 3216,
+    "prevalence": 0.039401624581909066,
+    "auprc": 0.056133293843171686,
+    "auroc": 0.5809828242246455,
+    "lift": 1.4246441470066904
+   },
+   "ortholog_proxy_cer_features_same_pairs": {
+    "n": 81621,
+    "n_pos": 3216,
+    "prevalence": 0.039401624581909066,
+    "auprc": 0.06803884554091932,
+    "auroc": 0.6049875931229638,
+    "lift": 1.7268030509624928
+   },
+   "ortholog_proxy_spearman_pombe_vs_cer_score": 0.4687683863585267,
+   "wall_s": 54.6
+  },
+  {
+   "fold": 4,
+   "best_iter": 434,
+   "n_train": 1171006,
+   "n_valid": 423241,
+   "C3_both_heldout": {
+    "n": 101691,
+    "n_pos": 2178,
+    "prevalence": 0.02141782458624657,
+    "auprc": 0.04619655108534673,
+    "auroc": 0.636661976331622,
+    "lift": 2.156920788071623
+   },
+   "C3_both_heldout_baseline_prop_sum": {
+    "n": 101691,
+    "n_pos": 2178,
+    "prevalence": 0.02141782458624657,
+    "auprc": 0.03716626130578199,
+    "auroc": 0.6456053491984385,
+    "lift": 1.7352958119588044
+   },
+   "C3_nxn_only": {
+    "n": 72323,
+    "n_pos": 1194,
+    "prevalence": 0.016509270909669124,
+    "auprc": 0.031571692490078934,
+    "auroc": 0.6109001991874862,
+    "lift": 1.9123614036515735
+   },
+   "C2_one_heldout": {
+    "n": 804062,
+    "n_pos": 16425,
+    "prevalence": 0.020427529220383503,
+    "auprc": 0.06423780167692297,
+    "auroc": 0.7060725808665049,
+    "lift": 3.144668206511418
+   },
+   "C2_one_heldout_baseline_prop_sum": {
+    "n": 804062,
+    "n_pos": 16425,
+    "prevalence": 0.020427529220383503,
+    "auprc": 0.03509328641952839,
+    "auroc": 0.6355313087046648,
+    "lift": 1.7179408258787725
+   },
+   "ortholog_proxy_pombe_features": {
+    "n": 91709,
+    "n_pos": 3003,
+    "prevalence": 0.03274487782006128,
+    "auprc": 0.04539930589158103,
+    "auroc": 0.5750831699358293,
+    "lift": 1.3864551928108575
+   },
+   "ortholog_proxy_cer_features_same_pairs": {
+    "n": 91709,
+    "n_pos": 3003,
+    "prevalence": 0.03274487782006128,
+    "auprc": 0.06059029091297067,
+    "auroc": 0.6039047455524357,
+    "lift": 1.8503746218240515
+   },
+   "ortholog_proxy_spearman_pombe_vs_cer_score": 0.4636166838789266,
+   "wall_s": 40.2
+  }
+ ],
+ "pair_cv_pooled": {
+  "C3_both_heldout": {
+   "n": 500728,
+   "n_pos": 10068,
+   "prevalence": 0.02010672460896934,
+   "auprc": 0.04141917683298608,
+   "auroc": 0.6285001111181989,
+   "lift": 2.059966386295933
+  },
+  "C3_nxn_only": {
+   "n": 362455,
+   "n_pos": 5606,
+   "prevalence": 0.015466747596253327,
+   "auprc": 0.025041123622594846,
+   "auroc": 0.6053715280200476,
+   "lift": 1.6190296936545872
+  },
+  "C3_baseline_prop_sum": {
+   "n": 500728,
+   "n_pos": 10068,
+   "prevalence": 0.02010672460896934,
+   "auprc": 0.03341038543330836,
+   "auroc": 0.631503464554995,
+   "lift": 1.6616523120033404
+  },
+  "ortholog_proxy_pombe_baseline_prop_sum": {
+   "n": 420793,
+   "n_pos": 14106,
+   "prevalence": 0.0335224207627028,
+   "auprc": 0.044759975951508664,
+   "auroc": 0.5773631818754225,
+   "lift": 1.335225050373117
+  },
+  "C3_mean_fold_auprc": 0.04218016966688694,
+  "C2_mean_fold_auprc": 0.06160925993547499,
+  "ortholog_proxy_pombe_features": {
+   "n": 420793,
+   "n_pos": 14106,
+   "prevalence": 0.0335224207627028,
+   "auprc": 0.04744611603745644,
+   "auroc": 0.5718677858982074,
+   "lift": 1.415354707624373
+  },
+  "ortholog_proxy_cer_features": {
+   "n": 420793,
+   "n_pos": 14106,
+   "prevalence": 0.0335224207627028,
+   "auprc": 0.06397210258505773,
+   "auroc": 0.6080689778747146,
+   "lift": 1.9083377969001982
+  },
+  "best_iters": [
+   797,
+   693,
+   552,
+   711,
+   434
+  ]
+ },
+ "final": {
+  "rounds": 762,
+  "n_train_pairs": 2500000
+ },
+ "pombe_apply": {
+  "pair_hat_quantiles": {
+   "0.01": 0.004394397605210543,
+   "0.5": 0.015078892931342125,
+   "0.9": 0.0328872986137867,
+   "0.99": 0.0645659938454628,
+   "0.999": 0.1180238351225853
+  },
+  "symmetric_features_checked": 19998
+ }
+}

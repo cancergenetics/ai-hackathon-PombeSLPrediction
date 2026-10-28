@@ -1,0 +1,351 @@
+{
+ "variant": "full",
+ "pair_esm_pcs": 0,
+ "quick": true,
+ "n_pairs_sampled": 1000000,
+ "seed": 0,
+ "pair_params": {
+  "objective": "binary",
+  "learning_rate": 0.05,
+  "num_leaves": 63,
+  "min_data_in_leaf": 200,
+  "feature_fraction": 0.7,
+  "bagging_fraction": 0.8,
+  "bagging_freq": 1,
+  "lambda_l2": 1.0,
+  "metric": "average_precision",
+  "verbose": -1,
+  "seed": 0,
+  "deterministic": true,
+  "force_row_wise": true,
+  "num_threads": 6
+ },
+ "gene_params": {
+  "learning_rate": 0.03,
+  "num_leaves": 15,
+  "min_data_in_leaf": 20,
+  "feature_fraction": 0.7,
+  "bagging_fraction": 0.8,
+  "bagging_freq": 1,
+  "lambda_l2": 1.0,
+  "verbose": -1,
+  "seed": 0,
+  "deterministic": true,
+  "force_row_wise": true,
+  "num_threads": 6
+ },
+ "gene_rounds": 400,
+ "networks": {
+  "pombe_edges": 8230,
+  "pombe_mean_degree": 3.21108078956604,
+  "pombe_frac_isolated": 0.44420600858369097,
+  "cer": {
+   "rows": 283038,
+   "rows_after_system_filter": 248577,
+   "rows_both_in_universe_non_self": 243243,
+   "edges": 162497
+  },
+  "cer_mean_degree_full": 54.805057525634766,
+  "cer_frac_isolated_full": 0.06795952782462057
+ },
+ "n_genes": {
+  "pombe": 5126,
+  "cerevisiae_universe": 5930,
+  "pombe_with_seq": 5126,
+  "cer_with_seq": 5930
+ },
+ "esm_joint_pca_evr_cum": 0.7947454859072216,
+ "raw_feature_medians": {
+  "log_len": {
+   "pombe": 2.5774917998372255,
+   "cerevisiae": 2.5943925503754266
+  },
+  "para_top1": {
+   "pombe": 0.8129703998565674,
+   "cerevisiae": 0.8377589583396912
+  },
+  "ppi_degree": {
+   "pombe": 1.0,
+   "cerevisiae": 25.0
+  },
+  "ppi_clustering": {
+   "pombe": 0.0,
+   "cerevisiae": 0.24836601307189543
+  }
+ },
+ "labels": {
+  "n_measured_universe_pairs": 10197249,
+  "frac_neg_costanzo": 0.03352757199515281,
+  "eps_threshold_T": -0.08969999849796295,
+  "prevalence": 0.019995098678084647,
+  "n_costanzo_orf_pairs_dropped_not_in_universe": 1232956,
+  "n_costanzo_genes_in_universe": 5203,
+  "n_essential": 954
+ },
+ "gene_cv": {
+  "prop_hat": {
+   "spearman_vs_rate": 0.39136902704520027,
+   "n": 5203,
+   "spearman_nonessential_genes": 0.3213732146431645,
+   "per_fold": [
+    0.36543959355971894,
+    0.3587899397076238,
+    0.41800839605779816,
+    0.3906277504465733,
+    0.4223820893689923
+   ]
+  },
+  "prop_nn_hat": {
+   "spearman_vs_rate": 0.380894080241362,
+   "n": 5203,
+   "spearman_nonessential_genes": 0.3168171968791821,
+   "per_fold": [
+    0.3495569942196353,
+    0.34660273895717114,
+    0.4049830027238577,
+    0.4047940188441375,
+    0.3997398563527663
+   ]
+  },
+  "ess_hat": {
+   "n": 5203,
+   "n_pos": 954,
+   "prevalence": 0.1833557562944455,
+   "auprc": 0.6045131158309522,
+   "auroc": 0.8564281742454632,
+   "lift": 3.2969410290025625
+  },
+  "single_feature_spearman_vs_rate": {
+   "ppi_degree": 0.30042898110897454,
+   "ppi_pagerank": 0.3013344774564877,
+   "log_len": 0.0444403192206391,
+   "para_top1": -0.15884850810196138,
+   "esm_pc1": 0.025547165692277517
+  },
+  "corr_prop_vs_prop_nn_target": 0.9361612729342712
+ },
+ "orthologs_1to1_costanzo": 2395,
+ "pair_sample": {
+  "n": 1000000,
+  "prevalence": 0.019906
+ },
+ "pair_gain_importance_fold0_top25": {
+  "prop_hat__min": 0.075,
+  "pair_rwr": 0.0414,
+  "ess_hat__min": 0.0392,
+  "ess_hat__max": 0.0389,
+  "log_len__max": 0.036,
+  "prop_nn_hat__max": 0.0354,
+  "disorder_prom__min": 0.0348,
+  "net_charge__max": 0.0345,
+  "ppi_clustering__max": 0.0339,
+  "prop_nn_hat__min": 0.0312,
+  "log_len__min": 0.0309,
+  "ppi_nbr_degree__max": 0.0303,
+  "para_top1__min": 0.0297,
+  "charged__max": 0.0297,
+  "para_top1__max": 0.0293,
+  "charged__min": 0.0283,
+  "prop_hat__max": 0.0279,
+  "net_charge__min": 0.027,
+  "hydrophobic__min": 0.0265,
+  "ppi_nbr_degree__min": 0.0261,
+  "hydrophobic__max": 0.0247,
+  "ppi_clustering__min": 0.0243,
+  "disorder_prom__max": 0.023,
+  "para_top5__min": 0.023,
+  "ppi_pagerank__max": 0.0228
+ },
+ "gene_ortholog_proxy": {
+  "n": 943,
+  "spearman_pombe_features_vs_ortholog_rate": 0.2503035101749665,
+  "spearman_cer_features_vs_rate_same_genes": 0.2803197720002309,
+  "spearman_pombe_hat_vs_cer_hat": 0.5798535811468539
+ },
+ "pair_cv": [
+  {
+   "fold": 0,
+   "best_iter": 207,
+   "n_train": 463802,
+   "n_valid": 175866,
+   "C3_both_heldout": {
+    "n": 39865,
+    "n_pos": 746,
+    "prevalence": 0.018713156904552865,
+    "auprc": 0.04011848643791954,
+    "auroc": 0.621105724904699,
+    "lift": 2.1438652303587973
+   },
+   "C3_both_heldout_baseline_prop_sum": {
+    "n": 39865,
+    "n_pos": 746,
+    "prevalence": 0.018713156904552865,
+    "auprc": 0.02967766924394613,
+    "auroc": 0.6249365636042687,
+    "lift": 1.585925314222403
+   },
+   "C3_nxn_only": {
+    "n": 27772,
+    "n_pos": 400,
+    "prevalence": 0.01440299582313121,
+    "auprc": 0.02060004504818479,
+    "auroc": 0.5873242729796873,
+    "lift": 1.43026112769547
+   },
+   "C2_one_heldout": {
+    "n": 320467,
+    "n_pos": 6304,
+    "prevalence": 0.019671292207934045,
+    "auprc": 0.053798051897605004,
+    "auroc": 0.6632313596714992,
+    "lift": 2.734850935512339
+   },
+   "C2_one_heldout_baseline_prop_sum": {
+    "n": 320467,
+    "n_pos": 6304,
+    "prevalence": 0.019671292207934045,
+    "auprc": 0.031403572612371845,
+    "auroc": 0.6151949132673231,
+    "lift": 1.5964163553884785
+   },
+   "ortholog_proxy_pombe_features": {
+    "n": 86123,
+    "n_pos": 2519,
+    "prevalence": 0.029248864995413536,
+    "auprc": 0.041462396475152416,
+    "auroc": 0.5650984720326276,
+    "lift": 1.4175728351050225
+   },
+   "ortholog_proxy_cer_features_same_pairs": {
+    "n": 86123,
+    "n_pos": 2519,
+    "prevalence": 0.029248864995413536,
+    "auprc": 0.057359620063351255,
+    "auroc": 0.5967721390348523,
+    "lift": 1.9610887489940454
+   },
+   "ortholog_proxy_spearman_pombe_vs_cer_score": 0.40493204094281116,
+   "wall_s": 15.4
+  },
+  {
+   "fold": 1,
+   "best_iter": 304,
+   "n_train": 469297,
+   "n_valid": 164853,
+   "C3_both_heldout": {
+    "n": 41646,
+    "n_pos": 790,
+    "prevalence": 0.018969408826778084,
+    "auprc": 0.036600648202431155,
+    "auroc": 0.6149521753463228,
+    "lift": 1.9294564494157567
+   },
+   "C3_both_heldout_baseline_prop_sum": {
+    "n": 41646,
+    "n_pos": 790,
+    "prevalence": 0.018969408826778084,
+    "auprc": 0.03206622347347154,
+    "auroc": 0.6283273857177911,
+    "lift": 1.6904176490837919
+   },
+   "C3_nxn_only": {
+    "n": 31831,
+    "n_pos": 480,
+    "prevalence": 0.015079639345292325,
+    "auprc": 0.021544793830783462,
+    "auroc": 0.5924340531402507,
+    "lift": 1.4287340258909758
+   },
+   "C2_one_heldout": {
+    "n": 324204,
+    "n_pos": 6290,
+    "prevalence": 0.01940136457292322,
+    "auprc": 0.05578789054971131,
+    "auroc": 0.6769530301527487,
+    "lift": 2.8754622047342777
+   },
+   "C2_one_heldout_baseline_prop_sum": {
+    "n": 324204,
+    "n_pos": 6290,
+    "prevalence": 0.01940136457292322,
+    "auprc": 0.03410731009915639,
+    "auroc": 0.6335798740623908,
+    "lift": 1.7579851134160414
+   },
+   "ortholog_proxy_pombe_features": {
+    "n": 80778,
+    "n_pos": 2517,
+    "prevalence": 0.031159474114239024,
+    "auprc": 0.04278232140174336,
+    "auroc": 0.5692785715749583,
+    "lift": 1.3730116639610748
+   },
+   "ortholog_proxy_cer_features_same_pairs": {
+    "n": 80778,
+    "n_pos": 2517,
+    "prevalence": 0.031159474114239024,
+    "auprc": 0.06251999415010925,
+    "auroc": 0.6144629674193558,
+    "lift": 2.006452160293018
+   },
+   "ortholog_proxy_spearman_pombe_vs_cer_score": 0.287916694427397,
+   "wall_s": 14.6
+  }
+ ],
+ "pair_cv_pooled": {
+  "C3_both_heldout": {
+   "n": 81511,
+   "n_pos": 1536,
+   "prevalence": 0.01884408239378734,
+   "auprc": 0.03833630985301676,
+   "auroc": 0.617741359604564,
+   "lift": 2.034395151321126
+  },
+  "C3_nxn_only": {
+   "n": 59603,
+   "n_pos": 880,
+   "prevalence": 0.014764357498783619,
+   "auprc": 0.020964702279815388,
+   "auroc": 0.5899997755254639,
+   "lift": 1.419953579527087
+  },
+  "C3_baseline_prop_sum": {
+   "n": 81511,
+   "n_pos": 1536,
+   "prevalence": 0.01884408239378734,
+   "auprc": 0.030497160898222145,
+   "auroc": 0.6265831892453371,
+   "lift": 1.618394584619131
+  },
+  "ortholog_proxy_pombe_baseline_prop_sum": {
+   "n": 166901,
+   "n_pos": 5036,
+   "prevalence": 0.03017357595221119,
+   "auprc": 0.04170384363831151,
+   "auroc": 0.5806286394586415,
+   "lift": 1.3821312960837628
+  },
+  "C3_mean_fold_auprc": 0.03835956732017535,
+  "C2_mean_fold_auprc": 0.05479297122365816,
+  "ortholog_proxy_pombe_features": {
+   "n": 166901,
+   "n_pos": 5036,
+   "prevalence": 0.03017357595221119,
+   "auprc": 0.041844541517034026,
+   "auroc": 0.5668924134824698,
+   "lift": 1.3867942461744434
+  },
+  "ortholog_proxy_cer_features": {
+   "n": 166901,
+   "n_pos": 5036,
+   "prevalence": 0.03017357595221119,
+   "auprc": 0.05927490965764603,
+   "auroc": 0.6049736985294549,
+   "lift": 1.9644641971347856
+  },
+  "best_iters": [
+   207,
+   304
+  ]
+ }
+}
