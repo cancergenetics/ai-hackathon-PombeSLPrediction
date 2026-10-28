@@ -19,7 +19,7 @@ def main() -> int:
     gl = write_genes_txt(out, IDMapper(log_dir=None))
     assert gl == sorted(set(gl))
     print(f"genes.txt: {len(gl)} protein-coding genes -> {out}")
-    fs.update_manifest("genes.txt", {"group": "META", "sources": ["pombase"],
+    fs.update_manifest("genes.txt", {"group": "META", "sources": ["pombase_ids_viability"],
                                      "script": "scripts/features/build_genes.py", "sha256": fs.sha256(out),
                                      "kind": "gene_order", "n_genes": len(gl),
                                      "source_files": ["pombase:misc/gene_IDs_names_products.tsv (gene_type == 'protein coding gene')"]})

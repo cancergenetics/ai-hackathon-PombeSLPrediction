@@ -1,0 +1,650 @@
+{
+ "staging": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed/features_staging",
+ "manifest": "manifest_xsp.json",
+ "features_dir": "/Users/colmclaude/ClaudeExperiments/psl_wt_m2plus/data/processed/features",
+ "dry_run": false,
+ "files": {
+  "gene/XSP.parquet": "copied",
+  "pair/XSP__pair_hat.npy": "copied"
+ },
+ "alias_changes": [
+  {
+   "key": "biogrid_genetic_pmids.txt",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet",
+   "from": [
+    "costanzo2016",
+    "pombase",
+    "ygob"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs",
+    "ygob"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__has_ortholog",
+   "from": [
+    "pombase"
+   ],
+   "to": [
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__n_orthologs",
+   "from": [
+    "pombase"
+   ],
+   "to": [
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__n_orthologs_costanzo",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__any_ortholog_essential",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__ortholog_smf",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__neg_rate_nxn",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__neg_rate_e",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb1",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb2",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb3",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb4",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb5",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb6",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb7",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb8",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb9",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb10",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb11",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb12",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb13",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb14",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb15",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb16",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb17",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb18",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb19",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__emb20",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__has_ohnolog_orthologs",
+   "from": [
+    "costanzo2016",
+    "pombase",
+    "ygob"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs",
+    "ygob"
+   ]
+  },
+  {
+   "key": "gene/CER.parquet:CER__ohnolog_orthologs_neg",
+   "from": [
+    "costanzo2016",
+    "pombase",
+    "ygob"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs",
+    "ygob"
+   ]
+  },
+  {
+   "key": "gene/PPI.parquet",
+   "from": [
+    "biogrid",
+    "pombase"
+   ],
+   "to": [
+    "biogrid_physical",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "gene/PPI.parquet:PPI__degree",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "gene/PPI.parquet:PPI__pagerank",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "gene/PPI.parquet:PPI__degree_htp",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "gene/PPI.parquet:PPI__pagerank_htp",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "gene/PPI.parquet:PPI__cer_ortholog_degree",
+   "from": [
+    "biogrid",
+    "pombase"
+   ],
+   "to": [
+    "biogrid_physical",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "genes.txt",
+   "from": [
+    "pombase"
+   ],
+   "to": [
+    "pombase_ids_viability"
+   ]
+  },
+  {
+   "key": "pair/CER__eps_kmin.npy",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "pair/CER__eps_mean.npy",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "pair/CER__eps_min.npy",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "pair/CER__frac_neg.npy",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "pair/CER__measured.npy",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "pair/CER__n_pairs.npy",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "pair/CER__ohnolog_sl.npy",
+   "from": [
+    "costanzo2016",
+    "pombase",
+    "ygob"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs",
+    "ygob"
+   ]
+  },
+  {
+   "key": "pair/CER__shared_ortholog.npy",
+   "from": [
+    "pombase"
+   ],
+   "to": [
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "pair/PPI__edge.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__edge_cer.npy",
+   "from": [
+    "biogrid",
+    "pombase"
+   ],
+   "to": [
+    "biogrid_physical",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "pair/PPI__edge_htp.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__jaccard.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__jaccard_htp.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__shared_nbrs.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__shared_nbrs_htp.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__shared_noedge.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__shared_noedge_htp.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__sp.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "pair/PPI__sp_htp.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "sim/cer_profile_corr.npy",
+   "from": [
+    "costanzo2016",
+    "pombase"
+   ],
+   "to": [
+    "costanzo2016",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "sim/ppi_cer_rwr.npy",
+   "from": [
+    "biogrid",
+    "pombase"
+   ],
+   "to": [
+    "biogrid_physical",
+    "pombase_orthologs"
+   ]
+  },
+  {
+   "key": "sim/ppi_rwr.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  },
+  {
+   "key": "sim/ppi_rwr_htp.npy",
+   "from": [
+    "biogrid"
+   ],
+   "to": [
+    "biogrid_physical"
+   ]
+  }
+ ],
+ "timestamp": "2026-10-28T19:16:30"
+}

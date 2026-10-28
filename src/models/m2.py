@@ -77,24 +77,25 @@ def resolve_gp(gp: dict | None) -> dict:
 
 
 # =========================================================================================== gene table
-@lru_cache(maxsize=2)
-def _gene_table(fdir: str) -> pd.DataFrame:
+@lru_cache(maxsize=4)
+def _gene_table(fdir: str, exclude_groups: tuple = ()) -> pd.DataFrame:
     from src import pairs as PA
     spec = PA.load_spec()
     parts = [pd.DataFrame(spec.table(rel, cols), index=spec.genes, columns=cols)
-             for _, rel, cols in spec.gene_tables]
+             for g, rel, cols in spec.gene_tables if g not in exclude_groups]
     return pd.concat(parts, axis=1)
 
 
-def gene_table() -> pd.DataFrame:
-    """All label-free gene-level columns of the feature store (genes.txt index, NaN = missing)."""
-    return _gene_table(str(protocol.data_root() / "features"))
+def gene_table(exclude_groups=()) -> pd.DataFrame:
+    """All label-free gene-level columns of the feature store (genes.txt index, NaN = missing), minus the
+    gene tables of `exclude_groups` (e.g. ("XSP",) reproduces the pre-XSP-merge M2 GP inputs exactly)."""
+    return _gene_table(str(protocol.data_root() / "features"), tuple(sorted(exclude_groups)))
 
 
-def gene_table_hashes() -> dict:
+def gene_table_hashes(exclude_groups=()) -> dict:
     from src import pairs as PA
     spec = PA.load_spec()
-    return {rel: spec.manifest[rel].get("sha256", "") for _, rel, _ in spec.gene_tables}
+    return {rel: spec.manifest[rel].get("sha256", "") for g, rel, _ in spec.gene_tables if g not in exclude_groups}
 
 
 # =========================================================================================== GP model
@@ -258,9 +259,13 @@ def make_builder(gene_tab: pd.DataFrame | None, gp_cfg: dict | None = None, base
 
 
 # =========================================================================================== nested tables
-def m2_cache_name(cfg: dict, sims: SimStore, gp_cfg: dict | None) -> str:
+def m2_cache_name(cfg: dict, sims: SimStore, gp_cfg: dict | None, exclude_groups=(), extra: dict | None = None) -> str:
+    """`extra` (e.g. a gene-table transform such as a permutation control) enters the hash only when given,
+    so the default name is unchanged."""
     payload = {"v": M2_FEATURE_VERSION, "ryanfeat": cfg_hash(cfg, sims), "gp": resolve_gp(gp_cfg),
-               "gene_tables": gene_table_hashes(), "train_filter": "drop_noncoding"}
+               "gene_tables": gene_table_hashes(exclude_groups), "train_filter": "drop_noncoding"}
+    if extra:
+        payload["extra"] = extra
     return "m2feat_" + hashlib.sha256(json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest()[:12]
 
 
@@ -272,18 +277,25 @@ def fold_pairs(split_seed, fold):
 
 
 def fold_tables_m2(split_seed=None, fold: int = 0, sims: SimStore | None = None, cfg: dict | None = None,
-                   gp_cfg: dict | None = None, use_cache: bool = True, timings: dict | None = None):
+                   gp_cfg: dict | None = None, use_cache: bool = True, timings: dict | None = None,
+                   exclude_groups=(), gt_transform=None, extra_key: dict | None = None):
     """Cached nested M2 tables for outer fold `fold`: (stacker training rows, outer eval rows, inner folds,
     drop info). Stacker rows: features from each inner fold's training pairs; eval rows: from all outer
-    training pairs (src/stacking)."""
+    training pairs (src/stacking). `exclude_groups`: gene tables left out of the GP inputs;
+    `gt_transform(gene_table) -> gene_table` (label-free, e.g. a permutation control) must come with an
+    `extra_key` describing it (it enters the cache name)."""
+    assert (gt_transform is None) == (extra_key is None), "gt_transform needs an extra_key (cache identity)"
     import time
     from src import stacking
     sims = sims if sims is not None else SimStore()
     cfg = resolve_cfg(cfg)
-    name = m2_cache_name(cfg, sims, gp_cfg)
+    name = m2_cache_name(cfg, sims, gp_cfg, exclude_groups, extra_key)
     train, ev, drop = fold_pairs(split_seed, fold)
     inner = data.inner_splits(train)
-    builder = make_builder(gene_table(), gp_cfg)
+    gt = gene_table(exclude_groups)
+    if gt_transform is not None:
+        gt = gt_transform(gt)
+    builder = make_builder(gt, gp_cfg)
     parts = []
     timings = timings if timings is not None else {}
     for f in inner:

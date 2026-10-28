@@ -1,0 +1,112 @@
+{
+ "split_seed": 20261028,
+ "variant_key": [
+  [],
+  false
+ ],
+ "cache_name": "m2feat_2c1c219747aa",
+ "workers": 3,
+ "threads_per_worker": 2,
+ "folds": {
+  "0": {
+   "timing": {
+    "stage": "features_fold0",
+    "wall_s": 127.236,
+    "cpu_s": 163.58,
+    "peak_rss_mb": 4022.1,
+    "threads": 2,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   "builds_s": {
+    "inner0": 17.5,
+    "inner1": 15.6,
+    "inner2": 18.6,
+    "inner3": 18.7,
+    "inner4": 18.4,
+    "outer": 34.3
+   },
+   "n_stacker_rows": 571466,
+   "n_eval_rows": 261962
+  },
+  "1": {
+   "timing": {
+    "stage": "features_fold1",
+    "wall_s": 125.046,
+    "cpu_s": 161.931,
+    "peak_rss_mb": 4681.9,
+    "threads": 2,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   "builds_s": {
+    "inner0": 17.7,
+    "inner1": 15.5,
+    "inner2": 18.3,
+    "inner3": 17.9,
+    "inner4": 17.9,
+    "outer": 33.6
+   },
+   "n_stacker_rows": 574030,
+   "n_eval_rows": 259379
+  },
+  "2": {
+   "timing": {
+    "stage": "features_fold2",
+    "wall_s": 128.28,
+    "cpu_s": 165.375,
+    "peak_rss_mb": 4195.5,
+    "threads": 2,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   "builds_s": {
+    "inner0": 17.9,
+    "inner1": 16.1,
+    "inner2": 18.4,
+    "inner3": 18.7,
+    "inner4": 18.8,
+    "outer": 34.1
+   },
+   "n_stacker_rows": 569808,
+   "n_eval_rows": 263619
+  },
+  "3": {
+   "timing": {
+    "stage": "features_fold3",
+    "wall_s": 124.94,
+    "cpu_s": 160.954,
+    "peak_rss_mb": 4784.9,
+    "threads": 2,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   "builds_s": {
+    "inner0": 20.9,
+    "inner1": 17.9,
+    "inner2": 18.4,
+    "inner3": 17.6,
+    "inner4": 17.0,
+    "outer": 29.1
+   },
+   "n_stacker_rows": 570959,
+   "n_eval_rows": 269897
+  },
+  "4": {
+   "timing": {
+    "stage": "features_fold4",
+    "wall_s": 123.572,
+    "cpu_s": 159.808,
+    "peak_rss_mb": 4528.7,
+    "threads": 2,
+    "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0"
+   },
+   "builds_s": {
+    "inner0": 20.1,
+    "inner1": 17.9,
+    "inner2": 18.2,
+    "inner3": 17.5,
+    "inner4": 16.8,
+    "outer": 29.1
+   },
+   "n_stacker_rows": 570780,
+   "n_eval_rows": 265217
+  }
+ }
+}

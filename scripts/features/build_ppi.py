@@ -60,7 +60,7 @@ DROP_SYSTEMS = {"Affinity Capture-RNA", "Protein-RNA", "Co-localization"}
 RESTART = 0.5
 SP_CAP = 4
 CHECKS = ROOT / "results/features/ppi_checks.json"
-SOURCES = ["biogrid", "pombase"]
+SOURCES = ["biogrid_physical", "pombase_orthologs"]
 
 
 # ------------------------------------------------------------------------------------------- step 1
@@ -309,7 +309,7 @@ def main() -> int:
                 "pagerank": "PageRank (alpha 0.85) x G",
                 "degree_htp": "degree in HTP-only network", "pagerank_htp": "PageRank in HTP-only network",
                 "cer_ortholog_degree": "mean filtered cerevisiae physical degree over curated orthologs"}
-        colsrc = {k: (SOURCES if k.startswith("cer_") else ["biogrid"]) for k in gene_cols}
+        colsrc = {k: (SOURCES if k.startswith("cer_") else ["biogrid_physical"]) for k in gene_cols}
         fs.save_gene_table("PPI", pd.DataFrame(gene_cols, index=genes), SOURCES, SCRIPT,
                            column_sources=colsrc, descriptions=desc, source_files=sf_p + sf_c)
         rt.step("cerevisiae_features")
@@ -333,7 +333,7 @@ def main() -> int:
         CHECKS.write_text(json.dumps(checks, indent=1, default=str) + "\n")
         pmid_path = fs.feat_dir() / "biogrid_genetic_pmids.txt"
         fs.update_manifest("biogrid_genetic_pmids.txt", {
-            "group": "PPI", "sources": ["biogrid"], "script": SCRIPT, "sha256": fs.sha256(pmid_path),
+            "group": "PPI", "sources": ["biogrid_physical"], "script": SCRIPT, "sha256": fs.sha256(pmid_path),
             "kind": "blocklist", "n_publications": len(block),
             "source_files": ["biogrid:BIOGRID-ORGANISM-5.0.262.tab3.zip (sha256 096a9e4d...), S. pombe member, "
                              "'Publication Source' of rows with Experimental System Type == genetic"]})
