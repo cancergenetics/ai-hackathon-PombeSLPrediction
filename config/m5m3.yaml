@@ -1,0 +1,111 @@
+# M5 (rank-average ensemble) and M3 (neural inductive pair model) rung: the last two backlog rungs
+# (RESEARCH_TREE backlog 7 and 8; DESIGN §5 "M3 (one attempt) -> M5 (average of <= 3 models)").
+# NOT the frozen protocol: config/protocol.yaml (labels, metric, splits, bootstrap, adoption rule) is untouched.
+# Everything below was written and committed BEFORE any outer-fold result of this rung existed (2026-10-28 ~22:45).
+# The only outer-eval-free development allowed after this commit: timing smoke tests on random data.
+# Later edits must be logged in docs/m5m3.md.
+
+incumbent:
+  model: M2r_huber
+  run: M2r_huber__20261028T205545__7b5e9e          # split seed 20261028, seeds 0-2, 6 LightGBM threads
+  run_split7: null   # created by this rung: run_m2plus.py --stages run --variants M2r --objective huber
+                     # --split-seed 7 --threads 4 (registered name M2r_huber_split7); filled in docs/m5m3.md
+
+compute:
+  threads: 4          # LightGBM and torch threads for every run of this rung (stated in each result)
+  budget_s: 3600      # total compute for this rung (all runs below)
+
+adoption:             # = DESIGN §3 / protocol.yaml adoption, applied to every candidate below
+  rule: >-
+      paired gene-bootstrap 95% CI of delta(primary) vs incumbent excludes 0 AND delta >= 0.005 AND
+        seed-7 delta > 0 (vs the seed-7 incumbent run) AND no opposite-direction CI under all-pairs/equal
+  multiple_pass: >-
+      if more than one candidate passes, adopt the simplest (fewest non-incumbent members, then
+        lowest added runtime); all candidates are reported regardless
+  control_if_adopted:
+    M5: >-
+        shuffled member -- the non-incumbent member(s) scores permuted within each outer fold (seed 20261028);
+        pass = the shuffled ensemble's delta vs incumbent CI excludes 0 below 0 or its delta is < 0.005
+        (i.e. the gain disappears when the member carries no information)
+    M3: >-
+        permuted-label M3 -- stacker-row labels (y and S2 together) permuted within each outer fold (seed
+        20261028), everything else identical; pass = primary <= prevalence + 0.005
+
+# =============================================================================================== M5
+m5:
+  # Members are seed-averaged out-of-fold predictions that already exist in the registry (primary partition).
+  # Seed-7 members are existing runs where they exist; otherwise reproduced with the same code (noted).
+  members:
+    INC:  {primary: M2r_huber__20261028T205545__7b5e9e, split7: "incumbent.run_split7"}
+    B4:   {primary: B4_logistic_MF__20261028T183958__e1e7b0,
+           split7: "new run: run_baselines._mf_fold (same tuned cfg, seeds 0-2), registered B4_logistic_MF_split7"}
+    NBR:  {primary: DIAG_NBR_mean__hit_dmean__20261028T184310__687618,
+           split7: "new run: column nbr_mean__hit_dmean of the M2 split-7 nested eval rows (cache m2feat_3d35f8c314e9,
+                    NaN -> bottom), registered DIAG_NBR_mean__hit_dmean_split7. Deviation: M2 tables drop the 11
+                    non-coding genes' training pairs, the baseline ryanfeat tables do not (<1% of pairs)"}
+    M1:   {primary: M1__20261028T185030__5ad666, split7: M1_split7__20261028T190338__fcd0de}
+    M2B:  {primary: M2r__20261028T194304__387281, split7: M2_split7__20261028T185814__ac04a4}   # binary stacker
+    M3:   {primary: "M3 run of this rung", split7: "M3_split7 run of this rung"}
+  # Combination rules (fixed equal weights; nothing is tuned):
+  rules:
+    pooled: >-
+        within each outer fold, every member's scores -> percentile ranks over ALL eval rows of the fold
+            (C1+C2+C3 pooled, as the metric pools per fold; ties = average rank); ensemble score = equal-weight
+            mean of the members' percentile ranks
+    class_preserving: >-
+        within each outer fold AND class (C1/C2/C3), percentile ranks within the class, equal-weight
+            mean r; the class's rows then receive the incumbent's own scores of that class re-assigned in the
+            order of r (ties in r broken by the incumbent score), so the incumbent's cross-class placement is kept
+            and only the within-class order changes (as the M2+ C3 blend)
+  # Candidates (each <= 3 models, DESIGN §5). Priority for 'multiple_pass' = order below.
+  candidates:
+    M5_IncB4Nbr:    {members: [INC, B4, NBR], rule: pooled}             # backlog item 7 as written
+    M5_IncB4Nbr_cp: {members: [INC, B4, NBR], rule: class_preserving}   # B4 / NBR are constant on C3 -> keep
+                                                                        # the incumbent's cross-class placement
+    M5_IncM2bM1:    {members: [INC, M2B, M1], rule: pooled}             # objective / feature-set diversity
+    M5_IncM3:       {members: [INC, M3], rule: pooled}                  # only after the M3 run below
+  report_only:
+    - Spearman correlation of members' scores per class (label-free diagnostic, after the runs)
+  seed7: every candidate's seed-7 delta is computed (members as listed above)
+
+# =============================================================================================== M3
+m3:
+  # ONE attempt (DESIGN §5 M3: gene encoder -> e; score = MLP([e_a + e_b, e_a * e_b, P]); BCE + Huber loss;
+  # feature dropout). Inductive: no gene-ID embeddings, every input is a feature, so unseen genes are scored
+  # exactly like seen ones.
+  name: M3
+  rows: >-
+        the incumbent's nested stacker rows (cache m2feat_3d35f8c314e9 via run_m2plus.FoldDataP variant M2r);
+        C1/C2/C3-like inner eval rows whose Ryan-derived features come from that inner fold's training pairs;
+        row weights w = protocol class weights per inner fold (mean 1)
+  P: >-
+      the incumbent's 475 pair features (LF 358 + RYAN 9 + NBR 100 + GP 8; families LF, RYAN, NBR, GP)
+  gene_tower_input: >-
+      the label-free gene-table columns of gene a and of gene b (m2.gene_table with the default
+        gene-table exclusion of src/model_inputs.py; 155 columns), same encoder for both genes
+  preprocessing:  # fitted on the fit rows (P) / the genes of the fit rows (gene table) only
+    transform: sklearn QuantileTransformer(n_quantiles 1000, output normal, subsample 200000, random_state 0)
+    missing: NaN -> 0 after the transform, plus a 0/1 missing indicator for every column with any NaN in the fit
+             rows (gene table -- in the fit genes)
+    clip: [-5, 5]
+  architecture:
+    input_dropout: 0.1                 # feature dropout on P and on each gene's input
+    gene_tower: [128, 64]              # Linear-ReLU-Linear -> e (64)
+    pair_mlp: [256, 64]                # on concat(e_a + e_b, e_a * e_b, P'); ReLU; dropout 0.2 after the first layer
+    heads: {huber: 1, bce: 1}          # two linear heads on the last hidden layer
+  loss: >-
+      w-weighted mean of Huber(delta = |protocol threshold|) on t = -min(S2, 0) (huber head) + 1.0 x w-weighted
+        BCE on the protocol label (bce head, auxiliary)
+  score: huber head output (predicted t), as the incumbent
+  optimiser: {name: AdamW, lr: 0.001, weight_decay: 0.0001, batch: 2048, max_epochs: 25, patience: 4}
+  early_stopping: >-
+      class-weighted AP of the protocol label (huber-head score) on the gene-grouped inner validation
+        rows of inner fold j = s mod 5; the network is fitted on the gene-grouped fit rows for j (no row touching
+        a T_j gene) -- exactly the incumbent's fit / validation rows; best epoch restored
+  seeds: [0, 1, 2]                     # torch.manual_seed(s); seed-averaged in evaluate() as the incumbent
+  device: cpu                          # 4 torch threads (deterministic); MPS not used
+  checks: score(a, b) == score(b, a) on 20k swapped eval rows per fold (max |diff| <= 1e-5)
+  evaluation:
+    standalone: M3 vs incumbent (adoption candidate) and on seed 7
+    ensemble: M5_IncM3 (above)
+    stacker_feature: NOT run -- a nested M3 stacker feature needs 25 inner M3 fits per partition (> budget)
