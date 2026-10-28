@@ -1,0 +1,54 @@
+# M2+ improvement rung (docs/m2plus.md; scripts/run_m2plus.py). NOT the frozen protocol: config/protocol.yaml
+# is unchanged and still defines labels, metric, splits, bootstrap and the adoption rule.
+# Everything below was written and committed BEFORE any outer-fold result of this rung was seen
+# (2026-10-28 ~19:20); later edits must be logged in docs/m2plus.md.
+
+compute:
+  stacker_threads: 6          # LightGBM num_threads (other agents share the machine)
+  feature_workers: 3          # nested feature build: 3 folds in parallel x 2 threads
+
+seeds:
+  ladder: [0, 1, 2]           # = protocol seeds.ladder (incumbent M2)
+  bag: [0, 1, 2, 3, 4]        # = protocol seeds.all; stacker seed s early-stops on inner fold s mod 5
+
+# Step 2: XSP ablation. One adoption candidate: M2_XSP = M2 + XSP in the label-free pair features AND in the
+# gene-propensity (GP) model's gene inputs. M2r = incumbent M2 re-run at this commit (XSP excluded from both).
+# M2_XSP_LF (XSP in pair features only) is a decomposition diagnostic, not an adoption candidate.
+# Gene-permuted control (run only if M2_XSP passes): XSP gene identities permuted (one permutation of
+# genes.txt, seed below) in both places. Pass: M2_XSP - M2_XSPperm CI excludes 0 (> 0).
+xsp:
+  candidate: M2_XSP
+  perm_seed: 20261028
+
+# Step 3: seed bagging of the best ladder config: same config, seeds.bag instead of seeds.ladder.
+# Main-ladder style check: also on the seed-7 dev partition.
+
+# Step 4: E-TARGET (DESIGN §5: binary vs Huber only). Single candidate: stacker objective = Huber regression
+# on t = -min(S2, 0) (S2 = protocol label column; positives of S2 clipped to 0), Huber delta = |protocol
+# label threshold|; same features, class-weighted rows, seeds and inner-fold early stopping, with the
+# early-stopping metric = class-weighted binary AP of the protocol label on the inner validation rows
+# (same as the binary stacker). Score = predicted t. Evaluation label unchanged.
+etarget:
+  objective: huber
+  target: neg_min_s2_0
+  delta: label_threshold_abs
+
+# Step 5: C3-focused low-capacity model (only if time remains).
+# Model: L2 logistic regression (sklearn, C = 0.1, standardised inputs, median imputation + missing
+# indicators from the fitting rows) fitted per outer fold on the C3-like stacker rows of all inner folds
+# (features computed from each inner fold's training pairs, i.e. nested as for M2), unweighted.
+# Inputs (pair min / max of gene-level propensity & sickness features):
+c3:
+  C: 0.1
+  features: [gp_hat_min, gp_hat_max, gp_hat_sum,
+             XSP__prop_hat__min, XSP__prop_hat__max, XSP__ess_hat__min, XSP__ess_hat__max,
+             PHEN__n_pheno__min, PHEN__n_pheno__max, PHEN__pc1__min, PHEN__pc1__max,
+             PHEN__smf_yes32__min, PHEN__smf_yes32__max,
+             CER__neg_rate_e__min, CER__neg_rate_e__max, CER__any_ortholog_essential__min,
+             CER__any_ortholog_essential__max]
+  # Blend rule (fixed, nothing tuned): within each outer fold and stacker seed, for C3 eval rows only,
+  # r = 0.5 * pct_rank(M2 score) + 0.5 * pct_rank(LR score); the C3 rows then receive M2's own C3 scores
+  # re-assigned in the order of r (so C3's score distribution, and hence its position in the pooled
+  # ranking, is unchanged; only the order within C3 changes). C1/C2 rows keep M2's scores.
+  blend_weight_m2: 0.5
+  base: best adopted config of steps 2-4

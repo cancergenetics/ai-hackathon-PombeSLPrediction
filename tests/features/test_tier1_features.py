@@ -24,12 +24,18 @@ MANIFEST = FEAT / "manifest.json"
 HAS_STORE = MANIFEST.exists() and (FEAT / "genes.txt").exists()
 store = pytest.mark.skipif(not HAS_STORE, reason="feature store not built")
 
-# DATA.md dataset ids that may feed features (docs/data_additions_features.md proposes the use=feature
-# allowlist; FYPO is universe/masks only).  Anything else in a manifest is a failure.
-ALLOWED_SOURCES = {"biogrid", "pombase", "costanzo2016", "rodriguez_lopez_2023_phenomics",
-                   "kim2010_deletion_library", "ygob", "coxpresdb_spo", "pombase_quant_expression",
-                   "ozturk2022_ko_proteome", "matsuyama2006_localization", "pombase_protein",
-                   "ensembl_fungi_compara", "esm2_weights", "sgd_protein", "alphafold_spombe"}
+# Exact DATA.md dataset ids (config/data_allowlist.yaml) that may feed features: every use=feature id. Short
+# aliases (`biogrid`, `pombase`) were replaced by exact ids on 2026-10-28 (scripts/features/merge_staged.py
+# --fix-aliases). genes.txt (kind gene_order, group META) is not a feature: it may also cite universe-only ids.
+# Anything else in a manifest is a failure.
+def _allow_uses() -> dict:
+    import yaml
+    return {k: v.get("use") for k, v in
+            yaml.safe_load((ROOT / "config" / "data_allowlist.yaml").read_text())["datasets"].items()}
+
+
+ALLOWED_SOURCES = {k for k, u in _allow_uses().items() if u == "feature"}
+META_SOURCES = ALLOWED_SOURCES | {k for k, u in _allow_uses().items() if u == "universe-only"}
 FORBIDDEN = re.compile(r"fypo|gene.?ontology|\bgo\b|go[ _]?slim|go enrich|kegg|string|text.?min|"
                        r"interactions\.tsv|net-ff|published phenotype|ryan|koch|biogrid.*genetic.*(pairs|edges)|"
                        r"data_inventory|results/eda", re.I)
@@ -129,7 +135,11 @@ def test_manifest_sources_allowlisted(manifest):
             assert k in e, f"{key}: missing {k}"
         srcs = set(e["sources"])
         assert srcs, key
-        assert srcs <= ALLOWED_SOURCES, f"{key}: non-allowlisted sources {srcs - ALLOWED_SOURCES}"
+        ok = META_SOURCES if e.get("group") == "META" else ALLOWED_SOURCES
+        assert srcs <= ok, f"{key}: non-allowlisted sources {srcs - ok}"
+        for c, ce in (e.get("columns") or {}).items():
+            if isinstance(ce, dict) and "sources" in ce:
+                assert set(ce["sources"]) <= ALLOWED_SOURCES, f"{key}:{c}: {set(ce['sources']) - ALLOWED_SOURCES}"
         for s in list(srcs) + list(e.get("source_files", [])):
             assert not FORBIDDEN.search(s.replace("biogrid_genetic_pmids", "")), f"{key}: forbidden source '{s}'"
 

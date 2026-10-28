@@ -69,7 +69,7 @@ N_EMB = 20
 MIN_PROFILE_PARTNERS = 50
 SEED = 0
 CHECKS = ROOT / "results/features/cer_checks.json"
-SOURCES = ["costanzo2016", "pombase"]
+SOURCES = ["costanzo2016", "pombase_orthologs"]
 ESS_CLASSES, DEL_CLASSES = {"tsq", "tsa", "damp"}, {"sn", "dma"}
 
 
@@ -281,7 +281,7 @@ def main() -> int:
         for c in ("has_ohnolog_orthologs", "ohnolog_orthologs_neg"):
             colsrc[c] = SOURCES + ["ygob"]
         for c in ("has_ortholog", "n_orthologs"):
-            colsrc[c] = ["pombase"]
+            colsrc[c] = ["pombase_orthologs"]
         sfiles = ["costanzo2016:Data File S1 SGA_NxN/ExN/ExE/DAmP.txt (strain IDs, eps, P-value)",
                   "costanzo2016:strain_ids_and_single_mutant_fitness.xlsx (via data/processed/costanzo_strains.tsv: "
                   "strain class, 'Single mutant fitness (30°)')", ORTH_FILE,
@@ -349,7 +349,7 @@ def main() -> int:
             M = fs.symmetrize_inplace(np.ascontiguousarray(M, dtype=np.float32))
             src = SOURCES + (["ygob"] if name == "ohnolog_sl" else [])
             if name == "shared_ortholog":
-                src = ["pombase"]
+                src = ["pombase_orthologs"]
             fs.save_matrix("pair", f"CER__{name}", M, "CER", src, SCRIPT, description=desc[name], source_files=sfiles)
         pc = fs.symmetrize_inplace(pc)
         fs.save_matrix("sim", "cer_profile_corr", pc, "CER", SOURCES, SCRIPT, source_files=sfiles[:1] + [ORTH_FILE],
