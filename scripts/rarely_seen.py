@@ -197,34 +197,46 @@ def stage_fewshot():
             ctx[f"fold{f}_k{k}"] = {"pairs_per_gene_mean": float(g["size"].mean()), "pos_per_gene_mean": float(g["sum"].mean()),
                                     "frac_genes_with_pos": float((g["sum"] > 0).mean())}
     out["revealed_context"] = ctx
-    # C2 pairs whose held-out gene received >=1 revealed positive vs none (k = max): report-only
-    k = max(ks)
-    strat = {}
-    pos_gene = {}
-    for f in folds:
-        held = set(data.fold_genes(None, f))
-        r = F.reveal_pairs(None, f, k).merge(lab, on=["gene_a", "gene_b"], how="left")
-        r = r[r.y == 1]
-        pos_gene[f] = set(pd.concat([r.gene_a, r.gene_b])) & held
-    for nm, flag in (("held-out gene has >=1 revealed positive", True), ("no revealed positive", False)):
-        sub = {}
-        for kk in (0, k):
-            d = frames[kk].copy()
-            hit = np.array([(a in pos_gene[f]) or (b in pos_gene[f]) for a, b, f in zip(d.gene_a, d.gene_b, d.fold)])
-            d["hit"] = hit
-            sub[kk] = d
-        r2 = {}
-        for kk in (0, k):
-            r2[f"k{kk}"] = binned_ap(sub[kk][sub[kk].part == "C2"], counts, gidx, lambda f: (f.hit == flag).to_numpy())
-        strat[nm] = r2
-    out["c2_by_revealed_positive_k%d" % k] = strat
+    # C2 pairs whose held-out gene received >=1 revealed positive vs none (report-only), for every k
+    for k in ks:
+        strat = {}
+        pos_gene = {}
+        for f in folds:
+            held = set(data.fold_genes(None, f))
+            r = F.reveal_pairs(None, f, k).merge(lab, on=["gene_a", "gene_b"], how="left")
+            r = r[r.y == 1]
+            pos_gene[f] = set(pd.concat([r.gene_a, r.gene_b])) & held
+        for nm, flag in (("held-out gene has >=1 revealed positive", True), ("no revealed positive", False)):
+            r2 = {}
+            for kk in (0, k):
+                d = frames[kk].copy()
+                d["hit"] = np.array([(a in pos_gene[f]) or (b in pos_gene[f]) for a, b, f in zip(d.gene_a, d.gene_b, d.fold)])
+                r2[f"k{kk}"] = binned_ap(d[d.part == "C2"], counts, gidx, lambda f, flag=flag: (f.hit == flag).to_numpy())
+            strat[nm] = r2
+        out["c2_by_revealed_positive_k%d" % k] = strat
+    # seed-to-seed spread (point estimates, fold-mean pooled C2+C3 AP of ONE seed): noise level of a 3-seed average
+    k0s = pd.read_parquet(protocol.preds_dir() / "m2plus" / f"{I['run_id']}_perseed.parquet")
+    sd = {}
+    for s_ in seeds:
+        row = {}
+        for k in [0] + ks:
+            parts = []
+            for f in folds:
+                E = F.eval_set(None, f)[["gene_a", "gene_b", "fold", "part"]]
+                P = k0s[(k0s.seed == s_) & (k0s.fold == f)] if k == 0 else pd.read_parquet(pdir / f"k{k}_fold{f}.parquet")
+                P = P[P.seed == s_]
+                parts.append(E.merge(P[["gene_a", "gene_b", "fold", "part", "score"]], on=["gene_a", "gene_b", "fold", "part"]))
+            d = pd.concat(parts).merge(lab, on=["gene_a", "gene_b"], how="left")
+            m = EV.pooled_metrics(d, W)["mean"]
+            row[f"k{k}"] = {"pooled_C2C3": m["pooled"], "C2": m["pooled_C2"], "C3": m["pooled_C3"]}
+        sd[f"seed{s_}"] = row
+    out["per_seed_point"] = sd
     (OUT / "fewshot.json").write_text(json.dumps(out, indent=1, default=float))
     for k in out["ks"]:
         r = res[k]
         print(f"k={k}: pooled C2+C3 {r['pooled_C2C3']:.4f} {r['pooled_C2C3_ci']} C2 {r['C2']:.4f} {r['C2_ci']} C3 {r['C3']:.4f} {r['C3_ci']}")
     for n, v in out["paired"].items():
         print(n, v)
-    print(json.dumps(strat, indent=1, default=float)[:1500])
 
 
 # ============================================================================================ figure
