@@ -8,21 +8,21 @@ model's own fit+predict stages over all folds (and seeds), excluding evaluation;
 
 | model | primary ± SE | 95% CI | AP C1 | AP C2 | AP C3 | AUROC | runtime (s) | seeds | run_id |
 |---|---|---|---|---|---|---|---|---|---|
-| B1_additive_logit | 0.1033 ± 0.0078 | 0.0894–0.1197 | 0.2070 | 0.0799 | 0.0215 | 0.772 | 8.5 | 0 | `B1_additive_logit__20261028T164725__cf37d4` |
-| B4_logistic_MF | 0.1079 ± 0.0081 | 0.0933–0.1242 | 0.2322 | 0.0799 | 0.0215 | 0.740 | 355.1 | 0,1,2 | `B4_logistic_MF__20261028T164925__a70f52` |
-| B2_costanzo_eps_min | 0.0256 ± 0.0021 | 0.0223–0.0307 | 0.0270 | 0.0250 | 0.0277 | 0.513 | 0.8 | 0 | `B2_costanzo_eps_min__20261028T164959__206ce3` |
-| B3_costanzo_profile_sim | 0.0249 ± 0.0022 | 0.0214–0.0297 | 0.0249 | 0.0248 | 0.0275 | 0.513 | 0.8 | 0 | `B3_costanzo_profile_sim__20261028T165031__b2afa1` |
-| DIAG_oracle_propensity | 0.2198 ± 0.0157 | 0.1882–0.2477 | 0.2231 | 0.2145 | 0.2346 | 0.905 | 0.7 | 0 | `DIAG_oracle_propensity__20261028T165115__021a9c` |
-| DIAG_NBR_cer_profile_corr__hit_dmean | 0.0718 ± 0.0064 | 0.0600–0.0850 | 0.1214 | 0.0674 | 0.0215 | 0.688 | 891.6 | 0 | `DIAG_NBR_cer_profile_corr__hit_dmean__20261028T165212__f197bd` |
-| DIAG_NBR_cons_phylo__hit_dmean | 0.0582 ± 0.0051 | 0.0490–0.0687 | 0.0895 | 0.0557 | 0.0215 | 0.684 | 891.6 | 0 | `DIAG_NBR_cons_phylo__hit_dmean__20261028T165259__759eb2` |
-| DIAG_NBR_esm_cos__hit_dmean | 0.0660 ± 0.0056 | 0.0555–0.0783 | 0.1020 | 0.0639 | 0.0215 | 0.701 | 891.6 | 0 | `DIAG_NBR_esm_cos__hit_dmean__20261028T165334__ec3165` |
-| DIAG_NBR_expr_array__hit_dmean | 0.0644 ± 0.0054 | 0.0546–0.0754 | 0.0970 | 0.0634 | 0.0215 | 0.700 | 892.3 | 0 | `DIAG_NBR_expr_array__hit_dmean__20261028T165406__c9d09e` |
-| DIAG_NBR_expr_rnaseq__hit_dmean | 0.0628 ± 0.0052 | 0.0532–0.0734 | 0.0954 | 0.0612 | 0.0215 | 0.694 | 891.6 | 0 | `DIAG_NBR_expr_rnaseq__hit_dmean__20261028T165446__25c9fa` |
-| DIAG_NBR_koprot_corr__hit_dmean | 0.0760 ± 0.0067 | 0.0639–0.0902 | 0.1232 | 0.0729 | 0.0215 | 0.713 | 891.6 | 0 | `DIAG_NBR_koprot_corr__hit_dmean__20261028T165530__82a4e0` |
-| DIAG_NBR_mean__hit_dmean | 0.1253 ± 0.0087 | 0.1096–0.1436 | 0.2217 | 0.1166 | 0.0215 | 0.788 | 891.6 | 0 | `DIAG_NBR_mean__hit_dmean__20261028T165615__d590e1` |
-| DIAG_NBR_phen_corr__hit_dmean | 0.0948 ± 0.0077 | 0.0806–0.1110 | 0.1490 | 0.0960 | 0.0215 | 0.741 | 891.6 | 0 | `DIAG_NBR_phen_corr__hit_dmean__20261028T165702__d7ba64` |
-| DIAG_NBR_ppi_cer_rwr__hit_dmean | 0.0749 ± 0.0072 | 0.0618–0.0900 | 0.1257 | 0.0709 | 0.0215 | 0.693 | 891.6 | 0 | `DIAG_NBR_ppi_cer_rwr__hit_dmean__20261028T165740__4ad216` |
-| DIAG_NBR_ppi_rwr__hit_dmean | 0.0654 ± 0.0061 | 0.0545–0.0783 | 0.1095 | 0.0619 | 0.0215 | 0.661 | 891.8 | 0 | `DIAG_NBR_ppi_rwr__hit_dmean__20261028T165812__e4cc9f` |
+| B1_additive_logit | 0.1033 ± 0.0078 | 0.0894–0.1197 | 0.2070 | 0.0799 | 0.0215 | 0.772 | 4.1 | 0 | `B1_additive_logit__20261028T183903__da755f` |
+| B4_logistic_MF | 0.1079 ± 0.0081 | 0.0933–0.1242 | 0.2322 | 0.0799 | 0.0215 | 0.740 | 166.2 | 0,1,2 | `B4_logistic_MF__20261028T183958__e1e7b0` |
+| B2_costanzo_eps_min | 0.0256 ± 0.0021 | 0.0223–0.0307 | 0.0270 | 0.0250 | 0.0277 | 0.513 | 0.5 | 0 | `B2_costanzo_eps_min__20261028T184016__07ac43` |
+| B3_costanzo_profile_sim | 0.0249 ± 0.0022 | 0.0214–0.0297 | 0.0249 | 0.0248 | 0.0275 | 0.513 | 0.4 | 0 | `B3_costanzo_profile_sim__20261028T184034__c417e3` |
+| DIAG_oracle_propensity | 0.2198 ± 0.0157 | 0.1882–0.2477 | 0.2231 | 0.2145 | 0.2346 | 0.905 | 0.3 | 0 | `DIAG_oracle_propensity__20261028T184053__7228f2` |
+| DIAG_NBR_cer_profile_corr__hit_dmean | 0.0718 ± 0.0064 | 0.0600–0.0850 | 0.1214 | 0.0674 | 0.0215 | 0.688 | 891.5 | 0 | `DIAG_NBR_cer_profile_corr__hit_dmean__20261028T184119__35d38b` |
+| DIAG_NBR_cons_phylo__hit_dmean | 0.0582 ± 0.0051 | 0.0490–0.0687 | 0.0895 | 0.0557 | 0.0215 | 0.684 | 891.5 | 0 | `DIAG_NBR_cons_phylo__hit_dmean__20261028T184138__615f4f` |
+| DIAG_NBR_esm_cos__hit_dmean | 0.0660 ± 0.0056 | 0.0555–0.0783 | 0.1020 | 0.0639 | 0.0215 | 0.701 | 891.5 | 0 | `DIAG_NBR_esm_cos__hit_dmean__20261028T184156__06400f` |
+| DIAG_NBR_expr_array__hit_dmean | 0.0644 ± 0.0054 | 0.0546–0.0754 | 0.0970 | 0.0634 | 0.0215 | 0.700 | 891.5 | 0 | `DIAG_NBR_expr_array__hit_dmean__20261028T184215__4a402e` |
+| DIAG_NBR_expr_rnaseq__hit_dmean | 0.0628 ± 0.0052 | 0.0532–0.0734 | 0.0954 | 0.0612 | 0.0215 | 0.694 | 891.5 | 0 | `DIAG_NBR_expr_rnaseq__hit_dmean__20261028T184233__d18de9` |
+| DIAG_NBR_koprot_corr__hit_dmean | 0.0760 ± 0.0067 | 0.0639–0.0902 | 0.1232 | 0.0729 | 0.0215 | 0.713 | 891.5 | 0 | `DIAG_NBR_koprot_corr__hit_dmean__20261028T184251__d0ed39` |
+| DIAG_NBR_mean__hit_dmean | 0.1253 ± 0.0087 | 0.1096–0.1436 | 0.2217 | 0.1166 | 0.0215 | 0.788 | 891.5 | 0 | `DIAG_NBR_mean__hit_dmean__20261028T184310__687618` |
+| DIAG_NBR_phen_corr__hit_dmean | 0.0948 ± 0.0077 | 0.0806–0.1110 | 0.1490 | 0.0960 | 0.0215 | 0.741 | 891.5 | 0 | `DIAG_NBR_phen_corr__hit_dmean__20261028T184328__0ff167` |
+| DIAG_NBR_ppi_cer_rwr__hit_dmean | 0.0749 ± 0.0072 | 0.0618–0.0900 | 0.1257 | 0.0709 | 0.0215 | 0.693 | 891.5 | 0 | `DIAG_NBR_ppi_cer_rwr__hit_dmean__20261028T184347__10caf9` |
+| DIAG_NBR_ppi_rwr__hit_dmean | 0.0654 ± 0.0061 | 0.0545–0.0783 | 0.1095 | 0.0619 | 0.0215 | 0.661 | 891.5 | 0 | `DIAG_NBR_ppi_rwr__hit_dmean__20261028T184405__17ae01` |
 
 Weighted prevalence (= B0 expectation): 0.0209. Rows starting `DIAG_` are **diagnostics, not models**:
 `DIAG_oracle_propensity` uses the held-out genes' true hit rates (computed from all dev labels, including
