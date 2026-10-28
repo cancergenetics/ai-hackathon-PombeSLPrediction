@@ -70,7 +70,13 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 - [x] 11. Deliverable tooling (docs/deliverable.md; merged f8a3fba): predict_all_pairs.py scores 7,693,003 pairs (3,923 genes incl. 144 viability-unknown) with M2 trained on dev genes in 985 s on 3 threads, peak footprint 6.3 GB; out-of-fold scores for measured pairs (in-sample AP 0.307 vs OOF 0.201 → users must read OOF); lockbox_eval.py one-shot with access log + prereg template (toy-tested only); config/models.yaml
   - [!] Linkage: Ryan barely measured pairs < 300 kb apart (coverage ≤6% vs ~77%). Same-chromosome 300–1,000 kb pairs have a small excess hit rate (2.15% vs 1.82% inter-chromosomal, OR 1.18, p 3e-8) that M2 does not predict. → `linked` flag at 300 kb, no score penalty; reported as a limitation
   - [!] Top-ranked universe pairs are almost all C1/C2 (top 10k: 1 C3 pair); C3 scores are compressed, so absolute scores are not comparable across classes
-- [~] 12. Ship incumbent (branch ship): shared Huber stacker in src, M2r_huber as deliverable default, explicit default LF groups (XSP leak fix), universe re-run
+- [x] 12. Ship incumbent (merged e8760e2; docs/deliverable.md)
+  - src/models/stacker.py is shared by run_m2, run_m2plus and the deliverable. Old and new code are bit-identical at a fixed thread count.
+  - default_inputs are pinned in config/models.yaml, which closes the XSP leak (tests/test_model_inputs.py).
+  - Universe run with M2r_huber (dev-trained): 7,693,003 pairs in 1,873 s on 2 threads, footprint 6.4 GB.
+  - Measured pairs: OOF AP 0.211 (in-sample 0.337).
+  - Top 100k pairs: 34% C1 / 49% C2 / 17% C3.
+  - [!] The Huber stacker is not invariant to LightGBM thread count; the binary stacker is. Δ between 2 and 6 threads: primary −6e-7, max per-row 0.027. The lockbox and final runs therefore use a fixed thread count.
 - [~] 13. E-CONT rung (branch m2cont): GP / NBR built from continuous −min(S2,0) instead of binary hits — aimed at C2/C3
 - [x] 14. Rarely-seen genes (docs/rarely_seen.md; merged e9efd28; report-only; 4,471 s)
   - [!] Ryan has no genes that are rarely *measured*: every seen dev gene has ≥106 training pairs. The practical "rarely seen" case is genes with few *hits*. For seen genes with 0 / 1–2 / 3–9 / 10+ training hits, C2 AUPRC is 0.008 / 0.022 / 0.055 / 0.194 against prevalence 0.25 / 0.42 / 0.93 / 4.3% (lift ≈3–6×). Absolute AUPRC follows the gene's base rate.
@@ -92,6 +98,7 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 8. [~] M3 neural inductive pair model (one attempt)
 
 ## Decision log
+- 2026-10-28: Lockbox prereg will use `seeds: model`, so M2r_huber is evaluated exactly as adopted (3 seeds) and not silently turned into bag5. This deviates from the DESIGN §3 "all 5 seeds" wording: per-step adoption rejected bagging. The lockbox and `--train-set all` runs use a fixed 4 threads (LightGBM and torch), recorded in the result. The shortlist waits for E-CONT and M5/M3.
 - 2026-10-28: E-FEWSHOT k=5 non-improvement is not fixed now. Why: Ryan contains no sparsely-measured genes (min 106 pairs), so neither dev CV, the lockbox nor the deliverable exercises that regime. Sparse-reveal stacker training goes in REPORT follow-ups.
 - 2026-10-28: **Incumbent = M2r_huber (3 seeds), not M2r_bag5_huber.** Why: DESIGN §3 adoption is per step. Bagging alone fails the 0.005 bar (+0.0028 binary, +0.0022 Huber), and the reported +0.0114 bundled two changes. The bag5 model stays available as an option. GP stays inside M2 because it belongs to the RYAN block that passed as a whole (M2 vs M1N +0.007); its own increment, +0.003, is not significant, and that is stated in the report.
 - 2026-10-28: Milestone M3 retrospective (fresh agent). Adopted:
