@@ -2,7 +2,7 @@
 
 One line per rule, each with evidence. Pruned at each milestone.
 
-**Last pruned:** 2026-10-28, milestone M3, after a fresh-agent retrospective ("stop doing / worked well").
+**Last pruned:** 2026-10-29, milestone M4 (final), after a fresh-agent fact-check of REPORT.md and a retrospective.
 
 1. **Diagnose before modelling.** Run cheap oracle and permutation diagnostics first.
    - *Evidence:* the propensity oracle scored 0.22 against B1's 0.10, which redirected M2 to gene propensity. Permutation controls (M1 0.071, M2 0.023) confirmed the signal is real.
@@ -26,13 +26,21 @@ One line per rule, each with evidence. Pruned at each milestone.
     - *Evidence:*
       - 10 per-source NBR diagnostics took ~15 min each, and 9 single-group ablations took 36 min.
       - C3 stayed at 0.095 across 4 ideas.
-11. **Keep the research tree current before launching the next rung.**
-    - *Evidence:* the M3 retrospective found a stale "Next: M2" summary and duplicate or stale checkboxes.
-12. **Give parallel agents disjoint file ownership, a shared interface spec, and their own worktree. Ask for report text in the hand-back.**
+11. **Keep the research tree current before launching the next rung. Before writing the report, sweep the decision log** for exposures, failed pre-stated checks and licence limits, and carry them into Limitations.
+    - *Evidence:*
+      - The M3 retrospective found a stale "Next: M2" summary.
+      - The first REPORT draft omitted the round-1 lockbox exposure, the failed GP toy check and Ryan's no-redistribution licence.
+12. **Take report numbers from the shipped run's summary JSON, and write the report after the final run, not before.**
+    - *Evidence:* the drafted REPORT carried the dev-trained run's numbers (17% C3 in the top 100k; 31 min) instead of the shipped run's (5%; 24 min).
+13. **Dry-run one-shot scripts against the committed config in the real repo layout, using a toy data root.**
+    - *Evidence:* the toy tests put the prereg at the repo root. The real prereg in config/ hit a path bug, causing one refused lockbox attempt and a prereg re-commit.
+14. **Comparator runs must be clean too.**
+    - *Evidence:* both seed-7 M2r_huber comparator runs were dirty, because of untracked files of a parallel agent. A clean rerun was needed before the report.
+15. **Give parallel agents disjoint file ownership, a shared interface spec, and their own worktree. Ask for report text in the hand-back.**
     - *Evidence:* there were zero merge conflicts over 4 parallel branches. Some subagents can't write report files.
-13. **Keep design review proportionate:** after the design phase, use one targeted reviewer per milestone.
+16. **Keep design review proportionate:** after the design phase, use one targeted reviewer per milestone.
     - *Evidence:* round 3 gave only text fixes. About 1h of the first 3h went to design.
-14. **Environment pins.**
+17. **Environment pins.**
     - LightGBM needs the libomp rpath fix in `scripts/setup_env.sh`.
     - Pin `pytest==8.3.5`.
     - torch MF is only bit-reproducible at 1 thread.

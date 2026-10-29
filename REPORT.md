@@ -5,7 +5,7 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
 ## 1. Summary
 
 - **Task.** Rank every pair of non-essential *S. pombe* genes by how likely it is to be a strong negative genetic interaction, defined as Ryan et al. 2012 S-score < −2.3.
-  - The universe has 3,923 genes: viable and condition-dependent protein-coding genes, plus Ryan deletion strains of unknown viability. That gives **7,693,003 pairs**, scored in about 30 min on a laptop CPU.
+  - The universe has 3,923 genes: viable and condition-dependent protein-coding genes, plus Ryan deletion strains of unknown viability. That gives **7,693,003 pairs**. The shipped model trains and scores them in 24 min on a laptop CPU (4 threads).
   - Training data: Ryan 2012 only (Dataset S2, the authors' averaged S-scores; 1.88% positives).
   - Inputs: label-free gene and pair data, plus the full budding-yeast map (Costanzo 2016).
   - No fission-yeast GI data from any other source, no text-mining-derived networks, and no GO.
@@ -36,18 +36,19 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
     - vs B4 +0.101 [0.075, 0.131]
     - vs M1 +0.049 [0.033, 0.067]
     - vs M2 +0.010 [0.003, 0.017]
-  - Other metrics: AUROC 0.86, precision among the top 1,000 lockbox pairs 0.55.
+  - Other metrics: AUROC 0.86. Class-weighted precision among the top 1,000 lockbox pairs is 0.55.
 - **Main lesson.** Most of the predictable signal is gene-level: how "sick" or interaction-prone each gene is.
   - An oracle that knows each held-out gene's true hit rate scores 0.22 on dev.
   - Degree-only baselines score 0.10 and are at chance for C3.
-  - Our label-free features recover a good part of this for unseen genes: lockbox C3 0.125, against 0.023 for the baselines.
+  - For unseen genes the model recovers only part of this. On dev, C3 is 0.094 against the oracle's 0.235 (≈40%). On the lockbox, C3 is 0.125 against 0.023 for the degree baselines.
+  - Almost all of the C3 signal comes from label-free gene features: label-free-only M1 already reaches 0.122 on lockbox C3. The Ryan-derived stacking helps mainly C1 and C2.
   - Pair-specific signal (which partner of a hub) is much weaker.
 
 ## 2. Approach
 
 ### 2.1 Data and labels (DATA.md, DESIGN.md §1)
 - **Labels.** Ryan Dataset S2, y = S2 < −2.3, read from config/protocol.yaml (frozen; sha256 73edd56d…).
-  - Raw single-orientation scores are used only for a sensitivity check. On the lockbox the headline model scores 0.235 on the raw-mean label.
+  - Raw single-orientation scores are used only for a sensitivity check. On the lockbox, the headline model scores 0.235 on the raw-mean label, but that label has ~4.3% prevalence, so the number is not comparable with 0.211.
   - DAmP-only pairs are excluded from evaluation, decided per pair.
   - Non-coding genes and inviable strains are dropped from training.
 - **Universe.** PomBase 2026-10-01 viability (used for the universe only, never as a feature): viable + condition-dependent protein-coding genes, plus 22 unknown-viability genes that have a Ryan deletion strain. A further 144 unknown-viability genes are scored and flagged `viability_unknown`.
@@ -61,7 +62,7 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
   - **C1:** both genes seen in training (a 10% held-out pair set).
   - **C2:** one gene held out.
   - **C3:** both genes held out.
-- **Lockbox.** 480 of 2,404 Ryan genes (stratified by role × hit-rate quintile + hubs; seed 20261028), drawn before any label-touching analysis, plus a lockbox C1 set.
+- **Lockbox.** 480 of 2,404 Ryan genes (stratified by role × hit-rate quintile + hubs; seed 20261028), plus a lockbox C1 set. The lockbox was drawn early, but not before every label-touching analysis: during design review round 1, two reviewer agents ran exploratory probes on all Ryan pairs. No model or feature decision was made from those probes, and this is logged in the decision log.
 - **Dev CV.** 5 gene folds, plus a second partition (seed 7) as a robustness check.
 - **Statistics.**
   - A shared Poisson(1) gene bootstrap (1,000 replicates) gives paired CIs.
@@ -69,28 +70,29 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
 
 ### 2.3 Model ladder (dev CV, primary AUPRC; prevalence 0.021)
 
-| rung | model | dev primary | C1/C2/C3 | verdict |
-|---|---|---|---|---|
-| B0 | random | 0.021 | | control |
-| B1 | additive gene-propensity logit | 0.103 | .207/.080/.022 | baseline |
-| B4 | logistic MF | 0.108 | .232/–/– | baseline |
-| B2/B3 | Costanzo ε / profile similarity of orthologs | 0.026 / 0.025 | | weak alone |
-| diag | NBR cross-source mean | 0.125 | C2 .117 | lever for unseen genes |
-| diag | oracle gene propensity | 0.220 | C3 .235 | upper bound for a gene-level model |
-| M1 | LightGBM, 358 label-free features | 0.145 | .214/.134/.088 | adopted (+0.041 vs B1) |
-| M2 | + nested RYAN/NBR/GP stacking | 0.170 | .251/.159/.095 | adopted (+0.025 vs M1; seed-7 +0.031) |
-| **M2r_huber** | M2 with a Huber stacker on −min(S2, 0) | **0.179** | .272/.167/.094 | **adopted** (+0.009 [0.005, 0.013]; seed-7 > 0) |
-| | + 5-seed bagging | 0.181 | | not adopted (+0.002 < bar) |
-| | + cross-species XSP features | 0.170 (on M2) | | null (+0.0002) |
-| | + C3-focused logistic blend | 0.181 | | null (−0.0001) |
-| | + continuous-target GP/NBR (E-CONT) | 0.179 | | null (−0.0001 to −0.0007) |
-| M3 | two-tower MLP (symmetric) | 0.170 | .263/.154/.095 | null (−0.010) |
-| M5 | rank ensembles | 0.145–0.181 | | null (best +0.0015, n.s.) |
+| rung | model | dev primary | C1/C2/C3 | dev-CV wall time (5 folds, registry) | verdict |
+|---|---|---|---|---|---|
+| B0 | random | 0.021 | | – | control |
+| B1 | additive gene-propensity logit | 0.103 | .207/.080/.022 | 4 s | baseline |
+| B4 | logistic MF | 0.108 | .232/–/– | 166 s | baseline |
+| B2/B3 | Costanzo ε / profile similarity of orthologs | 0.026 / 0.025 | | < 1 s | weak alone |
+| diag | NBR cross-source mean | 0.125 | C2 .117 | 892 s | lever for unseen genes |
+| diag | oracle gene propensity | 0.220 | C3 .235 | – | upper bound for a gene-level model |
+| M1 | LightGBM, 358 label-free features | 0.145 | .214/.134/.088 | 352 s | adopted (+0.041 vs B1) |
+| M2 | + nested RYAN/NBR/GP stacking | 0.170 | .251/.159/.095 | 948 s (incl. nested features) | adopted (+0.025 vs M1; seed-7 +0.031) |
+| **M2r_huber** | M2 with a Huber stacker on −min(S2, 0) | **0.179** | .272/.167/.094 | 529 s (features cached) | **adopted** (+0.009 [0.005, 0.013]; seed-7: SEED7_PLACEHOLDER) |
+| | + 5-seed bagging | 0.181 | | 869 s | not adopted (+0.002 < bar) |
+| | + cross-species XSP features | 0.170 (on M2) | | 1,056 s (incl. 629 s feature build) | null (+0.0002) |
+| | + C3-focused logistic blend | 0.181 | | ~120 s | null (−0.0001) |
+| | + continuous-target GP/NBR (E-CONT) | 0.179 | | 1,812–2,102 s (incl. add-on features) | null (−0.0001 to −0.0007) |
+| M3 | two-tower MLP (symmetric) | 0.170 | .263/.154/.095 | 1,075 s | null (−0.010) |
+| M5 | rank ensembles | 0.145–0.181 | | 1–2 s + members | null (best +0.0015, n.s.) |
 
 - **Ablations of M2** (docs/m2.md):
   - NBR is the largest Ryan-derived family, +0.019.
   - RYAN + GP together add +0.007.
   - GP alone adds +0.003, which is not significant; it substitutes for β/MF/NBR.
+  - GP's toy check **failed** its pre-stated bar: unseen-gene Spearman 0.563 < 0.6, because the B1 β target itself correlates only 0.55 with the truth. GP was kept because it belongs to the RYAN block, which passed as a whole (M2 vs M1N +0.007). Its own contribution is unproven.
 - **M1 ablations:**
   - Of the label-free groups only phenomics (+0.022) and budding-yeast ortholog features (+0.004) mattered.
   - A gene-permuted control collapses C3 to prevalence.
@@ -98,7 +100,7 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
 ### 2.4 Verification (reviews/)
 - **Phase A infrastructure:** all numbers were re-derived. 4 of 11 planted mutants escaped the original tests, which led to test hardening; all are now caught.
 - **M2:**
-  - A leak canary corrupting every held-out label left the features bit-identical, and two planted leaks were detected.
+  - A leak canary corrupting every held-out label left all Ryan-derived features bit-identical, except `mf_score`, which jitters with torch thread count. Two planted leaks were detected.
   - Label permutation gives 0.023, at prevalence.
   - The metric was re-derived exactly.
 - **Huber incumbent:**
@@ -106,7 +108,7 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
   - Permutation gives 0.022.
   - The paired Δ was re-derived.
 - **Lockbox:** all numbers re-derived to 1e-14 with independent code; eval/training hygiene had 0 mismatches; prereg compliance confirmed; no leakage (reviews/verify_lockbox/REPORT.md).
-- **Tests:** 249 pass (pytest, including mutation tests, toy data with known answers, and lints that restrict label access and hardcoded thresholds).
+- **Tests:** 249 passed, 1 skipped (results/tests/pytest_final.txt; pytest, including mutation tests, toy data with known answers, and lints that restrict label access and hardcoded thresholds).
 
 ## 3. Results on the held-out test set
 
@@ -148,7 +150,7 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
 
 ### 3.3 Linkage (docs/deliverable.md)
 - Ryan measured almost no pairs closer than 300 kb on the same chromosome: coverage ≤6%, against ~77% elsewhere. Such pairs are flagged `linked` and not penalised.
-- Same-chromosome pairs 300–1,000 kb apart show a small excess hit rate: 2.15% vs 1.82% between chromosomes (OR 1.18, p 3e-8). The model does not capture it.
+- Same-chromosome pairs 300–1,500 kb apart show a small excess hit rate. At 300–1,000 kb it is 2.15% against 1.82% between chromosomes (OR 1.18, p 3e-8); at 1,000–1,500 kb it is 2.11% (OR 1.16, p 1.5e-5). The M2 out-of-fold scores (the diagnostic predates M2r_huber) do not track this excess.
 
 ## 4. The deliverable
 
@@ -179,11 +181,11 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
   |---|---|
   | dev CV of the incumbent (5 folds × 3 seeds, incl. nested features) | ~9 min wall (486 s training) |
   | lockbox retrain + scoring of 5 models | 13 min |
-  | universe scoring, 7.69M pairs | ~31 min on 2 threads (fit 13 min, scoring 18 min), footprint 6.4 GB |
+  | final model: retrain on all Ryan + score 7.69M pairs | 24 min on 4 threads (fit 11 min, scoring 13 min), peak RSS 18.3 GB |
   | one-off feature building (ESM-2 650M) | 43 min (pombe) + 64 min (cerevisiae) on MPS |
 
 - **How to read scores.**
-  - Scores are comparable *within* a class but compressed for C3. The top-ranked pairs are almost all C1/C2: the top 1,000 has 0 C3 pairs, and the top 100k has 17% C3.
+  - Scores are comparable *within* a class but compressed for C3. The top-ranked pairs are almost all C1/C2: the top 1,000 has 0 C3 pairs, and the top 100k has 5% C3.
   - A user interested in uncharacterised genes should rank within class C3.
 
 ## 5. Limitations
@@ -198,6 +200,7 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
    - The Huber stacker and the torch MF feature are not bit-reproducible across thread counts: single runs vary by about ±0.001 primary. Paired comparisons share cached features and are unaffected.
    - The lockbox and final runs used a fixed 4 threads.
 6. **Feature-source caveats.**
+   - **Ryan 2012 is under the Elsevier user licence, with no redistribution or adaptation.** The shipped prediction file contains Ryan-derived pair-level scores and flags (`measured_in_ryan`, out-of-fold scores). It must therefore stay local and git-ignored; only aggregates are committed. Sharing predictions publicly would need a version without the Ryan-derived columns, plus a licence check.
    - Some sources have unclear licences: Costanzo, Kim 2010, Matsuyama.
    - Some sources were fetched from rolling URLs; pinned equivalents are documented in DATA.md.
    - The data themselves are not redistributed.
@@ -211,7 +214,7 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
   - condition-specific fitness screens, if circularity-safe;
   - protein-complex membership from structure-based predictions (e.g. AlphaFold-multimer screens), not from curation;
   - richer pombe phenomics.
-- **Linkage-aware modelling.** The 300–1,000 kb excess hit rate is unexplained. It could be a mild linkage artefact in E-MAP S-scores.
+- **Linkage-aware modelling.** The 300–1,500 kb excess hit rate is unexplained. It could be a mild linkage artefact in E-MAP S-scores.
 - **External validation.** Not allowed here, by design: no other pombe GI data. A future independent pombe screen would be the real test.
 - **Ideas tried and closed:**
   - XSP: cerevisiae gene-propensity transfer gave CV ρ 0.39 in cerevisiae and 0.25 transferred, but added nothing on top of the ortholog features.
