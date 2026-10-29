@@ -4,6 +4,11 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-29 — M4: final model, held-out test, deliverable
+The model search stopped after two consecutive null rungs: E-CONT (continuous-target gene propensity / NBR), and M5 rank ensembles plus M3 neural (best +0.0015, n.s.). The final model is **M2r_huber**: nested-stacked LightGBM on label-free features plus Ryan-derived RYAN/NBR/GP features, with a Huber loss on −min(S2,0) and 3 seeds. Dev CV gives 0.179. On the one-shot preregistered lockbox (480 genes, 456k pairs) it scores **0.211 [0.179, 0.247]**; C1 .285 / C2 .210 / C3 .125. The others score M2 0.201, M1 0.162, B4 0.110 and B1 0.106, and all four Holm contrasts reject. An independent verifier re-derived every number. It found no leakage, and attributes the lockbox > dev gap to sampling noise (z ≈ 1.5) plus a small effect of more training data.
+
+The final model was retrained on all Ryan data and has scored all 7,693,003 non-essential pairs in 24 min on 4 threads. The output carries class, `linked`, viability and measured flags, plus out-of-sample scores for measured pairs. REPORT.md is written. Open follow-ups are listed in REPORT §6. The main ones are sparse-reveal stacker training (because k = 5 few-shot does not help), a nested M3 feature, and better gene-level inputs for C3.
+
 ### 2026-10-28 — M3: Ryan-derived stacking, continuous target, deliverable tooling
 M2 (nested stacking: label-free + RYAN-fold + NBR + gene propensity) reached 0.170, and an independent verifier passed it: the leak canary was bit-identical, a label-permutation control fell to 0.023 against a prevalence of 0.021, and the metric re-derived exactly. The next rung found that only the training target matters. A Huber regression on −min(S2,0) for the stacker gives **M2r_huber 0.1791** (C1 .272/C2 .167/C3 .094), +0.009 over M2 on both dev partitions, and is the incumbent. Three things did not pass the 0.005 bar: cross-species features (XSP, +0.0002), seed bagging on its own (+0.003) and a C3-focused blend (−0.0001). C3 (both genes unseen) is stuck at ≈0.095, against an oracle value of 0.235. The deliverable tooling exists and is toy-tested: whole-universe scoring takes 16 min for 7.69M pairs, plus a one-shot lockbox evaluator with an access log and a linkage diagnostic. Ryan has almost no pairs closer than 300 kb, so those pairs are flagged.
 
@@ -99,8 +104,8 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
   - [!] The lockbox is higher than dev for the stacked models (+0.032 for M2r_huber, +0.017 for M1) but not for the baselines (≈0.002). Likely cause: more training genes (all dev, not 80%). Being checked by an independent verifier.
   - [x] One refused attempt, caused by a path bug in the prereg commit check (fixed in 6980831; no lockbox data read). Then exactly one completed run.
   - [x] Independent verification of the lockbox (reviews/verify_lockbox/REPORT.md): every number re-derived (to 3e-15), hygiene 0 mismatches, prereg compliant, no leakage. The dev/lockbox gap is sampling noise (z≈1.5; 5 genes move C2 .210→.183) plus a small effect of more training data.
-- [~] 17. Final model retrained on all Ryan (dev + lockbox) → universe predictions (running, 4 threads)
-- [ ] 18. REPORT.md
+- [x] 17. Final model M2r_huber retrained on all Ryan data (1.31M pairs, 2,376 genes) → 7,693,003 universe pairs scored; all checks pass; 1,459 s on 4 threads, peak RSS 18.3 GB (results/universe/summary_M2r_huber_all.json). Flagged dirty only because REPORT.md was untracked; no code diff during the run.
+- [x] 18. REPORT.md
 
 ## Idea backlog (ranked; stop rule: 3 consecutive failed rungs and no supported idea left)
 1. [x] Explicit gene-propensity model β̂ (in M2; own increment n.s.)

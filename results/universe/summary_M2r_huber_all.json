@@ -1,0 +1,249 @@
+{
+ "model": "M2r_huber",
+ "spec": {
+  "kind": "m2_stack",
+  "families": [
+   "LF",
+   "RYAN",
+   "NBR",
+   "GP"
+  ],
+  "objective": "huber",
+  "etarget": {
+   "target": "neg_min_s2_0",
+   "delta": "label_threshold_abs"
+  },
+  "init_score": false,
+  "lgbm_config": "default",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "rounds": "inner_early_stopping",
+  "lf_groups": [
+   "CER",
+   "CONS",
+   "EXPR",
+   "HYPO",
+   "KOPROT",
+   "LOC",
+   "PHEN",
+   "PPI",
+   "SEQ"
+  ],
+  "sims": [
+   "cer_profile_corr",
+   "cons_phylo",
+   "esm_cos",
+   "expr_array",
+   "expr_rnaseq",
+   "koprot_corr",
+   "phen_corr",
+   "ppi_cer_rwr",
+   "ppi_rwr"
+  ],
+  "ryan_cfg": {},
+  "gp_cfg": {},
+  "drop_noncoding": true,
+  "dev_run_model": "M2r_huber",
+  "dev_run": "M2r_huber__20261028T205545__7b5e9e",
+  "id": "M2r_huber"
+ },
+ "models_sha256": "8d2e29f528bae4d4d633482bcd6db382b81655c7477e59beab1c0924c01a87ed",
+ "train_set": "all",
+ "data_root": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/processed",
+ "real_data": true,
+ "output": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/processed/universe/predictions_M2r_huber_all.parquet",
+ "protocol_sha256": "73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230",
+ "git": {
+  "git_commit": "8fdd33a0f5efd03ea9e4a46e8f4a8bf0119df21e",
+  "git_dirty": true,
+  "git_diff_sha256": "81172abdf7e92d9ce1cce393ec52ad9b43491264227bdabd9a4e49ec5483333b"
+ },
+ "checks": {
+  "n_genes": 3923,
+  "n_rows": 7693003,
+  "expected_rows": 7693003,
+  "row_count_ok": true,
+  "no_nan_scores": true,
+  "pairs_unique_sorted": true,
+  "cover_rows_identical_across_blocks": true,
+  "cover_max_abs_diff": 0.0
+ },
+ "fit_info": {
+  "model": "M2r_huber",
+  "kind": "m2_stack",
+  "n_train_pairs": 1311979,
+  "n_train_positives": 24729,
+  "n_train_genes": 2376,
+  "noncoding_dropped": {
+   "pairs": 15254,
+   "positives": 99,
+   "genes": [
+    "SPAC186.04c",
+    "SPAC212.06c",
+    "SPAC2E12.05",
+    "SPAC977.13c",
+    "SPAPB24D3.05c",
+    "SPBC530.06c",
+    "SPBPB10D8.03",
+    "SPCC188.10c",
+    "SPCC18B5.02c",
+    "SPCC306.10",
+    "SPCC553.05c",
+    "SPCC622.17",
+    "SPCC663.07c",
+    "SPCP20C8.03",
+    "SPNCRNA.214",
+    "SPNCRNA.9001"
+   ]
+  },
+  "train_hash": "c38783243b1c30c10ccd0a6e97561b64edab1a95e7ed881caf3e6febf41cf73c",
+  "fits": [
+   {
+    "seed": 0,
+    "inner_fold_valid": 0,
+    "objective": "huber",
+    "best_iteration": 544,
+    "valid_ap_weighted": 0.19696891034117062,
+    "n_fit": 908888,
+    "n_valid": 330733,
+    "pos_fit": 17475,
+    "pos_valid": 6267,
+    "huber_delta": 2.3,
+    "target": "neg_min_s2_0"
+   },
+   {
+    "seed": 1,
+    "inner_fold_valid": 1,
+    "objective": "huber",
+    "best_iteration": 431,
+    "valid_ap_weighted": 0.17826894761496065,
+    "n_fit": 907469,
+    "n_valid": 333748,
+    "pos_fit": 17014,
+    "pos_valid": 6484,
+    "huber_delta": 2.3,
+    "target": "neg_min_s2_0"
+   },
+   {
+    "seed": 2,
+    "inner_fold_valid": 2,
+    "objective": "huber",
+    "best_iteration": 370,
+    "valid_ap_weighted": 0.2066494241747436,
+    "n_fit": 912137,
+    "n_valid": 329641,
+    "pos_fit": 16976,
+    "pos_valid": 6591,
+    "huber_delta": 2.3,
+    "target": "neg_min_s2_0"
+   }
+  ],
+  "stacker_cache": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/processed/cache/deliverable/5e80eacb036b6a41",
+  "objective": "huber",
+  "n_stacker_rows": 1657103,
+  "n_features": 475
+ },
+ "model_timings_s": {
+  "stacker_features": 161.46,
+  "stacker_rows": 166.7,
+  "stacker_assemble": 11.55,
+  "stacker_train": 478.47,
+  "fit_total": 659.09,
+  "ryan_features": 586.64,
+  "lf_assemble": 37.72,
+  "predict": 168.63
+ },
+ "runtime": {
+  "total_wall_s": 1458.6,
+  "stages_wall_s": {
+   "load_training_pairs": 0.193,
+   "fit": 659.365,
+   "score_universe": 794.778,
+   "flags_and_write": 3.158
+  },
+  "cpu_s": 3531.637,
+  "peak_rss_mb": 18321.7,
+  "threads": 4,
+  "hardware": "Apple M4, 10 cores, 32 GB, Darwin 25.6.0, py3.10.0",
+  "ryan_chunk": 2000000,
+  "lf_chunk": 500000
+ },
+ "counts": {
+  "class": {
+   "C2": 3764250,
+   "C1": 2530125,
+   "C3": 1398628
+  },
+  "viability_unknown_pairs": 554472,
+  "linked_pairs": 353615,
+  "linked_window_kb": 300.0,
+  "genes_with_coords": 3905,
+  "in_training": 1101660,
+  "measured_true": 1101660,
+  "measured_unknown": 0,
+  "with_oof": 1078622
+ },
+ "score_quantiles": {
+  "0.5": 0.220730951333708,
+  "0.9": 0.4730762467158708,
+  "0.99": 1.1525717429087816,
+  "0.999": 2.648472487496662
+ },
+ "score_mean_by_class": {
+  "C1": 0.28209662437438965,
+  "C2": 0.285734087228775,
+  "C3": 0.2974419891834259
+ },
+ "top_k_composition": {
+  "1000": {
+   "class": {
+    "C1": 891,
+    "C2": 109,
+    "C3": 0
+   },
+   "linked": 41,
+   "viability_unknown": 0,
+   "in_training": 658
+  },
+  "10000": {
+   "class": {
+    "C1": 7735,
+    "C2": 2265,
+    "C3": 0
+   },
+   "linked": 538,
+   "viability_unknown": 1,
+   "in_training": 4752
+  },
+  "100000": {
+   "class": {
+    "C1": 51589,
+    "C2": 43304,
+    "C3": 5107
+   },
+   "linked": 5001,
+   "viability_unknown": 396,
+   "in_training": 27852
+  }
+ },
+ "oof_run": "M2r_huber__20261028T205545__7b5e9e",
+ "lockbox_oof": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/processed/lockbox/preds_M2r_huber.parquet",
+ "in_sample_vs_oof": {
+  "n_pairs": 622515,
+  "positives": 12992,
+  "ap_in_sample": 0.3449663351184906,
+  "ap_out_of_fold": 0.2105899547637013,
+  "spearman_in_sample_vs_oof": 0.8058954548890372,
+  "note": "in-sample scores are optimistic on training pairs; use oof_score for measured pairs",
+  "by_class_of_pair_in_universe": {
+   "C1": {
+    "n": 622515,
+    "ap_in_sample": 0.3449663351184906,
+    "ap_out_of_fold": 0.2105899547637013
+   }
+  }
+ }
+}
