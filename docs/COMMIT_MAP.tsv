@@ -1,0 +1,85 @@
+old_commit	published_commit	date	subject
+b94db4356a9651c28a3c4a2fd1ae23dcebb91b90	b94db4356a9651c28a3c4a2fd1ae23dcebb91b90	2026-10-28 14:37:16 +0000	M0: project skeleton, prompt, env setup
+9d2d37179b03bc4764f2b5491c019cfdc9025c0d	23ed7b8f8bf2afd3ea3bc338a0c2c4f2c9e363b4	2026-10-28 14:58:55 +0000	Literature review, core data acquisition scripts, DATA.md, EDA inventory
+4b84f51b58375b2d37003b0ebc645281812e4414	7b2adaf32295b9799712a660ddcabc5602a0cb47	2026-10-28 15:18:33 +0000	DESIGN.md v1 draft; aux data inventory
+afcc7ebd69f6faaa520d00314b2ad43e5f710dd7	ad06a97a1dda8a8ec9b4d1a396889dc5b6a3f878	2026-10-28 15:19:51 +0000	Research tree update: data acquired, design review round 1 started
+c144142668d750181bb86f9dd0f0c4238f99c758	3aae8a3adf8ba7599d55cc56b95fc292ca66a056	2026-10-28 15:27:26 +0000	DESIGN.md v2 after review round 1; round-1 reviews
+a13b5f3aeb30122471652e92470d8732e59a963d	e98980f840f26743c01dfcd33b94ccfc26e81d21	2026-10-28 15:28:02 +0000	Tree/lessons after review round 1
+63b59de8a2e5ba77caa03e11d8125c6d6a7fbf09	e56b196704e75bfaacf5081cfe4456f2f4aaa1d1	2026-10-28 15:30:07 +0000	Draw lockbox gene set (20%, stratified, seed 20261028)
+e21d2a5b8b3cdcd1cf67382ea07bb921d67a48b3	c8ea75679b33cce816b29abe1c1bc6da97918008	2026-10-28 15:38:17 +0000	DESIGN.md v3 after review round 2; remove all-gene degree table from tree
+db4c993e123287164e7983157fe9f37b6c82c89f	9fce9ec8028c472bdced55b497b93d382860713b	2026-10-28 15:39:16 +0000	DESIGN.md v3 after review round 2
+a2dbde5f418a0b197201ceb9721e253f07eb07d2	9658828fd7187ac31f564144b263ed80bc34c3e6	2026-10-28 15:39:55 +0000	Shared interfaces spec
+234363b9ebafedcc2035a93a3d81d9d8e718e211	20aaa65161a58e2ae52e11ff4d78a361c779de16	2026-10-28 15:41:22 +0000	Research tree: M1 design complete
+98b078a320cd5fb150692e8e41aa548e41d37199	e9a9cfee323f2a313f396b2f5a699bc5863e9eb2	2026-10-28 15:43:52 +0000	DESIGN v3.1: round-3 final review fixes; design frozen
+94fb385188990f66fc191c76994be800edb08b05	bf2874c0262b0aebf9a42b5fb7c7fdcef5320866	2026-10-28 15:49:29 +0000	Toy data generator with known answers (separate agent); pin pytest 8.3.5
+877db0f176af75ef3bfc9dd41589e6858818c110	f7a225610467997f5c2fd8c620f2fc71772c3361	2026-10-28 15:53:17 +0000	LITERATURE.md corrections; DATA.md complete register; machine-readable data allowlist
+4ad7e113dabb33a54145cdb78e2d37a39449d47c	286028d1a3cf02dffc6d50edc9fb3bd65a59e661	2026-10-28 16:04:27 +0000	Tier-1 label-free features: idmap, PPI (PMID blocklist), SMF/PHEN, CER; YGOB added
+cb6ef2f1e335d50eb2aa655f7062c934db824abf	4ca684686bbdef0f0427799949103fe6fbf3cc70	2026-10-28 16:04:32 +0000	Ignore all of data/
+416cb7c58f5c4bcb363aeddc3ec1aa81dc7e3232	02b4642d09e4482f8d9cacda9ae2649fd2e589c4	2026-10-28 16:09:49 +0000	Phase A infrastructure: protocol.yaml, universe, splits, fold-scoped data API, evaluate + registry, timing, tests; B0 smoke test
+e93c211d2b8b8d4ceefd3f02c3145f3301adf100	ae70ffc88b64a42cc85aa487fbdf3b01d6627bb4	2026-10-28 16:09:50 +0000	Freeze protocol; tree update
+43e691ca19e5931f18097c7bf209ea38153af608	757f45394ff5902c6326d03931c560f730a4c66e	2026-10-28 16:28:47 +0000	Tier-2 label-free features: EXPR, KOPROT, LOC, SEQ (+ESM PCs/cosine), CONS
+232296807bb493e4a237225a1118aa3b1665741d	d68b59ef1dad7a3abed4a8c92386853fb2c7ea95	2026-10-28 16:44:48 +0000	Phase A independent verification report; B7 decision; DESIGN number corrections
+bb11fe92cb5acc457c3b6d4d4400ecd068838584	a826288f4d16e0793df10e5ee399ec44de849757	2026-10-28 16:59:46 +0000	Harden Phase A tests: eval completeness, non-circular DAmP check, AST label lint, pinned weights; all 11 planted mutants caught
+7c1fa467d4bacc26b1995976d1588059dd3c5d87	159153125f235938ba12a9cf15c0054bca097eeb	2026-10-28 17:06:19 +0000	Ryan-derived features (nested stacking, NBR), leakage tests, baselines B1-B4 + diagnostics
+59878ae54dc46fd5b471ecafafe22a858430fe22	615dfc03aebb211ca33460d6296d7ba3faab937a	2026-10-28 17:06:19 +0000	Tree: baselines
+e9e46e05a54e7d3a3b5f736aca4006f02b818cb2	ab8a94c79b971049352ebd649239246922674b27	2026-10-28 17:11:53 +0000	ESM-2 650M embeddings (pombe + cerevisiae) with sanity checks
+6c631c1585061bccb5fe38487e384b849b64a101	4fd05d79ec5eafb092f14b3d39ff9b31dcdd1083	2026-10-28 17:32:51 +0000	Pair assembler + M1 LightGBM (label-free features): primary 0.145; ablations; permutation control
+015cde20279981a5eb3619183d41926f097fc84a	cc4472a82156afdbfd5b5a37442d03e9649a5db5	2026-10-28 17:33:22 +0000	evaluate.git_info: dirty check covers code only (exclude results/, reviews/ outputs)
+fe57496a0a0d53c893fd9f8a54e045178d04a427	fccd0c20cedbf8f3f90e897f5d7dcb2c1c025fcb	2026-10-28 17:34:19 +0000	Milestone M2: tree summary, lessons
+eeac08339abad97019f9a407ef9ea8f8e9e06bc1	05a3ce494c13c3118a09f506d912df40574279a3	2026-10-28 17:35:21 +0000	Prune LESSONS after milestone retrospective; idea backlog
+3a9bf62a50fcbcf8561b9b56187ab1ad303e9f59	be158b52948d8440e84cc0f661b6f02f22a6d768	2026-10-28 18:05:37 +0000	M2: nested-stacked LightGBM with gene-propensity model; drop_noncoding helper; tests
+048f7fea0207e8176044a5d64d1f6b8292c079eb	4891f3755ad6e75d7cd46772021e72ffb38a22e3	2026-10-28 18:05:49 +0000	Cross-species transfer features (XSP, staged): cerevisiae-trained gene propensity + pair model applied to pombe
+10a1a06da2685d052de170056fa63d274d914d25	f7ddcccc7dcc0c65f6e3c360ac60a90cace5b8ab	2026-10-28 19:09:17 +0000	M2 results at clean commit 3a9bf62: M2 0.170 vs M1 0.145 (adopted, seed-7 +0.031); ablations; B1/B4/M1 clean reruns
+b0a795d0e920d300a33516e3f1349265076b5758	7e74d195dd2af34e77202f07d02b1e69373aed0c	2026-10-28 19:09:43 +0000	docs/m2.md (M2 results, ablations, shift, runtime); docs/baselines.md regenerated with clean-commit run ids
+08c4f0a7a145cc1e8097e15d88c89a05f7668a79	8080df2794fcdfc74e9efc079739ef8fad56f69d	2026-10-28 19:10:36 +0000	Tree: M2 adopted (0.170); XSP runtime records
+07628da97e328af7ed8d3abc76141ed03ad55de6	dc2339f29ffeaef66b01a8b2123a6c130479cd01	2026-10-28 19:11:42 +0000	Tree: launch M2 verification, M2+ rung, deliverable tooling
+bf7e4691b36f539f45bb13ffe4fa7b46f8d0e15c	a9562bff919cb35c36182f2e442079e5d5d2d8e7	2026-10-28 19:23:29 +0000	M2+: merge_staged.py (XSP merged, exact source ids), m2 gene-table group exclusion, run_m2plus.py (XSP variants, bagging, Huber E-TARGET, C3 blend), pre-stated config/m2plus.yaml, tests
+ede95342389a659c9bda0ca3396e390583217f01	84c0a9a01f0c9aa5a815f1da56c0eb82cac8bbd2	2026-10-28 19:32:49 +0000	Independent M2 verification: all checks pass (leak canary, permutation control, metric re-derivation, hygiene)
+a269a5fb2e40de885c53852210a660734cea5566	211266b269fd7097150287b54a948c89caedc37e	2026-10-28 19:49:19 +0000	Deliverable tooling: predict_all_pairs (M2 at universe scale), one-shot lockbox_eval + prereg template, linkage diagnostic
+450899d44086b0bd2d8d010b067265c543cef527	92b10b468066c1b9afdba60a96ec83e2755a96aa	2026-10-28 20:10:40 +0000	Deliverable: clean universe run at a269a5f (7,693,003 pairs, 985 s, peak RSS 12.4 GB / 6.3 GB footprint), toy full-universe summary, docs
+f8a3fba8ca55f47e266ab71d98e959201f4bddb7	74ed130d5c538c3e87f037925086421594cfde55	2026-10-28 20:11:14 +0000	Merge branch 'deliverable': predict_all_pairs, lockbox_eval + prereg template, linkage diagnostic
+a7666f303b17d225af031a7df7ba3309aefd8983	c76e1f109a20c444aa93e41104df34ea7925e662	2026-10-28 20:15:15 +0000	Register pombase_coords (universe-only); tree: deliverable merged, linkage findings, decisions
+26fe6368d278a20dc5dc1cfba7037002d64f7366	360d92ddc71240d28df3633db4121cfe5f4c885e	2026-10-28 20:29:24 +0000	M2+ results: M2r reproduces M2; XSP null; bag5 +0.003 (below bar); Huber E-TARGET +0.009 vs bag5
+592bdf124ecb8473211e084a85dba72e381d5363	2ed36ce240b899d580d68afcd3ed4653d8045ab9	2026-10-28 20:29:24 +0000	Merge main into m2plus (deliverable tooling, pombase_coords)
+7be24e15353e02133cfb8c1f913985cca1640e43	c3f818f1cedbb4a6adf0c6a86cc71a57086bd00c	2026-10-28 21:02:43 +0000	M2+ rung: Huber E-TARGET + 5-seed bagging adopted (0.1814, +0.0114 [0.0069, 0.0153] vs M2, seed-7 +0.0076); XSP and C3 blend null; docs/m2plus.md
+8d5299a02cd5d78276d6777f9edac2240780a452	ac143bf44f99e494c52cec2fd1f3d6b940de90ea	2026-10-28 21:03:18 +0000	Merge branch 'm2plus': XSP merged (not adopted), bagging, Huber stacker target adopted (0.1814)
+20182926092657781958f21326e705ee1a1f62bd	f91ffec29c14ad782e2c5a5773bb414169defffe	2026-10-28 21:03:38 +0000	Tree: M2+ rung results (Huber target adopted, 0.1814; XSP/bagging-alone/C3 blend null)
+4a81a106d3efb859fc87cb4c2a2c311582f11f79	310dac62808b9fa0a5ab4bececba03b54e2a1ffc	2026-10-28 21:04:56 +0000	Tree: launch Huber verification, ship, E-CONT, rarely-seen analysis
+69f50d4f5e4055d501d0cae8967c369e7bace825	c265db5a69d121098860d876e2f41aaf15dca08a	2026-10-28 21:06:27 +0000	Milestone M3: tree status summary + cleanup, incumbent = M2r_huber (per-step adoption), LESSONS pruned after retrospective
+8e98fa421d93908f9b2d74c2b9d3f051e93d92e7	3700804aae4256c1c924869b0f38d4823cf80455	2026-10-28 21:06:36 +0000	E-FEWSHOT and degree-analysis pre-statement (config/fewshot.yaml)
+f35085c51a6dc7e77125451292e8c1922cfca86a	bdbf644c9c130a4b4d76c7ed424f970f07887fd3	2026-10-28 21:07:33 +0000	scripts/run_fewshot.py: E-FEWSHOT runner (reveal via monkeypatch of data.fold_split/cache_path)
+46856ebeb1ff9ee10ceaefce61c61efb2fd3aa11	f2766f915b674df2121e8a691ce8e562721f6fde	2026-10-28 21:08:43 +0000	scripts/rarely_seen.py: degree, fewshot and figure stages
+5e1b7a569c42c68737ca58389544769ed98cbd04	7832826afd7adec00cf93420e85b294cc476dd5d	2026-10-28 21:09:02 +0000	E-CONT: pre-stated rules (config/m2cont.yaml) before any result
+bc73be2a78df2dc6fc6634543d345f365bb3a235	39536254b768eb57e43c9a68a63ee6302122623a	2026-10-28 21:19:01 +0000	Shared stacker (src/models/stacker.py), M2r_huber/M2r_bag5_huber deliverable specs, pinned default model inputs
+6016810cd4f773235176608d13b2b60fe71ce9b0	4cf901c10bdd5d98364a61813db6c7bcf71f4914	2026-10-28 21:25:13 +0000	E-CONT: continuous GP target (gp_cfg cont) and NBR-on-t columns (cfg cont_nbr), gene-permuted control, run_m2cont.py; toy check PASS (rho_theta 0.812 vs B1 0.551), toy canary PASS
+dbedfb643fa184327da2dc8fd84c1ba084823602	8d63d8dab9490aee3075f601f205badcc910631b	2026-10-28 21:53:33 +0000	docs/deliverable.md: shipped model M2r_huber, stacker objective (run numbers to follow)
+51c557f54f86ec310a819f06e6b3b4b3f0036c29	e9c62eda747d3def8dee2a7f2ec868bcefff43ed	2026-10-28 22:13:36 +0000	Independent verification of Huber incumbent: all checks pass
+145085d3df675e0f55f6c6bed389356703304214	8aba6c0d1f77e96d0cb99f9dde8971a2e2325eae	2026-10-28 22:29:43 +0000	Rarely-seen analysis: degree-stratified C1/C2 and E-FEWSHOT (k=0/5/20, 5 folds x 3 seeds); docs/rarely_seen.md, results/rarely_seen
+e9efd283d7c1c2600739f0fa7f2bdd7435eb5ce4	51052b8f45ba0a4d4209b6c34712186baf4f383f	2026-10-28 22:30:10 +0000	Merge branch 'fewshot': rarely-seen degree analysis + E-FEWSHOT (report-only)
+ad76950dd16ac13b982f671d90ae08bea7f45e3a	08c54dc5687ef581e14dbb1b876f0eb6eb7884ba	2026-10-28 22:30:24 +0000	Tree: rarely-seen / few-shot findings and decision
+71822fdef90eec91ef6423d8d4749e17f067a5f1	72291e3b7f19f222e794c0c723f0f52f67950378	2026-10-28 22:30:49 +0000	Tree: launch M5/M3 rung
+43d37723719af5624a86577446e393c6ee5d61a4	7e19f07bfd473fa914008de4d5cdc032d96feeaf	2026-10-28 22:31:33 +0000	Universe run of M2r_huber (dev, clean at dbedfb6), refactor equivalence result, lockbox records threads
+e8760e23429ec70f838ad7b11f499d5c7282245f	321da98ea1a849ead606bf42fc1ab74007efcf2d	2026-10-28 22:31:55 +0000	Merge branch 'ship': shared stacker module, M2r_huber as deliverable default, pinned default inputs, universe re-run
+1fa0520a9f9c6aa96002d5805e08c4baf2ae4166	2844543a2b2c88c16b570e59809bd713c360b430	2026-10-28 22:32:05 +0000	Tree: ship merged; prereg seeds/threads decisions
+d759d2827c708b8348ebf8d0a32ba4cff382ec36	3b1abdf61ad57f694977e317f3d2a4ba37867182	2026-10-28 22:39:38 +0000	M5/M3 rung: pre-stated candidates, combination rules, M3 spec and adoption rules (config/m5m3.yaml)
+d0483c80d976c06a11cb62d8f01f144744feb445	835f8568543fd1ccb922bb1295b8775774b5fd5a	2026-10-28 22:45:18 +0000	E-CONT: dev results (all null), split-7 comparator, same-thread comparator amendment, per-class / target-noise diagnostics
+db78f84f15e4002b3a93ecdd5c772d741286eb00	d220e701f4a77730f51223d4e3f206bce9c252ad	2026-10-28 22:57:25 +0000	M5 rank-average ensembles (scripts/run_m5.py) and M3 two-tower pair model (src/models/m3.py, scripts/run_m3.py) with tests
+e1e32221e9e231826cdd76976c75f6bf1657835c	66174f2cb9f5e9a578736668a0509f0bd6a1fc65	2026-10-28 23:07:13 +0000	E-CONT: same-thread comparator re-run, comparisons, per-class CIs, real-data target noise
+cde86c61d1eabdd2f8f4238ac8d3db199cd84825	24de8173c8ec3a28807e3031867572f51af67953	2026-10-28 23:07:13 +0000	Merge main into m2cont (shared Huber stacker src/models/stacker.py)
+a01580ffa9d340fceda2a0e512e87bdf11b83d14	7e8a1435181d77423cb793739483e2cb733724b4	2026-10-28 23:12:26 +0000	E-CONT: docs/m2cont.md (all three variants null; toy check and canary pass; same-thread comparator)
+8236f70e1ea5f4269f40fc1e61e714fff44ccf61	4cbcaed451e905f829cbc7a40858cee699dd2385	2026-10-28 23:12:52 +0000	Merge branch 'm2cont': E-CONT continuous GP/NBR variants (null)
+51d1368668139722f9192effe9391b6c05352294	1c466e30e8c0e007e62fa4e082f5f19097e24cd1	2026-10-28 23:13:38 +0000	Fix label-access lint: run_fewshot uses data.dev_pairs (reveal rows verified identical); rarely_seen.py allowlisted as report-only evaluator; tree: E-CONT null
+c36c4c41bf80ea24a99df4f242f462dbd92f03d8	4f300d4a7407d9ff5d5c8c0d516e8814a5efbde9	2026-10-28 23:42:09 +0000	M5/M3 rung results: nothing adopted (M3 0.1696, -0.0096; best ensemble M5_IncM3 +0.0015 [-0.0025, +0.0053]); docs/m5m3.md
+64c202a8396d496ee1ce1c02fef8014d373e403b	ddf43587f4826e78d49691e3fa13070a69b24fed	2026-10-28 23:42:41 +0000	Merge branch 'm5m3': M5 rank ensembles and M3 neural (all null)
+be18596db2f437a60951d4b0f008a0a1a5adac49	765c36cca3dcfa7e4c6d55879bff4a27bd50ed89	2026-10-28 23:42:53 +0000	Tree: M5/M3 null; stop model search, incumbent M2r_huber final
+94a88f79f3ea5007779186f4a70c00731460f405	293869abd74f3ad9798264a1855bc60d6610757c	2026-10-28 23:43:18 +0000	Lockbox preregistration filled: headline M2r_huber; shortlist M2r_huber, M2, M1 + baselines B1, B4; seeds=model; Holm over 4 contrasts vs headline; code_commit be18596, models sha 8d2e29f5
+698083111f8826a432aa0f7e858b5769edec377d	0cba47b70095efc80e8c8ae5b0e687a958f53ce6	2026-10-28 23:49:39 +0000	lockbox_eval: fix prereg commit check for preregs in subdirectories (git ran from the subdir with a top-level path; refused the committed config/lockbox_prereg.yaml); regression test; template-state test now validates the filled prereg. Access log keeps the refused attempt.
+792f12bb857430542072d7a3d4539b46b4ec1d88	1c14891ca0e74827811886bf738a38eff44a5ce0	2026-10-28 23:49:40 +0000	Lockbox prereg: code_commit -> 698083111f8826a432aa0f7e858b5769edec377d (lockbox_eval path fix only; shortlist/headline/contrasts unchanged; no lockbox data was read by the refused attempt)
+605d2e54d887558997ca5bb88296b5d7773c057c	f040510e44e1d2a2f555a61daf701ee52fe341ad	2026-10-29 00:03:00 +0000	LOCKBOX (one-shot, prereg deec74e3): headline M2r_huber primary 0.211 [0.179, 0.247] (C1 .285/C2 .210/C3 .125); M2 0.201, M1 0.162, B4 0.110, B1 0.106; all 4 Holm contrasts reject (vs M2 +0.010 [0.003, 0.017])
+08b84f754b716d2ad0e7fdf44a149ba52961f551	3d55ac4bc10d4fc1929a379cc6d86bb280b9c2bb	2026-10-29 00:03:31 +0000	Tree: lockbox result, final retrain started
+eb23f6d88b0463af946277106018211acf3c80c0	bed9ca59fe571e695f5e4d58776d65b140ef59af	2026-10-29 00:23:07 +0000	Independent lockbox verification: all checks pass; dev/lockbox gap = sampling noise + small data effect
+8fdd33a0f5efd03ea9e4a46e8f4a8bf0119df21e	8c8b501b6104188f11f6ddea9ceb8a2fcf8e9927	2026-10-29 00:23:21 +0000	REPORT draft (pending final universe run); tree: lockbox verified
+b003b34f5b415a9939ac92b3b20aafc22c9156b5	4295e635e23b804b190cee19a1fc2c4fe621d29e	2026-10-29 00:28:22 +0000	Final: M2r_huber retrained on all Ryan, universe scored (7,693,003 pairs); REPORT.md; tree M4 summary
+11b38675d27ab12d907943700d4194d22110f12a	6d278dfd619e80c84490ac68c3fbe26fdfd57f26	2026-10-29 00:42:48 +0000	REPORT fact-check corrections (12 items from independent review; seed-7 entry pending clean rerun); LESSONS final prune; final test log; dirty seed-7 rerun recorded (docs were uncommitted during run)
+71e69449587c4389494ae92047b79b3890cba6e4	ee60247f9c09640df2871da5aee2ae87895ab5ce	2026-10-29 00:52:36 +0000	scripts/compare_runs.py: CLI for registered paired comparisons
+e6f737a9b9f2e6cae6d6d5e228bea0b291ab1cb1	b68d7905eae59c46ae7f1c0663450cbf503b86e7	2026-10-29 00:53:22 +0000	Clean seed-7 comparator for M2r_huber (+0.0058; registered comparison adopt=True); REPORT final
