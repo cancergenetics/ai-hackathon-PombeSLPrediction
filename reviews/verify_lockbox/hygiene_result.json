@@ -1,0 +1,128 @@
+{
+ "n_lockbox_genes": 480,
+ "lockbox_genes_sha256": "77fb02e1a5d688884e0a282c49c9f100840ee0f1988b74247abee150228d3457",
+ "lockbox_s_score_matches_raw": true,
+ "lockbox_y_eq_recomputed": true,
+ "part_mismatch": 0,
+ "raw_pairs_with_lockbox_gene": 477627,
+ "lockbox_file_C2C3": 477627,
+ "raw_lockbox_gene_pairs_missing_from_lockbox_file": 0,
+ "in_universe_mismatch": 0,
+ "eligible_mismatch": 0,
+ "preds_n": 456107,
+ "expected_eval_n": 456107,
+ "preds_set_equal_expected": true,
+ "preds_part_mismatch": 0,
+ "eval_damp_only": 0,
+ "eval_merged": 0,
+ "eval_not_in_universe": 0,
+ "eval_by_class": {
+  "C2": 344186,
+  "C1": 69169,
+  "C3": 42752
+ },
+ "excluded_ineligible_by_class": {
+  "C2": 80898,
+  "C3": 9791
+ },
+ "excluded_damp_only_by_class": {
+  "C2": 54478,
+  "C3": 6967
+ },
+ "C1_with_lockbox_gene": 0,
+ "C1_fraction_of_eligible_devdev": 0.10000086744814106,
+ "devdev_raw": 859406,
+ "dev_file": 790237,
+ "lockbox_C1": 69169,
+ "devdev_eq_dev_union_C1": true,
+ "dev_file_intersect_C1": 0,
+ "train_n": 784194,
+ "train_pos": 14503,
+ "train_genes": 1915,
+ "train_lockbox_genes": 0,
+ "train_intersect_lockboxC1": 0,
+ "train_intersect_any_lockbox_pair": 0,
+ "train_intersect_eval_pairs": 0,
+ "train_y_eq_recomputed": true,
+ "hash_all_dev": "4f21b62a4b35af26fd4dc851a09f40da0c077e16ba782aa33a2d507934e0f838",
+ "hash_all_dev_coding": "bc25d3c322ae52af91622ecd7810666a71b02993775dfb0efc2a85f54f3f3512",
+ "n_coding": 775918,
+ "pos_coding": 14464,
+ "genes_coding": 1904,
+ "fits_check": {
+  "M2r_huber": {
+   "hash_match": true,
+   "n_match": true,
+   "seeds": [
+    0,
+    1,
+    2
+   ]
+  },
+  "M2": {
+   "hash_match": true,
+   "n_match": true,
+   "seeds": [
+    0,
+    1,
+    2
+   ]
+  },
+  "M1": {
+   "hash_match": true,
+   "n_match": true,
+   "seeds": [
+    0,
+    1,
+    2
+   ]
+  },
+  "B1_additive_logit": {
+   "hash_match": true,
+   "n_match": true,
+   "seeds": []
+  },
+  "B4_logistic_MF": {
+   "hash_match": true,
+   "n_match": true,
+   "seeds": []
+  }
+ },
+ "n_dev_training_pairs_match": true,
+ "prereg_sha256": "deec74e31a7ca6e250071d25f9494c0ef6dd6cf5d5b57ba64e6bd35cb9a0d704",
+ "prereg_sha_at_run_commit": "deec74e31a7ca6e250071d25f9494c0ef6dd6cf5d5b57ba64e6bd35cb9a0d704",
+ "code_diff_codecommit_vs_run": [],
+ "code_diff_run_vs_HEAD": [],
+ "models_sha_at_code_commit": "8d2e29f528bae4d4d633482bcd6db382b81655c7477e59beab1c0924c01a87ed",
+ "models_sha_prereg": "8d2e29f528bae4d4d633482bcd6db382b81655c7477e59beab1c0924c01a87ed",
+ "models_sha_result": "8d2e29f528bae4d4d633482bcd6db382b81655c7477e59beab1c0924c01a87ed",
+ "protocol_sha_ok": true,
+ "models_yaml_seeds": {
+  "M2r_huber": "ladder",
+  "M2r_bag5_huber": "all",
+  "M2": "ladder",
+  "M2_init": "ladder",
+  "M1N": "ladder",
+  "M1": "ladder",
+  "B1_additive_logit": null,
+  "B4_logistic_MF": "ladder"
+ },
+ "threads": 4,
+ "access_log_events": [
+  [
+   "refused",
+   "94a88f79",
+   "11d462c1b036"
+  ],
+  [
+   "started",
+   "792f12bb",
+   "deec74e31a7c"
+  ],
+  [
+   "completed",
+   "792f12bb",
+   "deec74e31a7c"
+  ]
+ ]
+}

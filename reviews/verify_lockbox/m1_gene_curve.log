@@ -1,0 +1,8 @@
+{"fold": 0, "n_train_full": 460699, "n_train_sub": 291166, "genes_full": 1532, "genes_sub": 1226, "full_C1": 0.2092, "full_C2": 0.1228, "full_C3": 0.0828, "full_s": 91.7, "sub_C1": 0.2117, "sub_C2": 0.1204, "sub_C3": 0.0817, "sub_s": 55.5}
+{"fold": 1, "n_train_full": 462417, "n_train_sub": 289327, "genes_full": 1533, "genes_sub": 1226, "full_C1": 0.1959, "full_C2": 0.1328, "full_C3": 0.0988, "full_s": 126.7, "sub_C1": 0.1739, "sub_C2": 0.1213, "sub_C3": 0.0777, "sub_s": 58.9}
+{"fold": 2, "n_train_full": 461066, "n_train_sub": 290641, "genes_full": 1533, "genes_sub": 1226, "full_C1": 0.168, "full_C2": 0.1173, "full_C3": 0.0807, "full_s": 101.6, "sub_C1": 0.1813, "sub_C2": 0.1155, "sub_C3": 0.0735, "sub_s": 70.5}
+{"fold": 3, "n_train_full": 463689, "n_train_sub": 299738, "genes_full": 1531, "genes_sub": 1225, "full_C1": 0.1664, "full_C2": 0.1005, "full_C3": 0.0616, "full_s": 124.8, "sub_C1": 0.1569, "sub_C2": 0.1042, "sub_C3": 0.0568, "sub_s": 36.2}
+{"fold": 4, "n_train_full": 462077, "n_train_sub": 299371, "genes_full": 1531, "genes_sub": 1225, "full_C1": 0.1629, "full_C2": 0.1194, "full_C3": 0.0866, "full_s": 48.0, "sub_C1": 0.1927, "sub_C2": 0.1226, "sub_C3": 0.0813, "sub_s": 43.6}
+C1 mean full 0.1805 sub 0.1833 rel drop -0.016
+C2 mean full 0.1186 sub 0.1168 rel drop 0.015
+C3 mean full 0.0821 sub 0.0742 rel drop 0.096

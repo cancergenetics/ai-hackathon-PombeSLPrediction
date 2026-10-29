@@ -1,0 +1,4 @@
+M2r_huber {"primary": 0.2113, "primary_sklearn": 0.2113, "primary_ci": [0.1815, 0.2448], "ap_C1": 0.2853, "ap_C2": 0.2103, "ap_C3": 0.1252, "ap_C1_sklearn": 0.2853, "ap_C2_sklearn": 0.2103, "ap_C3_sklearn": 0.1252, "ap_C1_ci": [0.2288, 0.3426], "ap_C2_ci": [0.1721, 0.254], "ap_C3_ci": [0.0852, 0.1752]}
+M2 {"primary": 0.201, "primary_sklearn": 0.201, "primary_ci": [0.1734, 0.2308], "ap_C1": 0.2663, "ap_C2": 0.1992, "ap_C3": 0.127, "ap_C1_sklearn": 0.2663, "ap_C2_sklearn": 0.1992, "ap_C3_sklearn": 0.127, "ap_C1_ci": [0.2148, 0.3241], "ap_C2_ci": [0.1639, 0.24], "ap_C3_ci": [0.0884, 0.1761]}
+M2r_huber - M2 {"delta": 0.0104, "ci": [0.003332321212760602, 0.01689590021604564], "p": 0.002, "p_floor": 0.001, "p_holm": 0.002, "reject": true}
+max abs diff point estimates vs claimed: 1.4155343563970746e-15
