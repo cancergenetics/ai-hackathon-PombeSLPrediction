@@ -92,8 +92,14 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
     - incumbent + M2 + M1: −0.007;
     - incumbent + M3: +0.0015 [−0.0025, +0.0053], seed-7 +0.003. C3 reached 0.099, the best yet, but not significant.
   - Rank-averaging only helps with members about as accurate as the incumbent.
-- [ ] 16. Lockbox: fill config/lockbox_prereg.yaml (shortlist, headline), commit, run scripts/lockbox_eval.py once
-- [ ] 17. Final model retrained on all Ryan (dev + lockbox) → universe predictions
+- [x] 16. Lockbox (prereg deec74e3; results/lockbox/lockbox_result_deec74e31a7c.json; 772 s on 4 threads)
+  - [!] **Held-out test: M2r_huber primary 0.211 [0.179, 0.247]**; C1 .285 / C2 .210 / C3 .125; AUROC 0.862; precision@k 0.55; 456k pairs, 2,238 genes, prevalence 0.021.
+    - M2 0.201, M1 0.162, B4 0.110, B1 0.106.
+    - All 4 Holm contrasts reject, including vs M2: +0.010 [0.003, 0.017].
+  - [!] The lockbox is higher than dev for the stacked models (+0.032 for M2r_huber, +0.017 for M1) but not for the baselines (≈0.002). Likely cause: more training genes (all dev, not 80%). Being checked by an independent verifier.
+  - [x] One refused attempt, caused by a path bug in the prereg commit check (fixed in 6980831; no lockbox data read). Then exactly one completed run.
+  - [~] Independent verification of the lockbox numbers
+- [~] 17. Final model retrained on all Ryan (dev + lockbox) → universe predictions (running, 4 threads)
 - [ ] 18. REPORT.md
 
 ## Idea backlog (ranked; stop rule: 3 consecutive failed rungs and no supported idea left)
