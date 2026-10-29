@@ -98,7 +98,7 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
     - All 4 Holm contrasts reject, including vs M2: +0.010 [0.003, 0.017].
   - [!] The lockbox is higher than dev for the stacked models (+0.032 for M2r_huber, +0.017 for M1) but not for the baselines (≈0.002). Likely cause: more training genes (all dev, not 80%). Being checked by an independent verifier.
   - [x] One refused attempt, caused by a path bug in the prereg commit check (fixed in 6980831; no lockbox data read). Then exactly one completed run.
-  - [~] Independent verification of the lockbox numbers
+  - [x] Independent verification of the lockbox (reviews/verify_lockbox/REPORT.md): every number re-derived (to 3e-15), hygiene 0 mismatches, prereg compliant, no leakage. The dev/lockbox gap is sampling noise (z≈1.5; 5 genes move C2 .210→.183) plus a small effect of more training data.
 - [~] 17. Final model retrained on all Ryan (dev + lockbox) → universe predictions (running, 4 threads)
 - [ ] 18. REPORT.md
 
