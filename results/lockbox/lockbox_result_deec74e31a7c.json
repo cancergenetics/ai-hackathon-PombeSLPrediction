@@ -1,0 +1,510 @@
+{
+ "prereg_sha256": "deec74e31a7ca6e250071d25f9494c0ef6dd6cf5d5b57ba64e6bd35cb9a0d704",
+ "headline_model": "M2r_huber",
+ "shipped_model": "M2r_huber",
+ "note": "the headline model is shipped regardless of the lockbox ranking (prereg)",
+ "ranking_by_primary": [
+  "M2r_huber",
+  "M2",
+  "M1",
+  "B4_logistic_MF",
+  "B1_additive_logit"
+ ],
+ "models": {
+  "M2r_huber": {
+   "primary": 0.21130776898797227,
+   "primary_ci": [
+    0.17929781125475314,
+    0.24681401288119664
+   ],
+   "primary_se": 0.017617157534736833,
+   "ap_C1": 0.2852903138562064,
+   "ap_C2": 0.21033288870214753,
+   "ap_C3": 0.12515316040543495,
+   "ap_C1_ci": [
+    0.2291277417503433,
+    0.34620669093378753
+   ],
+   "ap_C2_ci": [
+    0.16967270261377776,
+    0.2558556027130487
+   ],
+   "ap_C3_ci": [
+    0.08427568588193952,
+    0.1835088093302833
+   ],
+   "pooled_all_pairs": 0.22271497111082772,
+   "pooled_equal": 0.20659783374281548,
+   "auroc": 0.8618639535304483,
+   "precision_at_k": 0.5533714824958469,
+   "prevalence_primary": 0.02138845368817065,
+   "pooled_raw_mean_label": 0.23477012612016301,
+   "n_C1": 69169.0,
+   "n_C2": 344186.0,
+   "n_C3": 42752.0,
+   "pos_C1": 1444.0,
+   "pos_C2": 7247.0,
+   "pos_C3": 983.0,
+   "dev_run": "M2r_huber__20261028T205545__7b5e9e",
+   "dev_primary": 0.1791464365743302,
+   "dev_minus_lockbox": -0.03216133241364208
+  },
+  "M2": {
+   "primary": 0.20095653172809153,
+   "primary_ci": [
+    0.17168047785460555,
+    0.2333739842841001
+   ],
+   "primary_se": 0.01621473238681563,
+   "ap_C1": 0.2662684538981785,
+   "ap_C2": 0.19924229878476027,
+   "ap_C3": 0.12702527424166232,
+   "ap_C1_ci": [
+    0.21303382168200377,
+    0.3256314217866854
+   ],
+   "ap_C2_ci": [
+    0.16192822817801528,
+    0.24324421202834207
+   ],
+   "ap_C3_ci": [
+    0.08891992074891614,
+    0.18179936903364602
+   ],
+   "pooled_all_pairs": 0.21118455078642256,
+   "pooled_equal": 0.19736217711438453,
+   "auroc": 0.8657065715435518,
+   "precision_at_k": 0.5265744703019057,
+   "prevalence_primary": 0.02138845368817065,
+   "pooled_raw_mean_label": 0.22679812696455864,
+   "n_C1": 69169.0,
+   "n_C2": 344186.0,
+   "n_C3": 42752.0,
+   "pos_C1": 1444.0,
+   "pos_C2": 7247.0,
+   "pos_C3": 983.0,
+   "dev_run": "M2__20261028T183713__024416",
+   "dev_primary": 0.170008534966877,
+   "dev_minus_lockbox": -0.030947996761214513
+  },
+  "M1": {
+   "primary": 0.16192549896249173,
+   "primary_ci": [
+    0.13831522417528233,
+    0.18940488089330162
+   ],
+   "primary_se": 0.01364909369792573,
+   "ap_C1": 0.21355869783712764,
+   "ap_C2": 0.15432488927814622,
+   "ap_C3": 0.12174888774552298,
+   "ap_C1_ci": [
+    0.16749967775596622,
+    0.2707033603481379
+   ],
+   "ap_C2_ci": [
+    0.12803245023807105,
+    0.18423698826703402
+   ],
+   "ap_C3_ci": [
+    0.08386984329203623,
+    0.17474434550371518
+   ],
+   "pooled_all_pairs": 0.16999507075085118,
+   "pooled_equal": 0.16291650783895847,
+   "auroc": 0.8534310575791507,
+   "precision_at_k": 0.40094594688949065,
+   "prevalence_primary": 0.02138845368817065,
+   "pooled_raw_mean_label": 0.1981441186101751,
+   "n_C1": 69169.0,
+   "n_C2": 344186.0,
+   "n_C3": 42752.0,
+   "pos_C1": 1444.0,
+   "pos_C2": 7247.0,
+   "pos_C3": 983.0,
+   "dev_run": "M1__20261028T185030__5ad666",
+   "dev_primary": 0.14466210764261653,
+   "dev_minus_lockbox": -0.0172633913198752
+  },
+  "B1_additive_logit": {
+   "primary": 0.10595690928180733,
+   "primary_ci": [
+    0.08646601555321393,
+    0.12763948878822692
+   ],
+   "primary_se": 0.010727431582100325,
+   "ap_C1": 0.22251536906858776,
+   "ap_C2": 0.07981414677619825,
+   "ap_C3": 0.02299307634730539,
+   "ap_C1_ci": [
+    0.1725050007660852,
+    0.2807484025598881
+   ],
+   "ap_C2_ci": [
+    0.06716707965023452,
+    0.0924883333974447
+   ],
+   "ap_C3_ci": [
+    0.01639245376158838,
+    0.030731887790167483
+   ],
+   "pooled_all_pairs": 0.12412532022427855,
+   "pooled_equal": 0.11035238112267817,
+   "auroc": 0.7701240948856372,
+   "precision_at_k": 0.32699999999999996,
+   "prevalence_primary": 0.02138845368817065,
+   "pooled_raw_mean_label": 0.1486233421890315,
+   "n_C1": 69169.0,
+   "n_C2": 344186.0,
+   "n_C3": 42752.0,
+   "pos_C1": 1444.0,
+   "pos_C2": 7247.0,
+   "pos_C3": 983.0,
+   "dev_run": "B1_additive_logit__20261028T183903__da755f",
+   "dev_primary": 0.10331822661451136,
+   "dev_minus_lockbox": -0.002638682667295972
+  },
+  "B4_logistic_MF": {
+   "primary": 0.10988328339291908,
+   "primary_ci": [
+    0.08864176321850159,
+    0.13244526684767208
+   ],
+   "primary_se": 0.011189997054506011,
+   "ap_C1": 0.24646737949038977,
+   "ap_C2": 0.07981414677619825,
+   "ap_C3": 0.02299307634730539,
+   "ap_C1_ci": [
+    0.19243835362702952,
+    0.30539227054526646
+   ],
+   "ap_C2_ci": [
+    0.06716707965023452,
+    0.0924883333974447
+   ],
+   "ap_C3_ci": [
+    0.01639245376158838,
+    0.030731887790167483
+   ],
+   "pooled_all_pairs": 0.13066198301073856,
+   "pooled_equal": 0.11583217293983303,
+   "auroc": 0.736050098543241,
+   "precision_at_k": 0.36059622667212526,
+   "prevalence_primary": 0.02138845368817065,
+   "pooled_raw_mean_label": 0.148049418958505,
+   "n_C1": 69169.0,
+   "n_C2": 344186.0,
+   "n_C3": 42752.0,
+   "pos_C1": 1444.0,
+   "pos_C2": 7247.0,
+   "pos_C3": 983.0,
+   "dev_run": "B4_logistic_MF__20261028T183958__e1e7b0",
+   "dev_primary": 0.10785104019194156,
+   "dev_minus_lockbox": -0.0020322432009775293
+  }
+ },
+ "contrasts": {
+  "M2r_huber - B1_additive_logit": {
+   "delta": 0.10535085970616494,
+   "ci": [
+    0.07923223510453772,
+    0.1348557185212015
+   ],
+   "p": 0.0,
+   "p_holm": 0.0,
+   "reject_at_alpha": true
+  },
+  "M2r_huber - B4_logistic_MF": {
+   "delta": 0.10142448559505318,
+   "ci": [
+    0.07548474803060091,
+    0.1306402216865848
+   ],
+   "p": 0.0,
+   "p_holm": 0.0,
+   "reject_at_alpha": true
+  },
+  "M2r_huber - M1": {
+   "delta": 0.04938227002548054,
+   "ci": [
+    0.03270489067758298,
+    0.06744405803738462
+   ],
+   "p": 0.0,
+   "p_holm": 0.0,
+   "reject_at_alpha": true
+  },
+  "M2r_huber - M2": {
+   "delta": 0.010351237259880741,
+   "ci": [
+    0.0033644880858769892,
+    0.01683673759685603
+   ],
+   "p": 0.0,
+   "p_holm": 0.0,
+   "reject_at_alpha": true
+  }
+ },
+ "holm_alpha": 0.05,
+ "n_eval_pairs": 456107,
+ "n_eval_genes": 2238,
+ "n_boot": 1000,
+ "n_dev_training_pairs": 784194,
+ "seeds": "model",
+ "fits": {
+  "M2r_huber": {
+   "model": "M2r_huber",
+   "kind": "m2_stack",
+   "n_train_pairs": 775918,
+   "n_train_positives": 14464,
+   "n_train_genes": 1904,
+   "noncoding_dropped": {
+    "pairs": 8276,
+    "positives": 39,
+    "genes": [
+     "SPAC186.04c",
+     "SPAC2E12.05",
+     "SPAPB24D3.05c",
+     "SPBC530.06c",
+     "SPCC188.10c",
+     "SPCC18B5.02c",
+     "SPCC306.10",
+     "SPCC622.17",
+     "SPCC663.07c",
+     "SPCP20C8.03",
+     "SPNCRNA.9001"
+    ]
+   },
+   "train_hash": "bc25d3c322ae52af91622ecd7810666a71b02993775dfb0efc2a85f54f3f3512",
+   "fits": [
+    {
+     "seed": 0,
+     "inner_fold_valid": 0,
+     "objective": "huber",
+     "best_iteration": 721,
+     "valid_ap_weighted": 0.15371806282871703,
+     "n_fit": 538915,
+     "n_valid": 195367,
+     "pos_fit": 10323,
+     "pos_valid": 3657,
+     "huber_delta": 2.3,
+     "target": "neg_min_s2_0"
+    },
+    {
+     "seed": 1,
+     "inner_fold_valid": 1,
+     "objective": "huber",
+     "best_iteration": 838,
+     "valid_ap_weighted": 0.1755994618665405,
+     "n_fit": 539987,
+     "n_valid": 194088,
+     "pos_fit": 10213,
+     "pos_valid": 3643,
+     "huber_delta": 2.3,
+     "target": "neg_min_s2_0"
+    },
+    {
+     "seed": 2,
+     "inner_fold_valid": 2,
+     "objective": "huber",
+     "best_iteration": 317,
+     "valid_ap_weighted": 0.20075550947599352,
+     "n_fit": 534240,
+     "n_valid": 195761,
+     "pos_fit": 10035,
+     "pos_valid": 3759,
+     "huber_delta": 2.3,
+     "target": "neg_min_s2_0"
+    }
+   ],
+   "stacker_cache": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/processed/cache/deliverable/45978c2ef800a2bb",
+   "objective": "huber",
+   "n_stacker_rows": 975121,
+   "n_features": 475,
+   "timings": {
+    "stacker_rows": 0.67,
+    "stacker_assemble": 6.36,
+    "stacker_train": 329.21,
+    "fit_total": 338.85,
+    "ryan_features": 51.9,
+    "lf_assemble": 2.25,
+    "predict": 13.89
+   },
+   "wall_s": 407.2
+  },
+  "M2": {
+   "model": "M2",
+   "kind": "m2_stack",
+   "n_train_pairs": 775918,
+   "n_train_positives": 14464,
+   "n_train_genes": 1904,
+   "noncoding_dropped": {
+    "pairs": 8276,
+    "positives": 39,
+    "genes": [
+     "SPAC186.04c",
+     "SPAC2E12.05",
+     "SPAPB24D3.05c",
+     "SPBC530.06c",
+     "SPCC188.10c",
+     "SPCC18B5.02c",
+     "SPCC306.10",
+     "SPCC622.17",
+     "SPCC663.07c",
+     "SPCP20C8.03",
+     "SPNCRNA.9001"
+    ]
+   },
+   "train_hash": "bc25d3c322ae52af91622ecd7810666a71b02993775dfb0efc2a85f54f3f3512",
+   "fits": [
+    {
+     "seed": 0,
+     "inner_fold_valid": 0,
+     "objective": "binary",
+     "best_iteration": 119,
+     "valid_ap_weighted": 0.1461995363786366,
+     "n_fit": 538915,
+     "n_valid": 195367,
+     "pos_fit": 10323,
+     "pos_valid": 3657
+    },
+    {
+     "seed": 1,
+     "inner_fold_valid": 1,
+     "objective": "binary",
+     "best_iteration": 53,
+     "valid_ap_weighted": 0.16228408443731854,
+     "n_fit": 539987,
+     "n_valid": 194088,
+     "pos_fit": 10213,
+     "pos_valid": 3643
+    },
+    {
+     "seed": 2,
+     "inner_fold_valid": 2,
+     "objective": "binary",
+     "best_iteration": 27,
+     "valid_ap_weighted": 0.1848303079942392,
+     "n_fit": 534240,
+     "n_valid": 195761,
+     "pos_fit": 10035,
+     "pos_valid": 3759
+    }
+   ],
+   "stacker_cache": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/processed/cache/deliverable/45978c2ef800a2bb",
+   "objective": "binary",
+   "n_stacker_rows": 975121,
+   "n_features": 475,
+   "timings": {
+    "stacker_rows": 0.54,
+    "stacker_assemble": 6.24,
+    "stacker_train": 94.74,
+    "fit_total": 101.55,
+    "ryan_features": 52.38,
+    "lf_assemble": 2.21,
+    "predict": 1.63
+   },
+   "wall_s": 158.1
+  },
+  "M1": {
+   "model": "M1",
+   "kind": "lf_lgbm",
+   "n_train_pairs": 775918,
+   "n_train_positives": 14464,
+   "n_train_genes": 1904,
+   "noncoding_dropped": {
+    "pairs": 8276,
+    "positives": 39,
+    "genes": [
+     "SPAC186.04c",
+     "SPAC2E12.05",
+     "SPAPB24D3.05c",
+     "SPBC530.06c",
+     "SPCC188.10c",
+     "SPCC18B5.02c",
+     "SPCC306.10",
+     "SPCC622.17",
+     "SPCC663.07c",
+     "SPCP20C8.03",
+     "SPNCRNA.9001"
+    ]
+   },
+   "train_hash": "bc25d3c322ae52af91622ecd7810666a71b02993775dfb0efc2a85f54f3f3512",
+   "fits": [
+    {
+     "seed": 0,
+     "best_iteration": 575,
+     "valid_ap": 0.13345420692771126,
+     "n_fit": 556610,
+     "n_valid": 219308,
+     "pos_fit": 10014,
+     "pos_valid": 4450
+    },
+    {
+     "seed": 1,
+     "best_iteration": 373,
+     "valid_ap": 0.13844670941366247,
+     "n_fit": 555011,
+     "n_valid": 220907,
+     "pos_fit": 10233,
+     "pos_valid": 4231
+    },
+    {
+     "seed": 2,
+     "best_iteration": 187,
+     "valid_ap": 0.11667984304782689,
+     "n_fit": 569325,
+     "n_valid": 206593,
+     "pos_fit": 10582,
+     "pos_valid": 3882
+    }
+   ],
+   "timings": {
+    "fit_total": 133.12,
+    "lf_assemble": 1.26,
+    "predict": 9.47
+   },
+   "wall_s": 144.1
+  },
+  "B1_additive_logit": {
+   "model": "B1_additive_logit",
+   "kind": "b1",
+   "n_train_pairs": 784194,
+   "n_train_positives": 14503,
+   "n_train_genes": 1915,
+   "noncoding_dropped": null,
+   "train_hash": "4f21b62a4b35af26fd4dc851a09f40da0c077e16ba782aa33a2d507934e0f838",
+   "fits": [],
+   "timings": {
+    "fit_total": 1.45
+   },
+   "wall_s": 1.6
+  },
+  "B4_logistic_MF": {
+   "model": "B4_logistic_MF",
+   "kind": "b4",
+   "n_train_pairs": 784194,
+   "n_train_positives": 14503,
+   "n_train_genes": 1915,
+   "noncoding_dropped": null,
+   "train_hash": "4f21b62a4b35af26fd4dc851a09f40da0c077e16ba782aa33a2d507934e0f838",
+   "fits": [],
+   "timings": {
+    "fit_total": 17.62
+   },
+   "wall_s": 27.8
+  }
+ },
+ "wall_s": 771.7,
+ "peak_rss_mb": 14301.6,
+ "threads": 4,
+ "git": {
+  "git_commit": "792f12bb857430542072d7a3d4539b46b4ec1d88",
+  "git_dirty": false,
+  "git_diff_sha256": ""
+ },
+ "models_sha256": "8d2e29f528bae4d4d633482bcd6db382b81655c7477e59beab1c0924c01a87ed",
+ "protocol_sha256": "73edd56db38e6d82007b2ece6e66beabae0fb6bce126c6e26f834cf5686bc230",
+ "data_root": "/Users/colmclaude/ClaudeExperiments/PombeSL_prediction/data/processed",
+ "override": false,
+ "reason": ""
+}
