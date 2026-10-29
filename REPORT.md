@@ -80,7 +80,7 @@ Date 2026-10-29. The full record is in RESEARCH_TREE.md (decision log, research 
 | diag | oracle gene propensity | 0.220 | C3 .235 | – | upper bound for a gene-level model |
 | M1 | LightGBM, 358 label-free features | 0.145 | .214/.134/.088 | 352 s | adopted (+0.041 vs B1) |
 | M2 | + nested RYAN/NBR/GP stacking | 0.170 | .251/.159/.095 | 948 s (incl. nested features) | adopted (+0.025 vs M1; seed-7 +0.031) |
-| **M2r_huber** | M2 with a Huber stacker on −min(S2, 0) | **0.179** | .272/.167/.094 | 529 s (features cached) | **adopted** (+0.009 [0.005, 0.013]; seed-7: SEED7_PLACEHOLDER) |
+| **M2r_huber** | M2 with a Huber stacker on −min(S2, 0) | **0.179** | .272/.167/.094 | 529 s (features cached) | **adopted** (+0.009 [0.005, 0.013]; seed-7 +0.006, clean rerun M2r_huber_split7__…55fdbe vs M2_split7) |
 | | + 5-seed bagging | 0.181 | | 869 s | not adopted (+0.002 < bar) |
 | | + cross-species XSP features | 0.170 (on M2) | | 1,056 s (incl. 629 s feature build) | null (+0.0002) |
 | | + C3-focused logistic blend | 0.181 | | ~120 s | null (−0.0001) |

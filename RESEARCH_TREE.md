@@ -118,6 +118,12 @@ Next: integrate LITERATURE.md + data inventory, draft DESIGN.md, run up to three
 8. [-] M3 neural inductive pair model (one attempt; −0.010 standalone, +0.0015 n.s. in ensemble)
 
 ## Decision log
+- 2026-10-29: REPORT.md fact-checked by an independent agent. All 12 corrections applied:
+  - stale dev-run numbers replaced by the shipped run's;
+  - the lockbox exposure, the GP toy failure and the Ryan licence limits disclosed;
+  - the C3 overclaim removed;
+  - per-model runtimes added.
+  The two earlier seed-7 M2r_huber comparator runs were dirty (untracked or uncommitted non-code files). A clean rerun gives M2r_huber_split7__20261029T005214__55fdbe = 0.1761. The registered comparison M2r_huber vs M2r is +0.0091 [0.0048, 0.0133] with alt-seed Δ +0.0058 → adopt=True (clean). The adoption decision stands.
 - 2026-10-28: **Model search stops; the incumbent is final: M2r_huber.**
   - Why: the two rungs since the Huber gain (E-CONT, M5/M3) both failed. The remaining ideas each have an expected gain below the 0.005 bar: M3 as a nested stacker feature (the ensemble showed only +0.0015), and sparse-reveal stacker training (no effect on the metric, because Ryan has no sparse genes). C3 is limited by the label-free inputs.
   - Next: preregister the lockbox and evaluate it once, then retrain on all Ryan data, predict the universe, and write REPORT.md.

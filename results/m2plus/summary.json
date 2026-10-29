@@ -2440,7 +2440,7 @@
    "peak_rss_mb": 15113.25
   },
   "M2r_huber_split7": {
-   "run_id": "M2r_huber_split7__20261029T004231__81dbe9",
+   "run_id": "M2r_huber_split7__20261029T005214__55fdbe",
    "variant": "M2r",
    "objective": "huber",
    "seeds": [
@@ -2470,8 +2470,8 @@
     0.16643871561775841,
     0.1746964072764096
    ],
-   "git_commit": "b003b34f5b415a9939ac92b3b20aafc22c9156b5",
-   "git_dirty": true,
+   "git_commit": "11b38675d27ab12d907943700d4194d22110f12a",
+   "git_dirty": false,
    "n_features": 475,
    "importance_by_family": {
     "GP": 0.27177491009795934,
@@ -2715,14 +2715,14 @@
     }
    ],
    "runtime_stages_s": {
-    "load": 4.3,
-    "assemble": 12.7,
-    "train": 516.4,
-    "predict": 21.3
+    "load": 3.9,
+    "assemble": 12.2,
+    "train": 495.9,
+    "predict": 20.4
    },
-   "runtime_total_s": 554.449,
-   "run_wall_s": 586.8,
-   "peak_rss_mb": 14234.171875
+   "runtime_total_s": 532.276,
+   "run_wall_s": 564.1,
+   "peak_rss_mb": 14030.90625
   }
  }
 }
